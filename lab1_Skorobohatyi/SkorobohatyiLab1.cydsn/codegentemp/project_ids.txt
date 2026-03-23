@@ -1,0 +1,8 @@
+C:\Users\STUDENT\Documents\SkorobohatyiLab1\SkorobohatyiLab1.cydsn\SkorobohatyiLab1.cyprj|b7ccbfb4-e0a8-4e3c-a517-e14f218dbfeb
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|3a70b54a-d035-4eb8-b8d8-3a82043284ac
+C:\Users\STUDENT\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|7c5be4b4-82d2-40b3-ac81-4dd86e6e6325
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|ecae21d2-802d-4df2-a07d-3da4ea3a16b4
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|4f40bd8b-b784-4f9d-bb94-b3f94e6f3d48
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|9e9b37da-295e-40b8-8ae8-123cbd9c278e
+C:\Users\STUDENT\Documents\SkorobohatyiLab1\SkorobohatyiLab2.cydsn\SkorobohatyiLab2.cyprj|5f17065d-f2aa-4619-bff4-d08a64779bcc
+C:\Users\STUDENT\Documents\SkorobohatyiLab1\SkorobohatyiLab1_Copy_02.cydsn\SkorobohatyiLab1_Copy_02.cyprj|89284af8-8482-4d09-958e-64ad1c8e7ea0
