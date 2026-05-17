@@ -1,0 +1,4309 @@
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.HC595_sendByte,"ax",%progbits
+  20              		.align	2
+  21              		.global	HC595_sendByte
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	HC595_sendByte, %function
+  25              	HC595_sendByte:
+  26              	.LFB32:
+  27              		.file 1 "main.c"
+   1:main.c        **** #include "project.h"
+   2:main.c        **** #include <stdbool.h>
+   3:main.c        **** #include <stdint.h>
+   4:main.c        **** #include <string.h>
+   5:main.c        **** 
+   6:main.c        **** #define ROWS 4
+   7:main.c        **** #define COLS 3
+   8:main.c        **** #define DISPLAY_SIZE 8
+   9:main.c        **** #define BLANK 0xFF
+  10:main.c        **** 
+  11:main.c        **** const uint8_t ascii_font[128] = {
+  12:main.c        ****     ['0']=0xC0, ['1']=0xF9, ['2']=0xA4, ['3']=0xB0,
+  13:main.c        ****     ['4']=0x99, ['5']=0x92, ['6']=0x82, ['7']=0xF8,
+  14:main.c        ****     ['8']=0x80, ['9']=0x90, ['P']=0x8C, ['O']=0xC0, 
+  15:main.c        ****     ['E']=0x86, ['N']=0xAB, ['-']=0xBF, [' ']=0xFF, ['_']=0xF7
+  16:main.c        **** };
+  17:main.c        **** 
+  18:main.c        **** typedef enum {
+  19:main.c        ****     STATE_LOCKED,
+  20:main.c        ****     STATE_PENALTY,
+  21:main.c        ****     STATE_OPEN_ANIM,
+  22:main.c        ****     STATE_STOPWATCH,
+  23:main.c        ****     STATE_MEMO
+  24:main.c        **** } safe_state_t;
+  25:main.c        **** 
+  26:main.c        **** volatile uint8_t display_data[DISPLAY_SIZE] = {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLA
+  27:main.c        **** volatile uint32_t system_tick_ms = 0;
+  28:main.c        **** 
+  29:main.c        **** static const char key_map[ROWS][COLS] = {
+  30:main.c        ****     {'1','2','3'}, {'4','5','6'}, {'7','8','9'}, {'*','0','#'}
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 2
+
+
+  31:main.c        **** };
+  32:main.c        **** static uint8_t last_keys[ROWS][COLS];
+  33:main.c        **** 
+  34:main.c        **** void HC595_sendByte(uint8_t data) {
+  28              		.loc 1 34 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 4, -16
+  36              		.cfi_offset 5, -12
+  37              		.cfi_offset 6, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0500     		movs	r5, r0
+  40              	.LVL1:
+  41              	.LBB2:
+  35:main.c        ****     for(uint8_t i = 0; i < 8; i++) {
+  42              		.loc 1 35 0
+  43 0004 0024     		movs	r4, #0
+  44 0006 0FE0     		b	.L2
+  45              	.LVL2:
+  46              	.L3:
+  36:main.c        ****         Pin_DO_Write((data & (0x80 >> i)) ? 1 : 0);
+  47              		.loc 1 36 0 discriminator 3
+  48 0008 8020     		movs	r0, #128
+  49 000a 2041     		asrs	r0, r0, r4
+  50 000c 2840     		ands	r0, r5
+  51 000e 431E     		subs	r3, r0, #1
+  52 0010 9841     		sbcs	r0, r0, r3
+  53 0012 C0B2     		uxtb	r0, r0
+  54 0014 FFF7FEFF 		bl	Pin_DO_Write
+  55              	.LVL3:
+  37:main.c        ****         Pin_CLK_Write(1);
+  56              		.loc 1 37 0 discriminator 3
+  57 0018 0120     		movs	r0, #1
+  58 001a FFF7FEFF 		bl	Pin_CLK_Write
+  59              	.LVL4:
+  38:main.c        ****         Pin_CLK_Write(0);
+  60              		.loc 1 38 0 discriminator 3
+  61 001e 0020     		movs	r0, #0
+  62 0020 FFF7FEFF 		bl	Pin_CLK_Write
+  63              	.LVL5:
+  35:main.c        ****         Pin_DO_Write((data & (0x80 >> i)) ? 1 : 0);
+  64              		.loc 1 35 0 discriminator 3
+  65 0024 0134     		adds	r4, r4, #1
+  66              	.LVL6:
+  67 0026 E4B2     		uxtb	r4, r4
+  68              	.LVL7:
+  69              	.L2:
+  35:main.c        ****         Pin_DO_Write((data & (0x80 >> i)) ? 1 : 0);
+  70              		.loc 1 35 0 is_stmt 0 discriminator 1
+  71 0028 072C     		cmp	r4, #7
+  72 002a EDD9     		bls	.L3
+  73              	.LBE2:
+  39:main.c        ****     }
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 3
+
+
+  40:main.c        **** }
+  74              		.loc 1 40 0 is_stmt 1
+  75              		@ sp needed
+  76              	.LVL8:
+  77 002c 70BD     		pop	{r4, r5, r6, pc}
+  78              		.cfi_endproc
+  79              	.LFE32:
+  80              		.size	HC595_sendByte, .-HC595_sendByte
+  81 002e C046     		.section	.text.Timer_Int_Handler,"ax",%progbits
+  82              		.align	2
+  83              		.global	Timer_Int_Handler
+  84              		.code	16
+  85              		.thumb_func
+  86              		.type	Timer_Int_Handler, %function
+  87              	Timer_Int_Handler:
+  88              	.LFB33:
+  41:main.c        **** 
+  42:main.c        **** CY_ISR(Timer_Int_Handler) {
+  89              		.loc 1 42 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93 0000 10B5     		push	{r4, lr}
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 4, -8
+  96              		.cfi_offset 14, -4
+  43:main.c        ****     static uint8_t digit_idx = 0;
+  44:main.c        ****     HC595_sendByte((uint8_t)~(1u << digit_idx));
+  97              		.loc 1 44 0
+  98 0002 114C     		ldr	r4, .L6
+  99 0004 2378     		ldrb	r3, [r4]
+ 100 0006 0120     		movs	r0, #1
+ 101 0008 9840     		lsls	r0, r0, r3
+ 102 000a C043     		mvns	r0, r0
+ 103 000c C0B2     		uxtb	r0, r0
+ 104 000e FFF7FEFF 		bl	HC595_sendByte
+ 105              	.LVL9:
+  45:main.c        ****     HC595_sendByte(display_data[digit_idx]);
+ 106              		.loc 1 45 0
+ 107 0012 2378     		ldrb	r3, [r4]
+ 108 0014 0D4A     		ldr	r2, .L6+4
+ 109 0016 D05C     		ldrb	r0, [r2, r3]
+ 110 0018 C0B2     		uxtb	r0, r0
+ 111 001a FFF7FEFF 		bl	HC595_sendByte
+ 112              	.LVL10:
+  46:main.c        ****     Pin_Latch_Write(1);
+ 113              		.loc 1 46 0
+ 114 001e 0120     		movs	r0, #1
+ 115 0020 FFF7FEFF 		bl	Pin_Latch_Write
+ 116              	.LVL11:
+  47:main.c        ****     Pin_Latch_Write(0);
+ 117              		.loc 1 47 0
+ 118 0024 0020     		movs	r0, #0
+ 119 0026 FFF7FEFF 		bl	Pin_Latch_Write
+ 120              	.LVL12:
+  48:main.c        ****     
+  49:main.c        ****     digit_idx++;
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 4
+
+
+ 121              		.loc 1 49 0
+ 122 002a 2378     		ldrb	r3, [r4]
+ 123 002c 0133     		adds	r3, r3, #1
+ 124 002e DBB2     		uxtb	r3, r3
+ 125 0030 2370     		strb	r3, [r4]
+  50:main.c        ****     if(digit_idx >= DISPLAY_SIZE) digit_idx = 0;
+ 126              		.loc 1 50 0
+ 127 0032 072B     		cmp	r3, #7
+ 128 0034 02D9     		bls	.L5
+ 129              		.loc 1 50 0 is_stmt 0 discriminator 1
+ 130 0036 0022     		movs	r2, #0
+ 131 0038 034B     		ldr	r3, .L6
+ 132 003a 1A70     		strb	r2, [r3]
+ 133              	.L5:
+  51:main.c        ****     system_tick_ms++;
+ 134              		.loc 1 51 0 is_stmt 1
+ 135 003c 024A     		ldr	r2, .L6
+ 136 003e 5368     		ldr	r3, [r2, #4]
+ 137 0040 0133     		adds	r3, r3, #1
+ 138 0042 5360     		str	r3, [r2, #4]
+  52:main.c        **** }
+ 139              		.loc 1 52 0
+ 140              		@ sp needed
+ 141 0044 10BD     		pop	{r4, pc}
+ 142              	.L7:
+ 143 0046 C046     		.align	2
+ 144              	.L6:
+ 145 0048 00000000 		.word	.LANCHOR0
+ 146 004c 00000000 		.word	.LANCHOR1
+ 147              		.cfi_endproc
+ 148              	.LFE33:
+ 149              		.size	Timer_Int_Handler, .-Timer_Int_Handler
+ 150              		.section	.text.rgb_set,"ax",%progbits
+ 151              		.align	2
+ 152              		.global	rgb_set
+ 153              		.code	16
+ 154              		.thumb_func
+ 155              		.type	rgb_set, %function
+ 156              	rgb_set:
+ 157              	.LFB34:
+  53:main.c        **** 
+  54:main.c        **** void rgb_set(uint8_t r, uint8_t g, uint8_t b) {
+ 158              		.loc 1 54 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              	.LVL13:
+ 163 0000 70B5     		push	{r4, r5, r6, lr}
+ 164              		.cfi_def_cfa_offset 16
+ 165              		.cfi_offset 4, -16
+ 166              		.cfi_offset 5, -12
+ 167              		.cfi_offset 6, -8
+ 168              		.cfi_offset 14, -4
+ 169 0002 0D00     		movs	r5, r1
+ 170 0004 1400     		movs	r4, r2
+  55:main.c        ****     LED_R_Write(r); LED_G_Write(g); LED_B_Write(b);
+ 171              		.loc 1 55 0
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 5
+
+
+ 172 0006 FFF7FEFF 		bl	LED_R_Write
+ 173              	.LVL14:
+ 174 000a 2800     		movs	r0, r5
+ 175 000c FFF7FEFF 		bl	LED_G_Write
+ 176              	.LVL15:
+ 177 0010 2000     		movs	r0, r4
+ 178 0012 FFF7FEFF 		bl	LED_B_Write
+ 179              	.LVL16:
+  56:main.c        **** }
+ 180              		.loc 1 56 0
+ 181              		@ sp needed
+ 182 0016 70BD     		pop	{r4, r5, r6, pc}
+ 183              		.cfi_endproc
+ 184              	.LFE34:
+ 185              		.size	rgb_set, .-rgb_set
+ 186              		.section	.text.clear_display,"ax",%progbits
+ 187              		.align	2
+ 188              		.global	clear_display
+ 189              		.code	16
+ 190              		.thumb_func
+ 191              		.type	clear_display, %function
+ 192              	clear_display:
+ 193              	.LFB35:
+  57:main.c        **** 
+  58:main.c        **** void clear_display(void) {
+ 194              		.loc 1 58 0
+ 195              		.cfi_startproc
+ 196              		@ args = 0, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 198              		@ link register save eliminated.
+ 199              	.LVL17:
+ 200              	.LBB3:
+  59:main.c        ****     for(uint8_t i = 0; i < DISPLAY_SIZE; i++) display_data[i] = BLANK;
+ 201              		.loc 1 59 0
+ 202 0000 0023     		movs	r3, #0
+ 203 0002 04E0     		b	.L10
+ 204              	.LVL18:
+ 205              	.L11:
+ 206              		.loc 1 59 0 is_stmt 0 discriminator 3
+ 207 0004 FF21     		movs	r1, #255
+ 208 0006 034A     		ldr	r2, .L12
+ 209 0008 D154     		strb	r1, [r2, r3]
+ 210 000a 0133     		adds	r3, r3, #1
+ 211              	.LVL19:
+ 212 000c DBB2     		uxtb	r3, r3
+ 213              	.LVL20:
+ 214              	.L10:
+ 215              		.loc 1 59 0 discriminator 1
+ 216 000e 072B     		cmp	r3, #7
+ 217 0010 F8D9     		bls	.L11
+ 218              	.LBE3:
+  60:main.c        **** }
+ 219              		.loc 1 60 0 is_stmt 1
+ 220              		@ sp needed
+ 221 0012 7047     		bx	lr
+ 222              	.L13:
+ 223              		.align	2
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 6
+
+
+ 224              	.L12:
+ 225 0014 00000000 		.word	.LANCHOR1
+ 226              		.cfi_endproc
+ 227              	.LFE35:
+ 228              		.size	clear_display, .-clear_display
+ 229              		.section	.text.matrix_init,"ax",%progbits
+ 230              		.align	2
+ 231              		.global	matrix_init
+ 232              		.code	16
+ 233              		.thumb_func
+ 234              		.type	matrix_init, %function
+ 235              	matrix_init:
+ 236              	.LFB36:
+  61:main.c        **** 
+  62:main.c        **** void matrix_init(void) {
+ 237              		.loc 1 62 0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241 0000 10B5     		push	{r4, lr}
+ 242              		.cfi_def_cfa_offset 8
+ 243              		.cfi_offset 4, -8
+ 244              		.cfi_offset 14, -4
+  63:main.c        ****     COLUMN_0_SetDriveMode(COLUMN_0_DM_DIG_HIZ);
+ 245              		.loc 1 63 0
+ 246 0002 0120     		movs	r0, #1
+ 247 0004 FFF7FEFF 		bl	COLUMN_0_SetDriveMode
+ 248              	.LVL21:
+  64:main.c        ****     COLUMN_1_SetDriveMode(COLUMN_1_DM_DIG_HIZ);
+ 249              		.loc 1 64 0
+ 250 0008 0120     		movs	r0, #1
+ 251 000a FFF7FEFF 		bl	COLUMN_1_SetDriveMode
+ 252              	.LVL22:
+  65:main.c        ****     COLUMN_2_SetDriveMode(COLUMN_2_DM_DIG_HIZ);
+ 253              		.loc 1 65 0
+ 254 000e 0120     		movs	r0, #1
+ 255 0010 FFF7FEFF 		bl	COLUMN_2_SetDriveMode
+ 256              	.LVL23:
+ 257              	.LBB4:
+  66:main.c        ****     for(uint8_t r = 0; r < ROWS; r++) {
+ 258              		.loc 1 66 0
+ 259 0014 0021     		movs	r1, #0
+ 260 0016 0EE0     		b	.L15
+ 261              	.LVL24:
+ 262              	.L16:
+ 263              	.LBB5:
+  67:main.c        ****         for(uint8_t c = 0; c < COLS; c++) last_keys[r][c] = 1;
+ 264              		.loc 1 67 0 discriminator 3
+ 265 0018 4B00     		lsls	r3, r1, #1
+ 266 001a 5B18     		adds	r3, r3, r1
+ 267 001c 0748     		ldr	r0, .L19
+ 268 001e C318     		adds	r3, r0, r3
+ 269 0020 9B18     		adds	r3, r3, r2
+ 270 0022 0120     		movs	r0, #1
+ 271 0024 1872     		strb	r0, [r3, #8]
+ 272 0026 0132     		adds	r2, r2, #1
+ 273              	.LVL25:
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 7
+
+
+ 274 0028 D2B2     		uxtb	r2, r2
+ 275              	.LVL26:
+ 276 002a 00E0     		b	.L17
+ 277              	.LVL27:
+ 278              	.L18:
+ 279              	.LBE5:
+ 280 002c 0022     		movs	r2, #0
+ 281              	.L17:
+ 282              	.LVL28:
+ 283              	.LBB6:
+ 284              		.loc 1 67 0 is_stmt 0 discriminator 1
+ 285 002e 022A     		cmp	r2, #2
+ 286 0030 F2D9     		bls	.L16
+ 287              	.LBE6:
+  66:main.c        ****     for(uint8_t r = 0; r < ROWS; r++) {
+ 288              		.loc 1 66 0 is_stmt 1 discriminator 2
+ 289 0032 0131     		adds	r1, r1, #1
+ 290              	.LVL29:
+ 291 0034 C9B2     		uxtb	r1, r1
+ 292              	.LVL30:
+ 293              	.L15:
+  66:main.c        ****     for(uint8_t r = 0; r < ROWS; r++) {
+ 294              		.loc 1 66 0 is_stmt 0 discriminator 1
+ 295 0036 0329     		cmp	r1, #3
+ 296 0038 F8D9     		bls	.L18
+ 297              	.LBE4:
+  68:main.c        ****     }
+  69:main.c        **** }
+ 298              		.loc 1 69 0 is_stmt 1
+ 299              		@ sp needed
+ 300 003a 10BD     		pop	{r4, pc}
+ 301              	.L20:
+ 302              		.align	2
+ 303              	.L19:
+ 304 003c 00000000 		.word	.LANCHOR0
+ 305              		.cfi_endproc
+ 306              	.LFE36:
+ 307              		.size	matrix_init, .-matrix_init
+ 308              		.section	.text.get_key,"ax",%progbits
+ 309              		.align	2
+ 310              		.global	get_key
+ 311              		.code	16
+ 312              		.thumb_func
+ 313              		.type	get_key, %function
+ 314              	get_key:
+ 315              	.LFB37:
+  70:main.c        **** 
+  71:main.c        **** char get_key(void) {
+ 316              		.loc 1 71 0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 8
+ 319              		@ frame_needed = 0, uses_anonymous_args = 0
+ 320 0000 70B5     		push	{r4, r5, r6, lr}
+ 321              		.cfi_def_cfa_offset 16
+ 322              		.cfi_offset 4, -16
+ 323              		.cfi_offset 5, -12
+ 324              		.cfi_offset 6, -8
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 8
+
+
+ 325              		.cfi_offset 14, -4
+ 326 0002 82B0     		sub	sp, sp, #8
+ 327              		.cfi_def_cfa_offset 24
+ 328              	.LVL31:
+ 329              	.LBB7:
+  72:main.c        ****     char pressed = 0;
+  73:main.c        ****     for(uint8_t c = 0; c < COLS; c++) {
+ 330              		.loc 1 73 0
+ 331 0004 0024     		movs	r4, #0
+ 332              	.LBE7:
+  72:main.c        ****     char pressed = 0;
+ 333              		.loc 1 72 0
+ 334 0006 0025     		movs	r5, #0
+ 335              	.LBB10:
+ 336              		.loc 1 73 0
+ 337 0008 63E0     		b	.L22
+ 338              	.LVL32:
+ 339              	.L32:
+ 340              	.LBB8:
+  74:main.c        ****         if(c==0) { COLUMN_0_SetDriveMode(COLUMN_0_DM_STRONG); COLUMN_0_Write(0); }
+ 341              		.loc 1 74 0
+ 342 000a 002C     		cmp	r4, #0
+ 343 000c 06D1     		bne	.L23
+ 344              		.loc 1 74 0 is_stmt 0 discriminator 1
+ 345 000e 0620     		movs	r0, #6
+ 346 0010 FFF7FEFF 		bl	COLUMN_0_SetDriveMode
+ 347              	.LVL33:
+ 348 0014 0020     		movs	r0, #0
+ 349 0016 FFF7FEFF 		bl	COLUMN_0_Write
+ 350              	.LVL34:
+ 351 001a 10E0     		b	.L24
+ 352              	.L23:
+  75:main.c        ****         else if(c==1) { COLUMN_1_SetDriveMode(COLUMN_1_DM_STRONG); COLUMN_1_Write(0); }
+ 353              		.loc 1 75 0 is_stmt 1
+ 354 001c 012C     		cmp	r4, #1
+ 355 001e 06D1     		bne	.L25
+ 356              		.loc 1 75 0 is_stmt 0 discriminator 1
+ 357 0020 0620     		movs	r0, #6
+ 358 0022 FFF7FEFF 		bl	COLUMN_1_SetDriveMode
+ 359              	.LVL35:
+ 360 0026 0020     		movs	r0, #0
+ 361 0028 FFF7FEFF 		bl	COLUMN_1_Write
+ 362              	.LVL36:
+ 363 002c 07E0     		b	.L24
+ 364              	.L25:
+  76:main.c        ****         else if(c==2) { COLUMN_2_SetDriveMode(COLUMN_2_DM_STRONG); COLUMN_2_Write(0); }
+ 365              		.loc 1 76 0 is_stmt 1
+ 366 002e 022C     		cmp	r4, #2
+ 367 0030 05D1     		bne	.L24
+ 368              		.loc 1 76 0 is_stmt 0 discriminator 1
+ 369 0032 0620     		movs	r0, #6
+ 370 0034 FFF7FEFF 		bl	COLUMN_2_SetDriveMode
+ 371              	.LVL37:
+ 372 0038 0020     		movs	r0, #0
+ 373 003a FFF7FEFF 		bl	COLUMN_2_Write
+ 374              	.LVL38:
+ 375              	.L24:
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 9
+
+
+  77:main.c        ****         
+  78:main.c        ****         CyDelayUs(20);
+ 376              		.loc 1 78 0 is_stmt 1
+ 377 003e 1420     		movs	r0, #20
+ 378 0040 FFF7FEFF 		bl	CyDelayUs
+ 379              	.LVL39:
+  79:main.c        ****         uint8_t rows[ROWS] = {ROW_0_Read(), ROW_1_Read(), ROW_2_Read(), ROW_3_Read()};
+ 380              		.loc 1 79 0
+ 381 0044 FFF7FEFF 		bl	ROW_0_Read
+ 382              	.LVL40:
+ 383 0048 01AE     		add	r6, sp, #4
+ 384 004a 3070     		strb	r0, [r6]
+ 385 004c FFF7FEFF 		bl	ROW_1_Read
+ 386              	.LVL41:
+ 387 0050 7070     		strb	r0, [r6, #1]
+ 388 0052 FFF7FEFF 		bl	ROW_2_Read
+ 389              	.LVL42:
+ 390 0056 B070     		strb	r0, [r6, #2]
+ 391 0058 FFF7FEFF 		bl	ROW_3_Read
+ 392              	.LVL43:
+ 393 005c F070     		strb	r0, [r6, #3]
+ 394              	.LVL44:
+ 395              	.LBB9:
+  80:main.c        ****         
+  81:main.c        ****         for(uint8_t r = 0; r < ROWS; r++) {
+ 396              		.loc 1 81 0
+ 397 005e 0022     		movs	r2, #0
+ 398 0060 19E0     		b	.L26
+ 399              	.LVL45:
+ 400              	.L28:
+  82:main.c        ****             if((rows[r] == 0) && (last_keys[r][c] == 1)) pressed = key_map[r][c];
+ 401              		.loc 1 82 0
+ 402 0062 1300     		movs	r3, r2
+ 403 0064 01A9     		add	r1, sp, #4
+ 404 0066 885C     		ldrb	r0, [r1, r2]
+ 405 0068 0028     		cmp	r0, #0
+ 406 006a 0CD1     		bne	.L27
+ 407              		.loc 1 82 0 is_stmt 0 discriminator 1
+ 408 006c 5100     		lsls	r1, r2, #1
+ 409 006e 8918     		adds	r1, r1, r2
+ 410 0070 1A4E     		ldr	r6, .L33
+ 411 0072 7118     		adds	r1, r6, r1
+ 412 0074 0919     		adds	r1, r1, r4
+ 413 0076 097A     		ldrb	r1, [r1, #8]
+ 414 0078 0129     		cmp	r1, #1
+ 415 007a 04D1     		bne	.L27
+ 416              		.loc 1 82 0 discriminator 2
+ 417 007c 5100     		lsls	r1, r2, #1
+ 418 007e 8918     		adds	r1, r1, r2
+ 419 0080 174D     		ldr	r5, .L33+4
+ 420              	.LVL46:
+ 421 0082 6918     		adds	r1, r5, r1
+ 422 0084 0D5D     		ldrb	r5, [r1, r4]
+ 423              	.LVL47:
+ 424              	.L27:
+  83:main.c        ****             last_keys[r][c] = rows[r];
+ 425              		.loc 1 83 0 is_stmt 1 discriminator 2
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 10
+
+
+ 426 0086 5900     		lsls	r1, r3, #1
+ 427 0088 CB18     		adds	r3, r1, r3
+ 428 008a 1449     		ldr	r1, .L33
+ 429 008c CB18     		adds	r3, r1, r3
+ 430 008e 1B19     		adds	r3, r3, r4
+ 431 0090 1872     		strb	r0, [r3, #8]
+  81:main.c        ****             if((rows[r] == 0) && (last_keys[r][c] == 1)) pressed = key_map[r][c];
+ 432              		.loc 1 81 0 discriminator 2
+ 433 0092 0132     		adds	r2, r2, #1
+ 434              	.LVL48:
+ 435 0094 D2B2     		uxtb	r2, r2
+ 436              	.LVL49:
+ 437              	.L26:
+  81:main.c        ****             if((rows[r] == 0) && (last_keys[r][c] == 1)) pressed = key_map[r][c];
+ 438              		.loc 1 81 0 is_stmt 0 discriminator 1
+ 439 0096 032A     		cmp	r2, #3
+ 440 0098 E3D9     		bls	.L28
+ 441              	.LBE9:
+  84:main.c        ****         }
+  85:main.c        ****         
+  86:main.c        ****         if(c==0) { COLUMN_0_Write(1); COLUMN_0_SetDriveMode(COLUMN_0_DM_DIG_HIZ); }
+ 442              		.loc 1 86 0 is_stmt 1
+ 443 009a 002C     		cmp	r4, #0
+ 444 009c 06D1     		bne	.L29
+ 445              		.loc 1 86 0 is_stmt 0 discriminator 1
+ 446 009e 0120     		movs	r0, #1
+ 447 00a0 FFF7FEFF 		bl	COLUMN_0_Write
+ 448              	.LVL50:
+ 449 00a4 0120     		movs	r0, #1
+ 450 00a6 FFF7FEFF 		bl	COLUMN_0_SetDriveMode
+ 451              	.LVL51:
+ 452 00aa 10E0     		b	.L30
+ 453              	.LVL52:
+ 454              	.L29:
+  87:main.c        ****         else if(c==1) { COLUMN_1_Write(1); COLUMN_1_SetDriveMode(COLUMN_1_DM_DIG_HIZ); }
+ 455              		.loc 1 87 0 is_stmt 1
+ 456 00ac 012C     		cmp	r4, #1
+ 457 00ae 06D1     		bne	.L31
+ 458              		.loc 1 87 0 is_stmt 0 discriminator 1
+ 459 00b0 0120     		movs	r0, #1
+ 460 00b2 FFF7FEFF 		bl	COLUMN_1_Write
+ 461              	.LVL53:
+ 462 00b6 0120     		movs	r0, #1
+ 463 00b8 FFF7FEFF 		bl	COLUMN_1_SetDriveMode
+ 464              	.LVL54:
+ 465 00bc 07E0     		b	.L30
+ 466              	.LVL55:
+ 467              	.L31:
+  88:main.c        ****         else if(c==2) { COLUMN_2_Write(1); COLUMN_2_SetDriveMode(COLUMN_2_DM_DIG_HIZ); }
+ 468              		.loc 1 88 0 is_stmt 1
+ 469 00be 022C     		cmp	r4, #2
+ 470 00c0 05D1     		bne	.L30
+ 471              		.loc 1 88 0 is_stmt 0 discriminator 1
+ 472 00c2 0120     		movs	r0, #1
+ 473 00c4 FFF7FEFF 		bl	COLUMN_2_Write
+ 474              	.LVL56:
+ 475 00c8 0120     		movs	r0, #1
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 11
+
+
+ 476 00ca FFF7FEFF 		bl	COLUMN_2_SetDriveMode
+ 477              	.LVL57:
+ 478              	.L30:
+ 479              	.LBE8:
+  73:main.c        ****         if(c==0) { COLUMN_0_SetDriveMode(COLUMN_0_DM_STRONG); COLUMN_0_Write(0); }
+ 480              		.loc 1 73 0 is_stmt 1 discriminator 2
+ 481 00ce 0134     		adds	r4, r4, #1
+ 482              	.LVL58:
+ 483 00d0 E4B2     		uxtb	r4, r4
+ 484              	.LVL59:
+ 485              	.L22:
+  73:main.c        ****         if(c==0) { COLUMN_0_SetDriveMode(COLUMN_0_DM_STRONG); COLUMN_0_Write(0); }
+ 486              		.loc 1 73 0 is_stmt 0 discriminator 1
+ 487 00d2 022C     		cmp	r4, #2
+ 488 00d4 99D9     		bls	.L32
+ 489              	.LBE10:
+  89:main.c        ****     }
+  90:main.c        ****     return pressed;
+  91:main.c        **** }
+ 490              		.loc 1 91 0 is_stmt 1
+ 491 00d6 2800     		movs	r0, r5
+ 492 00d8 02B0     		add	sp, sp, #8
+ 493              		@ sp needed
+ 494              	.LVL60:
+ 495              	.LVL61:
+ 496 00da 70BD     		pop	{r4, r5, r6, pc}
+ 497              	.L34:
+ 498              		.align	2
+ 499              	.L33:
+ 500 00dc 00000000 		.word	.LANCHOR0
+ 501 00e0 14000000 		.word	.LANCHOR2
+ 502              		.cfi_endproc
+ 503              	.LFE37:
+ 504              		.size	get_key, .-get_key
+ 505              		.global	__aeabi_uidiv
+ 506              		.global	__aeabi_uidivmod
+ 507              		.section	.text.main,"ax",%progbits
+ 508              		.align	2
+ 509              		.global	main
+ 510              		.code	16
+ 511              		.thumb_func
+ 512              		.type	main, %function
+ 513              	main:
+ 514              	.LFB38:
+  92:main.c        **** 
+  93:main.c        **** int main(void) {
+ 515              		.loc 1 93 0
+ 516              		.cfi_startproc
+ 517              		@ args = 0, pretend = 0, frame = 16
+ 518              		@ frame_needed = 0, uses_anonymous_args = 0
+ 519 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 520              		.cfi_def_cfa_offset 20
+ 521              		.cfi_offset 4, -20
+ 522              		.cfi_offset 5, -16
+ 523              		.cfi_offset 6, -12
+ 524              		.cfi_offset 7, -8
+ 525              		.cfi_offset 14, -4
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 12
+
+
+ 526 0002 5F46     		mov	r7, fp
+ 527 0004 5646     		mov	r6, r10
+ 528 0006 4D46     		mov	r5, r9
+ 529 0008 4446     		mov	r4, r8
+ 530 000a F0B4     		push	{r4, r5, r6, r7}
+ 531              		.cfi_def_cfa_offset 36
+ 532              		.cfi_offset 8, -36
+ 533              		.cfi_offset 9, -32
+ 534              		.cfi_offset 10, -28
+ 535              		.cfi_offset 11, -24
+ 536 000c 85B0     		sub	sp, sp, #20
+ 537              		.cfi_def_cfa_offset 56
+  94:main.c        ****     CyGlobalIntEnable;
+ 538              		.loc 1 94 0
+ 539              		.syntax divided
+ 540              	@ 94 "main.c" 1
+ 541 000e 62B6     		CPSIE   i
+ 542              	@ 0 "" 2
+  95:main.c        ****     Timer_Start();
+ 543              		.loc 1 95 0
+ 544              		.thumb
+ 545              		.syntax unified
+ 546 0010 FFF7FEFF 		bl	Timer_Start
+ 547              	.LVL62:
+  96:main.c        ****     Timer_Int_StartEx(Timer_Int_Handler);
+ 548              		.loc 1 96 0
+ 549 0014 C548     		ldr	r0, .L71
+ 550 0016 FFF7FEFF 		bl	Timer_Int_StartEx
+ 551              	.LVL63:
+  97:main.c        ****     matrix_init();
+ 552              		.loc 1 97 0
+ 553 001a FFF7FEFF 		bl	matrix_init
+ 554              	.LVL64:
+  98:main.c        ****     
+  99:main.c        ****     safe_state_t current_state = STATE_LOCKED;
+ 100:main.c        ****     
+ 101:main.c        ****     uint32_t last_action_ms = 0;
+ 102:main.c        ****     uint32_t action_timer_ms = 0;
+ 103:main.c        ****     
+ 104:main.c        ****     char pin_buf[5] = {0};
+ 555              		.loc 1 104 0
+ 556 001e 0522     		movs	r2, #5
+ 557 0020 0021     		movs	r1, #0
+ 558 0022 02A8     		add	r0, sp, #8
+ 559 0024 FFF7FEFF 		bl	memset
+ 560              	.LVL65:
+ 105:main.c        ****     uint8_t input_idx = 0;
+ 106:main.c        ****     uint8_t scroll_step = 0;
+ 107:main.c        ****     bool is_scrolling = false;
+ 108:main.c        **** 
+ 109:main.c        ****     rgb_set(1, 1, 1);
+ 561              		.loc 1 109 0
+ 562 0028 0122     		movs	r2, #1
+ 563 002a 0121     		movs	r1, #1
+ 564 002c 0120     		movs	r0, #1
+ 565 002e FFF7FEFF 		bl	rgb_set
+ 566              	.LVL66:
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 13
+
+
+ 107:main.c        **** 
+ 567              		.loc 1 107 0
+ 568 0032 0023     		movs	r3, #0
+ 569 0034 9946     		mov	r9, r3
+ 106:main.c        ****     bool is_scrolling = false;
+ 570              		.loc 1 106 0
+ 571 0036 0026     		movs	r6, #0
+ 105:main.c        ****     uint8_t input_idx = 0;
+ 572              		.loc 1 105 0
+ 573 0038 9846     		mov	r8, r3
+ 102:main.c        ****     
+ 574              		.loc 1 102 0
+ 575 003a 0193     		str	r3, [sp, #4]
+ 101:main.c        ****     uint32_t action_timer_ms = 0;
+ 576              		.loc 1 101 0
+ 577 003c 0027     		movs	r7, #0
+  99:main.c        ****     
+ 578              		.loc 1 99 0
+ 579 003e 0025     		movs	r5, #0
+ 580              	.LVL67:
+ 581              	.L68:
+ 582              	.LBB11:
+ 110:main.c        **** 
+ 111:main.c        ****     for(;;) {
+ 112:main.c        ****         char key = get_key();
+ 583              		.loc 1 112 0
+ 584 0040 FFF7FEFF 		bl	get_key
+ 585              	.LVL68:
+ 586 0044 0090     		str	r0, [sp]
+ 587 0046 0400     		movs	r4, r0
+ 588              	.LVL69:
+ 113:main.c        ****         
+ 114:main.c        ****         if(key == '*') {
+ 589              		.loc 1 114 0
+ 590 0048 2A28     		cmp	r0, #42
+ 591 004a 0ED1     		bne	.L36
+ 592              	.LVL70:
+ 115:main.c        ****             current_state = STATE_LOCKED;
+ 116:main.c        ****             input_idx = 0;
+ 117:main.c        ****             memset(pin_buf, 0, sizeof(pin_buf));
+ 593              		.loc 1 117 0
+ 594 004c 0522     		movs	r2, #5
+ 595 004e 0021     		movs	r1, #0
+ 596 0050 02A8     		add	r0, sp, #8
+ 597 0052 FFF7FEFF 		bl	memset
+ 598              	.LVL71:
+ 118:main.c        ****             clear_display();
+ 599              		.loc 1 118 0
+ 600 0056 FFF7FEFF 		bl	clear_display
+ 601              	.LVL72:
+ 119:main.c        ****             rgb_set(0, 1, 1);
+ 602              		.loc 1 119 0
+ 603 005a 0122     		movs	r2, #1
+ 604 005c 0121     		movs	r1, #1
+ 605 005e 0020     		movs	r0, #0
+ 606 0060 FFF7FEFF 		bl	rgb_set
+ 607              	.LVL73:
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 14
+
+
+ 116:main.c        ****             memset(pin_buf, 0, sizeof(pin_buf));
+ 608              		.loc 1 116 0
+ 609 0064 0023     		movs	r3, #0
+ 610 0066 9846     		mov	r8, r3
+ 115:main.c        ****             input_idx = 0;
+ 611              		.loc 1 115 0
+ 612 0068 0025     		movs	r5, #0
+ 613              	.LVL74:
+ 614              	.L36:
+ 120:main.c        ****         }
+ 121:main.c        **** 
+ 122:main.c        ****         switch(current_state) {
+ 615              		.loc 1 122 0
+ 616 006a 042D     		cmp	r5, #4
+ 617 006c 00D9     		bls	.LCB559
+ 618 006e 59E1     		b	.L37	@long jump
+ 619              	.LCB559:
+ 620 0070 AB00     		lsls	r3, r5, #2
+ 621 0072 AF4A     		ldr	r2, .L71+4
+ 622 0074 D358     		ldr	r3, [r2, r3]
+ 623 0076 9F46     		mov	pc, r3
+ 624              		.section	.rodata
+ 625              		.align	2
+ 626              	.L39:
+ 627 0000 78000000 		.word	.L38
+ 628 0004 04010000 		.word	.L40
+ 629 0008 78010000 		.word	.L41
+ 630 000c D0010000 		.word	.L42
+ 631 0010 86020000 		.word	.L43
+ 632              		.section	.text.main
+ 633              	.L38:
+ 634              	.LBB12:
+ 123:main.c        ****             
+ 124:main.c        ****             // ПАРОЛЬ
+ 125:main.c        ****             case STATE_LOCKED:
+ 126:main.c        ****                 rgb_set(0, 1, 1);
+ 635              		.loc 1 126 0
+ 636 0078 0122     		movs	r2, #1
+ 637 007a 0121     		movs	r1, #1
+ 638 007c 0020     		movs	r0, #0
+ 639 007e FFF7FEFF 		bl	rgb_set
+ 640              	.LVL75:
+ 127:main.c        ****                 clear_display();
+ 641              		.loc 1 127 0
+ 642 0082 FFF7FEFF 		bl	clear_display
+ 643              	.LVL76:
+ 644              	.LBB13:
+ 128:main.c        ****                 
+ 129:main.c        ****                 for(uint8_t i = 0; i < 4; i++) {
+ 645              		.loc 1 129 0
+ 646 0086 0023     		movs	r3, #0
+ 647 0088 0EE0     		b	.L44
+ 648              	.LVL77:
+ 649              	.L47:
+ 130:main.c        ****                     if(i < input_idx) display_data[i] = ascii_font[(uint8_t)pin_buf[i]];
+ 650              		.loc 1 130 0
+ 651 008a 9845     		cmp	r8, r3
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 15
+
+
+ 652 008c 07D9     		bls	.L45
+ 653              		.loc 1 130 0 is_stmt 0 discriminator 1
+ 654 008e 02AA     		add	r2, sp, #8
+ 655 0090 D25C     		ldrb	r2, [r2, r3]
+ 656 0092 A849     		ldr	r1, .L71+8
+ 657 0094 8A18     		adds	r2, r1, r2
+ 658 0096 117B     		ldrb	r1, [r2, #12]
+ 659 0098 A74A     		ldr	r2, .L71+12
+ 660 009a D154     		strb	r1, [r2, r3]
+ 661 009c 02E0     		b	.L46
+ 662              	.L45:
+ 131:main.c        ****                     else display_data[i] = 0xBF;
+ 663              		.loc 1 131 0 is_stmt 1
+ 664 009e BF21     		movs	r1, #191
+ 665 00a0 A54A     		ldr	r2, .L71+12
+ 666 00a2 D154     		strb	r1, [r2, r3]
+ 667              	.L46:
+ 129:main.c        ****                     if(i < input_idx) display_data[i] = ascii_font[(uint8_t)pin_buf[i]];
+ 668              		.loc 1 129 0 discriminator 2
+ 669 00a4 0133     		adds	r3, r3, #1
+ 670              	.LVL78:
+ 671 00a6 DBB2     		uxtb	r3, r3
+ 672              	.LVL79:
+ 673              	.L44:
+ 129:main.c        ****                     if(i < input_idx) display_data[i] = ascii_font[(uint8_t)pin_buf[i]];
+ 674              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 675 00a8 032B     		cmp	r3, #3
+ 676 00aa EED9     		bls	.L47
+ 677              	.LBE13:
+ 132:main.c        ****                 }
+ 133:main.c        **** 
+ 134:main.c        ****                 if((key >= '0') && (key <= '9') && (input_idx < 4)) {
+ 678              		.loc 1 134 0 is_stmt 1
+ 679 00ac 009A     		ldr	r2, [sp]
+ 680 00ae 1300     		movs	r3, r2
+ 681              	.LVL80:
+ 682 00b0 303B     		subs	r3, r3, #48
+ 683 00b2 DBB2     		uxtb	r3, r3
+ 684 00b4 092B     		cmp	r3, #9
+ 685 00b6 08D8     		bhi	.L48
+ 686              		.loc 1 134 0 is_stmt 0 discriminator 1
+ 687 00b8 4346     		mov	r3, r8
+ 688 00ba 032B     		cmp	r3, #3
+ 689 00bc 05D8     		bhi	.L48
+ 135:main.c        ****                     pin_buf[input_idx++] = key;
+ 690              		.loc 1 135 0 is_stmt 1
+ 691 00be 0133     		adds	r3, r3, #1
+ 692              	.LVL81:
+ 693 00c0 02A9     		add	r1, sp, #8
+ 694 00c2 4046     		mov	r0, r8
+ 695 00c4 0A54     		strb	r2, [r1, r0]
+ 696 00c6 DBB2     		uxtb	r3, r3
+ 697 00c8 9846     		mov	r8, r3
+ 698              	.LVL82:
+ 699              	.L48:
+ 136:main.c        ****                 }
+ 137:main.c        ****                 
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 16
+
+
+ 138:main.c        ****                 if((key == '#') && (input_idx == 4)) {
+ 700              		.loc 1 138 0
+ 701 00ca 232C     		cmp	r4, #35
+ 702 00cc 00D0     		beq	.LCB642
+ 703 00ce 29E1     		b	.L37	@long jump
+ 704              	.LCB642:
+ 705              		.loc 1 138 0 is_stmt 0 discriminator 1
+ 706 00d0 4346     		mov	r3, r8
+ 707 00d2 042B     		cmp	r3, #4
+ 708 00d4 00D0     		beq	.LCB645
+ 709 00d6 25E1     		b	.L37	@long jump
+ 710              	.LCB645:
+ 139:main.c        ****                     if(strncmp(pin_buf, "2026", 4) == 0) {
+ 711              		.loc 1 139 0 is_stmt 1
+ 712 00d8 0422     		movs	r2, #4
+ 713 00da 9849     		ldr	r1, .L71+16
+ 714 00dc 02A8     		add	r0, sp, #8
+ 715 00de FFF7FEFF 		bl	strncmp
+ 716              	.LVL83:
+ 717 00e2 0028     		cmp	r0, #0
+ 718 00e4 06D1     		bne	.L49
+ 719              	.LVL84:
+ 140:main.c        ****                         current_state = STATE_OPEN_ANIM;
+ 141:main.c        ****                         scroll_step = 0;
+ 142:main.c        ****                         last_action_ms = system_tick_ms;
+ 720              		.loc 1 142 0
+ 721 00e6 964B     		ldr	r3, .L71+20
+ 722 00e8 5F68     		ldr	r7, [r3, #4]
+ 723              	.LVL85:
+ 141:main.c        ****                         last_action_ms = system_tick_ms;
+ 724              		.loc 1 141 0
+ 725 00ea 0026     		movs	r6, #0
+ 143:main.c        ****                     } else {
+ 144:main.c        ****                         current_state = STATE_PENALTY;
+ 145:main.c        ****                         action_timer_ms = 15000;
+ 146:main.c        ****                         last_action_ms = system_tick_ms;
+ 147:main.c        ****                     }
+ 148:main.c        ****                     input_idx = 0;
+ 726              		.loc 1 148 0
+ 727 00ec 0023     		movs	r3, #0
+ 728 00ee 9846     		mov	r8, r3
+ 729              	.LVL86:
+ 140:main.c        ****                         scroll_step = 0;
+ 730              		.loc 1 140 0
+ 731 00f0 0225     		movs	r5, #2
+ 732 00f2 17E1     		b	.L37
+ 733              	.LVL87:
+ 734              	.L49:
+ 146:main.c        ****                     }
+ 735              		.loc 1 146 0
+ 736 00f4 924B     		ldr	r3, .L71+20
+ 737 00f6 5F68     		ldr	r7, [r3, #4]
+ 738              	.LVL88:
+ 739              		.loc 1 148 0
+ 740 00f8 0023     		movs	r3, #0
+ 741 00fa 9846     		mov	r8, r3
+ 742              	.LVL89:
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 17
+
+
+ 145:main.c        ****                         last_action_ms = system_tick_ms;
+ 743              		.loc 1 145 0
+ 744 00fc 914B     		ldr	r3, .L71+24
+ 745 00fe 0193     		str	r3, [sp, #4]
+ 144:main.c        ****                         action_timer_ms = 15000;
+ 746              		.loc 1 144 0
+ 747 0100 0125     		movs	r5, #1
+ 748 0102 0FE1     		b	.L37
+ 749              	.LVL90:
+ 750              	.L40:
+ 149:main.c        ****                 }
+ 150:main.c        ****                 break;
+ 151:main.c        **** 
+ 152:main.c        ****             // ТАЙМЕР
+ 153:main.c        ****             case STATE_PENALTY:
+ 154:main.c        ****                 clear_display();
+ 751              		.loc 1 154 0
+ 752 0104 FFF7FEFF 		bl	clear_display
+ 753              	.LVL91:
+ 155:main.c        ****                 rgb_set(0, 1, 1);
+ 754              		.loc 1 155 0
+ 755 0108 0122     		movs	r2, #1
+ 756 010a 0121     		movs	r1, #1
+ 757 010c 0020     		movs	r0, #0
+ 758 010e FFF7FEFF 		bl	rgb_set
+ 759              	.LVL92:
+ 156:main.c        ****                 
+ 157:main.c        ****                 if((system_tick_ms - last_action_ms) >= 1000) {
+ 760              		.loc 1 157 0
+ 761 0112 8B4B     		ldr	r3, .L71+20
+ 762 0114 5B68     		ldr	r3, [r3, #4]
+ 763 0116 DB1B     		subs	r3, r3, r7
+ 764 0118 8B4A     		ldr	r2, .L71+28
+ 765 011a 9342     		cmp	r3, r2
+ 766 011c 0CD9     		bls	.L50
+ 158:main.c        ****                     if(action_timer_ms >= 1000) action_timer_ms -= 1000;
+ 767              		.loc 1 158 0
+ 768 011e 1300     		movs	r3, r2
+ 769 0120 0199     		ldr	r1, [sp, #4]
+ 770 0122 0A00     		movs	r2, r1
+ 771 0124 9942     		cmp	r1, r3
+ 772 0126 04D9     		bls	.L69
+ 773              		.loc 1 158 0 is_stmt 0 discriminator 1
+ 774 0128 884B     		ldr	r3, .L71+32
+ 775 012a 9C46     		mov	ip, r3
+ 776 012c 6244     		add	r2, r2, ip
+ 777 012e 0192     		str	r2, [sp, #4]
+ 778              	.LVL93:
+ 779 0130 00E0     		b	.L51
+ 780              	.LVL94:
+ 781              	.L69:
+ 159:main.c        ****                     else current_state = STATE_LOCKED;
+ 782              		.loc 1 159 0 is_stmt 1
+ 783 0132 0025     		movs	r5, #0
+ 784              	.LVL95:
+ 785              	.L51:
+ 160:main.c        ****                     last_action_ms = system_tick_ms;
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 18
+
+
+ 786              		.loc 1 160 0
+ 787 0134 824B     		ldr	r3, .L71+20
+ 788 0136 5F68     		ldr	r7, [r3, #4]
+ 789              	.LVL96:
+ 790              	.L50:
+ 161:main.c        ****                 }
+ 162:main.c        ****                 
+ 163:main.c        ****                 uint8_t sec = action_timer_ms / 1000;
+ 791              		.loc 1 163 0
+ 792 0138 FA21     		movs	r1, #250
+ 793 013a 8900     		lsls	r1, r1, #2
+ 794 013c 0198     		ldr	r0, [sp, #4]
+ 795 013e FFF7FEFF 		bl	__aeabi_uidiv
+ 796              	.LVL97:
+ 797 0142 C3B2     		uxtb	r3, r0
+ 798 0144 1A00     		movs	r2, r3
+ 799              	.LVL98:
+ 164:main.c        ****                 display_data[0] = ascii_font['P'];
+ 800              		.loc 1 164 0
+ 801 0146 7C4C     		ldr	r4, .L71+12
+ 802 0148 8C23     		movs	r3, #140
+ 803 014a 2370     		strb	r3, [r4]
+ 165:main.c        ****                 display_data[2] = ascii_font[sec / 10 + '0'];
+ 804              		.loc 1 165 0
+ 805 014c 0A21     		movs	r1, #10
+ 806 014e 0092     		str	r2, [sp]
+ 807              	.LVL99:
+ 808 0150 1000     		movs	r0, r2
+ 809 0152 FFF7FEFF 		bl	__aeabi_uidiv
+ 810              	.LVL100:
+ 811 0156 C0B2     		uxtb	r0, r0
+ 812 0158 3030     		adds	r0, r0, #48
+ 813 015a 764B     		ldr	r3, .L71+8
+ 814 015c 9B46     		mov	fp, r3
+ 815 015e 5844     		add	r0, r0, fp
+ 816 0160 037B     		ldrb	r3, [r0, #12]
+ 817 0162 A370     		strb	r3, [r4, #2]
+ 166:main.c        ****                 display_data[3] = ascii_font[sec % 10 + '0'];
+ 818              		.loc 1 166 0
+ 819 0164 0A21     		movs	r1, #10
+ 820 0166 0098     		ldr	r0, [sp]
+ 821 0168 FFF7FEFF 		bl	__aeabi_uidivmod
+ 822              	.LVL101:
+ 823 016c C9B2     		uxtb	r1, r1
+ 824 016e 3031     		adds	r1, r1, #48
+ 825 0170 5944     		add	r1, r1, fp
+ 826 0172 0B7B     		ldrb	r3, [r1, #12]
+ 827 0174 E370     		strb	r3, [r4, #3]
+ 167:main.c        ****                 break;
+ 828              		.loc 1 167 0
+ 829 0176 D5E0     		b	.L37
+ 830              	.LVL102:
+ 831              	.L41:
+ 168:main.c        **** 
+ 169:main.c        ****             // ДЗЕРКАЛЬНИЙ ТЕКСТ
+ 170:main.c        ****             case STATE_OPEN_ANIM:
+ 171:main.c        ****                 clear_display();
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 19
+
+
+ 832              		.loc 1 171 0
+ 833 0178 FFF7FEFF 		bl	clear_display
+ 834              	.LVL103:
+ 172:main.c        ****                 rgb_set(1, 0, 1);
+ 835              		.loc 1 172 0
+ 836 017c 0122     		movs	r2, #1
+ 837 017e 0021     		movs	r1, #0
+ 838 0180 0120     		movs	r0, #1
+ 839 0182 FFF7FEFF 		bl	rgb_set
+ 840              	.LVL104:
+ 173:main.c        ****                 
+ 174:main.c        ****                 const char* txt = "OPE     ";
+ 175:main.c        ****                 if((system_tick_ms - last_action_ms) >= 300) {
+ 841              		.loc 1 175 0
+ 842 0186 6E4B     		ldr	r3, .L71+20
+ 843 0188 5B68     		ldr	r3, [r3, #4]
+ 844 018a DB1B     		subs	r3, r3, r7
+ 845 018c 2C22     		movs	r2, #44
+ 846 018e FF32     		adds	r2, r2, #255
+ 847 0190 9342     		cmp	r3, r2
+ 848 0192 0AD9     		bls	.L52
+ 176:main.c        ****                     scroll_step++;
+ 849              		.loc 1 176 0
+ 850 0194 0136     		adds	r6, r6, #1
+ 851              	.LVL105:
+ 852 0196 F6B2     		uxtb	r6, r6
+ 853              	.LVL106:
+ 177:main.c        ****                     if(scroll_step >= 6) {
+ 854              		.loc 1 177 0
+ 855 0198 052E     		cmp	r6, #5
+ 856 019a 04D9     		bls	.L53
+ 857              	.LVL107:
+ 178:main.c        ****                         current_state = STATE_STOPWATCH;
+ 179:main.c        ****                         action_timer_ms = 0;
+ 180:main.c        ****                         last_action_ms = system_tick_ms;
+ 858              		.loc 1 180 0
+ 859 019c 684B     		ldr	r3, .L71+20
+ 860 019e 5B68     		ldr	r3, [r3, #4]
+ 861              	.LVL108:
+ 179:main.c        ****                         last_action_ms = system_tick_ms;
+ 862              		.loc 1 179 0
+ 863 01a0 0023     		movs	r3, #0
+ 864 01a2 0193     		str	r3, [sp, #4]
+ 178:main.c        ****                         current_state = STATE_STOPWATCH;
+ 865              		.loc 1 178 0
+ 866 01a4 0325     		movs	r5, #3
+ 867              	.LVL109:
+ 868              	.L53:
+ 181:main.c        ****                     }
+ 182:main.c        ****                     last_action_ms = system_tick_ms;
+ 869              		.loc 1 182 0
+ 870 01a6 664B     		ldr	r3, .L71+20
+ 871 01a8 5F68     		ldr	r7, [r3, #4]
+ 872              	.LVL110:
+ 873              	.L52:
+ 874              	.LBB14:
+ 183:main.c        ****                 }
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 20
+
+
+ 184:main.c        ****                 
+ 185:main.c        ****                 for(uint8_t i = 0; i < 4; i++) {
+ 875              		.loc 1 185 0
+ 876 01aa 0023     		movs	r3, #0
+ 877 01ac 0DE0     		b	.L54
+ 878              	.LVL111:
+ 879              	.L55:
+ 880              	.LBB15:
+ 186:main.c        ****                     uint8_t symbol = ascii_font[(uint8_t)txt[(scroll_step + i) % 8]];
+ 881              		.loc 1 186 0 discriminator 3
+ 882 01ae F118     		adds	r1, r6, r3
+ 883 01b0 0722     		movs	r2, #7
+ 884 01b2 1140     		ands	r1, r2
+ 885 01b4 6648     		ldr	r0, .L71+36
+ 886 01b6 415C     		ldrb	r1, [r0, r1]
+ 887 01b8 5E48     		ldr	r0, .L71+8
+ 888 01ba 4118     		adds	r1, r0, r1
+ 889 01bc 087B     		ldrb	r0, [r1, #12]
+ 890              	.LVL112:
+ 187:main.c        ****                     display_data[i] = symbol;
+ 891              		.loc 1 187 0 discriminator 3
+ 892 01be 5E49     		ldr	r1, .L71+12
+ 893 01c0 C854     		strb	r0, [r1, r3]
+ 188:main.c        ****                     display_data[7 - i] = symbol;
+ 894              		.loc 1 188 0 discriminator 3
+ 895 01c2 D21A     		subs	r2, r2, r3
+ 896 01c4 8854     		strb	r0, [r1, r2]
+ 897              	.LBE15:
+ 185:main.c        ****                     uint8_t symbol = ascii_font[(uint8_t)txt[(scroll_step + i) % 8]];
+ 898              		.loc 1 185 0 discriminator 3
+ 899 01c6 0133     		adds	r3, r3, #1
+ 900              	.LVL113:
+ 901 01c8 DBB2     		uxtb	r3, r3
+ 902              	.LVL114:
+ 903              	.L54:
+ 185:main.c        ****                     uint8_t symbol = ascii_font[(uint8_t)txt[(scroll_step + i) % 8]];
+ 904              		.loc 1 185 0 is_stmt 0 discriminator 1
+ 905 01ca 032B     		cmp	r3, #3
+ 906 01cc EFD9     		bls	.L55
+ 907 01ce A9E0     		b	.L37
+ 908              	.LVL115:
+ 909              	.L42:
+ 910              	.LBE14:
+ 189:main.c        ****                 }
+ 190:main.c        ****                 break;
+ 191:main.c        **** 
+ 192:main.c        ****             // СЕКУНДОМІР
+ 193:main.c        ****             case STATE_STOPWATCH:
+ 194:main.c        ****                 clear_display();
+ 911              		.loc 1 194 0 is_stmt 1
+ 912 01d0 FFF7FEFF 		bl	clear_display
+ 913              	.LVL116:
+ 195:main.c        ****                 rgb_set(1, 0, 1);
+ 914              		.loc 1 195 0
+ 915 01d4 0122     		movs	r2, #1
+ 916 01d6 0021     		movs	r1, #0
+ 917 01d8 0120     		movs	r0, #1
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 21
+
+
+ 918 01da FFF7FEFF 		bl	rgb_set
+ 919              	.LVL117:
+ 196:main.c        ****                 
+ 197:main.c        ****                 if(key == '9') {
+ 920              		.loc 1 197 0
+ 921 01de 392C     		cmp	r4, #57
+ 922 01e0 08D1     		bne	.L56
+ 923              	.LVL118:
+ 198:main.c        ****                     current_state = STATE_MEMO;
+ 199:main.c        ****                     input_idx = 0;
+ 200:main.c        ****                     is_scrolling = false;
+ 201:main.c        ****                     memset(pin_buf, 0, sizeof(pin_buf));
+ 924              		.loc 1 201 0
+ 925 01e2 0522     		movs	r2, #5
+ 926 01e4 0021     		movs	r1, #0
+ 927 01e6 02A8     		add	r0, sp, #8
+ 928 01e8 FFF7FEFF 		bl	memset
+ 929              	.LVL119:
+ 200:main.c        ****                     memset(pin_buf, 0, sizeof(pin_buf));
+ 930              		.loc 1 200 0
+ 931 01ec 0023     		movs	r3, #0
+ 932 01ee 9946     		mov	r9, r3
+ 199:main.c        ****                     is_scrolling = false;
+ 933              		.loc 1 199 0
+ 934 01f0 9846     		mov	r8, r3
+ 198:main.c        ****                     current_state = STATE_MEMO;
+ 935              		.loc 1 198 0
+ 936 01f2 0425     		movs	r5, #4
+ 937              	.LVL120:
+ 938              	.L56:
+ 202:main.c        ****                 }
+ 203:main.c        **** 
+ 204:main.c        ****                 if((system_tick_ms - last_action_ms) >= 10) {
+ 939              		.loc 1 204 0
+ 940 01f4 524B     		ldr	r3, .L71+20
+ 941 01f6 5B68     		ldr	r3, [r3, #4]
+ 942 01f8 DB1B     		subs	r3, r3, r7
+ 943 01fa 092B     		cmp	r3, #9
+ 944 01fc 04D9     		bls	.L57
+ 205:main.c        ****                     action_timer_ms += 10;
+ 945              		.loc 1 205 0
+ 946 01fe 019B     		ldr	r3, [sp, #4]
+ 947 0200 0A33     		adds	r3, r3, #10
+ 948 0202 0193     		str	r3, [sp, #4]
+ 949              	.LVL121:
+ 206:main.c        ****                     last_action_ms = system_tick_ms;
+ 950              		.loc 1 206 0
+ 951 0204 4E4B     		ldr	r3, .L71+20
+ 952              	.LVL122:
+ 953 0206 5F68     		ldr	r7, [r3, #4]
+ 954              	.LVL123:
+ 955              	.L57:
+ 207:main.c        ****                 }
+ 208:main.c        ****                 
+ 209:main.c        ****                 uint32_t t_sec = action_timer_ms / 1000;
+ 956              		.loc 1 209 0
+ 957 0208 FA21     		movs	r1, #250
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 22
+
+
+ 958 020a 8900     		lsls	r1, r1, #2
+ 959 020c 019C     		ldr	r4, [sp, #4]
+ 960 020e 2000     		movs	r0, r4
+ 961 0210 FFF7FEFF 		bl	__aeabi_uidiv
+ 962              	.LVL124:
+ 963 0214 0090     		str	r0, [sp]
+ 964              	.LVL125:
+ 210:main.c        ****                 display_data[4] = ascii_font[(t_sec / 60) % 10 + '0'] & 0x7F;
+ 965              		.loc 1 210 0
+ 966 0216 4F49     		ldr	r1, .L71+40
+ 967 0218 0194     		str	r4, [sp, #4]
+ 968              	.LVL126:
+ 969 021a 2000     		movs	r0, r4
+ 970              	.LVL127:
+ 971 021c FFF7FEFF 		bl	__aeabi_uidiv
+ 972              	.LVL128:
+ 973 0220 0A21     		movs	r1, #10
+ 974 0222 FFF7FEFF 		bl	__aeabi_uidivmod
+ 975              	.LVL129:
+ 976 0226 3031     		adds	r1, r1, #48
+ 977 0228 424B     		ldr	r3, .L71+8
+ 978 022a 9A46     		mov	r10, r3
+ 979 022c 5144     		add	r1, r1, r10
+ 980 022e 0B7B     		ldrb	r3, [r1, #12]
+ 981 0230 7F22     		movs	r2, #127
+ 982 0232 9346     		mov	fp, r2
+ 983 0234 1340     		ands	r3, r2
+ 984 0236 404C     		ldr	r4, .L71+12
+ 985              	.LVL130:
+ 986 0238 2371     		strb	r3, [r4, #4]
+ 211:main.c        ****                 display_data[5] = ascii_font[(t_sec % 60) / 10 + '0'];
+ 987              		.loc 1 211 0
+ 988 023a 3C21     		movs	r1, #60
+ 989 023c 0098     		ldr	r0, [sp]
+ 990 023e FFF7FEFF 		bl	__aeabi_uidivmod
+ 991              	.LVL131:
+ 992 0242 0B00     		movs	r3, r1
+ 993 0244 0A21     		movs	r1, #10
+ 994 0246 0093     		str	r3, [sp]
+ 995              	.LVL132:
+ 996 0248 1800     		movs	r0, r3
+ 997 024a FFF7FEFF 		bl	__aeabi_uidiv
+ 998              	.LVL133:
+ 999 024e 3030     		adds	r0, r0, #48
+ 1000 0250 5044     		add	r0, r0, r10
+ 1001 0252 037B     		ldrb	r3, [r0, #12]
+ 1002 0254 6371     		strb	r3, [r4, #5]
+ 212:main.c        ****                 display_data[6] = ascii_font[(t_sec % 60) % 10 + '0'] & 0x7F;
+ 1003              		.loc 1 212 0
+ 1004 0256 0A21     		movs	r1, #10
+ 1005 0258 0098     		ldr	r0, [sp]
+ 1006 025a FFF7FEFF 		bl	__aeabi_uidivmod
+ 1007              	.LVL134:
+ 1008 025e 3031     		adds	r1, r1, #48
+ 1009 0260 5144     		add	r1, r1, r10
+ 1010 0262 0B7B     		ldrb	r3, [r1, #12]
+ 1011 0264 5A46     		mov	r2, fp
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 23
+
+
+ 1012 0266 1340     		ands	r3, r2
+ 1013 0268 A371     		strb	r3, [r4, #6]
+ 213:main.c        ****                 display_data[7] = ascii_font[((action_timer_ms % 1000) / 100) + '0'];
+ 1014              		.loc 1 213 0
+ 1015 026a FA21     		movs	r1, #250
+ 1016 026c 8900     		lsls	r1, r1, #2
+ 1017 026e 0198     		ldr	r0, [sp, #4]
+ 1018 0270 FFF7FEFF 		bl	__aeabi_uidivmod
+ 1019              	.LVL135:
+ 1020 0274 0800     		movs	r0, r1
+ 1021 0276 6421     		movs	r1, #100
+ 1022 0278 FFF7FEFF 		bl	__aeabi_uidiv
+ 1023              	.LVL136:
+ 1024 027c 3030     		adds	r0, r0, #48
+ 1025 027e 5044     		add	r0, r0, r10
+ 1026 0280 037B     		ldrb	r3, [r0, #12]
+ 1027 0282 E371     		strb	r3, [r4, #7]
+ 214:main.c        ****                 break;
+ 1028              		.loc 1 214 0
+ 1029 0284 4EE0     		b	.L37
+ 1030              	.LVL137:
+ 1031              	.L43:
+ 215:main.c        **** 
+ 216:main.c        ****             // РУХОМИЙ РЯДОК
+ 217:main.c        ****             case STATE_MEMO:
+ 218:main.c        ****                 clear_display();
+ 1032              		.loc 1 218 0
+ 1033 0286 FFF7FEFF 		bl	clear_display
+ 1034              	.LVL138:
+ 219:main.c        ****                 rgb_set(1, 1, 0);
+ 1035              		.loc 1 219 0
+ 1036 028a 0022     		movs	r2, #0
+ 1037 028c 0121     		movs	r1, #1
+ 1038 028e 0120     		movs	r0, #1
+ 1039 0290 FFF7FEFF 		bl	rgb_set
+ 1040              	.LVL139:
+ 220:main.c        ****                 
+ 221:main.c        ****                 if((key >= '0') && (key <= '9') && (input_idx < 4)) {
+ 1041              		.loc 1 221 0
+ 1042 0294 009A     		ldr	r2, [sp]
+ 1043 0296 1300     		movs	r3, r2
+ 1044 0298 303B     		subs	r3, r3, #48
+ 1045 029a DBB2     		uxtb	r3, r3
+ 1046 029c 092B     		cmp	r3, #9
+ 1047 029e 08D8     		bhi	.L58
+ 1048              		.loc 1 221 0 is_stmt 0 discriminator 1
+ 1049 02a0 4346     		mov	r3, r8
+ 1050 02a2 032B     		cmp	r3, #3
+ 1051 02a4 05D8     		bhi	.L58
+ 222:main.c        ****                     pin_buf[input_idx++] = key;
+ 1052              		.loc 1 222 0 is_stmt 1
+ 1053 02a6 0133     		adds	r3, r3, #1
+ 1054              	.LVL140:
+ 1055 02a8 02A9     		add	r1, sp, #8
+ 1056 02aa 4046     		mov	r0, r8
+ 1057 02ac 0A54     		strb	r2, [r1, r0]
+ 1058 02ae DBB2     		uxtb	r3, r3
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 24
+
+
+ 1059 02b0 9846     		mov	r8, r3
+ 1060              	.LVL141:
+ 1061              	.L58:
+ 223:main.c        ****                 }
+ 224:main.c        ****                 if(key == '#') {
+ 1062              		.loc 1 224 0
+ 1063 02b2 232C     		cmp	r4, #35
+ 1064 02b4 06D1     		bne	.L59
+ 225:main.c        ****                     is_scrolling = !is_scrolling;
+ 1065              		.loc 1 225 0
+ 1066 02b6 0123     		movs	r3, #1
+ 1067 02b8 4A46     		mov	r2, r9
+ 1068 02ba 5A40     		eors	r2, r3
+ 1069 02bc D3B2     		uxtb	r3, r2
+ 1070 02be 9946     		mov	r9, r3
+ 1071              	.LVL142:
+ 226:main.c        ****                     last_action_ms = system_tick_ms;
+ 1072              		.loc 1 226 0
+ 1073 02c0 1F4B     		ldr	r3, .L71+20
+ 1074 02c2 5F68     		ldr	r7, [r3, #4]
+ 1075              	.LVL143:
+ 1076              	.L59:
+ 227:main.c        ****                 }
+ 228:main.c        **** 
+ 229:main.c        ****                 if(!is_scrolling) {
+ 1077              		.loc 1 229 0
+ 1078 02c4 4B46     		mov	r3, r9
+ 1079 02c6 002B     		cmp	r3, #0
+ 1080 02c8 0ED1     		bne	.L60
+ 1081 02ca 0AE0     		b	.L61
+ 1082              	.LVL144:
+ 1083              	.L63:
+ 1084              	.LBB16:
+ 230:main.c        ****                     for(uint8_t i = 0; i < 4; i++) {
+ 231:main.c        ****                         if(i < input_idx) display_data[i] = ascii_font[(uint8_t)pin_buf[i]];
+ 1085              		.loc 1 231 0
+ 1086 02cc 9845     		cmp	r8, r3
+ 1087 02ce 06D9     		bls	.L62
+ 1088              		.loc 1 231 0 is_stmt 0 discriminator 1
+ 1089 02d0 02AA     		add	r2, sp, #8
+ 1090 02d2 D25C     		ldrb	r2, [r2, r3]
+ 1091 02d4 1749     		ldr	r1, .L71+8
+ 1092 02d6 8A18     		adds	r2, r1, r2
+ 1093 02d8 117B     		ldrb	r1, [r2, #12]
+ 1094 02da 174A     		ldr	r2, .L71+12
+ 1095 02dc D154     		strb	r1, [r2, r3]
+ 1096              	.L62:
+ 230:main.c        ****                     for(uint8_t i = 0; i < 4; i++) {
+ 1097              		.loc 1 230 0 is_stmt 1 discriminator 2
+ 1098 02de 0133     		adds	r3, r3, #1
+ 1099              	.LVL145:
+ 1100 02e0 DBB2     		uxtb	r3, r3
+ 1101              	.LVL146:
+ 1102              	.L61:
+ 230:main.c        ****                     for(uint8_t i = 0; i < 4; i++) {
+ 1103              		.loc 1 230 0 is_stmt 0 discriminator 1
+ 1104 02e2 032B     		cmp	r3, #3
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 25
+
+
+ 1105 02e4 F2D9     		bls	.L63
+ 1106 02e6 1DE0     		b	.L37
+ 1107              	.LVL147:
+ 1108              	.L60:
+ 1109              	.LBE16:
+ 232:main.c        ****                     }
+ 233:main.c        ****                 } else {
+ 234:main.c        ****                     if((system_tick_ms - last_action_ms) >= 350) {
+ 1110              		.loc 1 234 0 is_stmt 1
+ 1111 02e8 154B     		ldr	r3, .L71+20
+ 1112 02ea 5B68     		ldr	r3, [r3, #4]
+ 1113 02ec DB1B     		subs	r3, r3, r7
+ 1114 02ee 5E22     		movs	r2, #94
+ 1115 02f0 FF32     		adds	r2, r2, #255
+ 1116 02f2 9342     		cmp	r3, r2
+ 1117 02f4 06D9     		bls	.L64
+ 235:main.c        ****                         scroll_step++;
+ 1118              		.loc 1 235 0
+ 1119 02f6 0136     		adds	r6, r6, #1
+ 1120              	.LVL148:
+ 1121 02f8 F6B2     		uxtb	r6, r6
+ 1122              	.LVL149:
+ 236:main.c        ****                         if(scroll_step >= 8) scroll_step = 0;
+ 1123              		.loc 1 236 0
+ 1124 02fa 072E     		cmp	r6, #7
+ 1125 02fc 00D9     		bls	.L65
+ 1126 02fe 0026     		movs	r6, #0
+ 1127              	.LVL150:
+ 1128              	.L65:
+ 237:main.c        ****                         last_action_ms = system_tick_ms;
+ 1129              		.loc 1 237 0
+ 1130 0300 0F4B     		ldr	r3, .L71+20
+ 1131 0302 5F68     		ldr	r7, [r3, #4]
+ 1132              	.LVL151:
+ 1133              	.L64:
+ 1134              	.LBB17:
+ 238:main.c        ****                     }
+ 239:main.c        ****                     for(uint8_t i = 0; i < 8; i++) {
+ 1135              		.loc 1 239 0
+ 1136 0304 0023     		movs	r3, #0
+ 1137 0306 0BE0     		b	.L66
+ 1138              	.LVL152:
+ 1139              	.L67:
+ 240:main.c        ****                         display_data[i] = ascii_font[(uint8_t)pin_buf[(scroll_step + i) % 4]];
+ 1140              		.loc 1 240 0 discriminator 3
+ 1141 0308 F218     		adds	r2, r6, r3
+ 1142 030a 0321     		movs	r1, #3
+ 1143 030c 0A40     		ands	r2, r1
+ 1144 030e 02A9     		add	r1, sp, #8
+ 1145 0310 8A5C     		ldrb	r2, [r1, r2]
+ 1146 0312 0849     		ldr	r1, .L71+8
+ 1147 0314 8A18     		adds	r2, r1, r2
+ 1148 0316 117B     		ldrb	r1, [r2, #12]
+ 1149 0318 074A     		ldr	r2, .L71+12
+ 1150 031a D154     		strb	r1, [r2, r3]
+ 239:main.c        ****                         display_data[i] = ascii_font[(uint8_t)pin_buf[(scroll_step + i) % 4]];
+ 1151              		.loc 1 239 0 discriminator 3
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 26
+
+
+ 1152 031c 0133     		adds	r3, r3, #1
+ 1153              	.LVL153:
+ 1154 031e DBB2     		uxtb	r3, r3
+ 1155              	.LVL154:
+ 1156              	.L66:
+ 239:main.c        ****                         display_data[i] = ascii_font[(uint8_t)pin_buf[(scroll_step + i) % 4]];
+ 1157              		.loc 1 239 0 is_stmt 0 discriminator 1
+ 1158 0320 072B     		cmp	r3, #7
+ 1159 0322 F1D9     		bls	.L67
+ 1160              	.LVL155:
+ 1161              	.L37:
+ 1162              	.LBE17:
+ 1163              	.LBE12:
+ 241:main.c        ****                     }
+ 242:main.c        ****                 }
+ 243:main.c        ****                 break;
+ 244:main.c        ****         }
+ 245:main.c        ****         CyDelay(10);
+ 1164              		.loc 1 245 0 is_stmt 1
+ 1165 0324 0A20     		movs	r0, #10
+ 1166 0326 FFF7FEFF 		bl	CyDelay
+ 1167              	.LVL156:
+ 1168              	.LBE11:
+ 246:main.c        ****     }
+ 1169              		.loc 1 246 0
+ 1170 032a 89E6     		b	.L68
+ 1171              	.L72:
+ 1172              		.align	2
+ 1173              	.L71:
+ 1174 032c 00000000 		.word	Timer_Int_Handler
+ 1175 0330 00000000 		.word	.L39
+ 1176 0334 14000000 		.word	.LANCHOR2
+ 1177 0338 00000000 		.word	.LANCHOR1
+ 1178 033c 00000000 		.word	.LC10
+ 1179 0340 00000000 		.word	.LANCHOR0
+ 1180 0344 983A0000 		.word	15000
+ 1181 0348 E7030000 		.word	999
+ 1182 034c 18FCFFFF 		.word	-1000
+ 1183 0350 08000000 		.word	.LC13
+ 1184 0354 60EA0000 		.word	60000
+ 1185              		.cfi_endproc
+ 1186              	.LFE38:
+ 1187              		.size	main, .-main
+ 1188              		.global	system_tick_ms
+ 1189              		.global	display_data
+ 1190              		.global	ascii_font
+ 1191              		.section	.rodata
+ 1192              		.align	2
+ 1193              		.set	.LANCHOR2,. + 0
+ 1194              		.type	key_map, %object
+ 1195              		.size	key_map, 12
+ 1196              	key_map:
+ 1197 0014 31       		.byte	49
+ 1198 0015 32       		.byte	50
+ 1199 0016 33       		.byte	51
+ 1200 0017 34       		.byte	52
+ 1201 0018 35       		.byte	53
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 27
+
+
+ 1202 0019 36       		.byte	54
+ 1203 001a 37       		.byte	55
+ 1204 001b 38       		.byte	56
+ 1205 001c 39       		.byte	57
+ 1206 001d 2A       		.byte	42
+ 1207 001e 30       		.byte	48
+ 1208 001f 23       		.byte	35
+ 1209              		.type	ascii_font, %object
+ 1210              		.size	ascii_font, 128
+ 1211              	ascii_font:
+ 1212 0020 00000000 		.space	32
+ 1212      00000000 
+ 1212      00000000 
+ 1212      00000000 
+ 1212      00000000 
+ 1213 0040 FF       		.byte	-1
+ 1214 0041 00000000 		.space	12
+ 1214      00000000 
+ 1214      00000000 
+ 1215 004d BF       		.byte	-65
+ 1216 004e 0000     		.space	2
+ 1217 0050 C0       		.byte	-64
+ 1218 0051 F9       		.byte	-7
+ 1219 0052 A4       		.byte	-92
+ 1220 0053 B0       		.byte	-80
+ 1221 0054 99       		.byte	-103
+ 1222 0055 92       		.byte	-110
+ 1223 0056 82       		.byte	-126
+ 1224 0057 F8       		.byte	-8
+ 1225 0058 80       		.byte	-128
+ 1226 0059 90       		.byte	-112
+ 1227 005a 00000000 		.space	11
+ 1227      00000000 
+ 1227      000000
+ 1228 0065 86       		.byte	-122
+ 1229 0066 00000000 		.space	8
+ 1229      00000000 
+ 1230 006e AB       		.byte	-85
+ 1231 006f C0       		.byte	-64
+ 1232 0070 8C       		.byte	-116
+ 1233 0071 00000000 		.space	14
+ 1233      00000000 
+ 1233      00000000 
+ 1233      0000
+ 1234 007f F7       		.byte	-9
+ 1235 0080 00000000 		.space	32
+ 1235      00000000 
+ 1235      00000000 
+ 1235      00000000 
+ 1235      00000000 
+ 1236              		.data
+ 1237              		.align	2
+ 1238              		.set	.LANCHOR1,. + 0
+ 1239              		.type	display_data, %object
+ 1240              		.size	display_data, 8
+ 1241              	display_data:
+ 1242 0000 FF       		.byte	-1
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 28
+
+
+ 1243 0001 FF       		.byte	-1
+ 1244 0002 FF       		.byte	-1
+ 1245 0003 FF       		.byte	-1
+ 1246 0004 FF       		.byte	-1
+ 1247 0005 FF       		.byte	-1
+ 1248 0006 FF       		.byte	-1
+ 1249 0007 FF       		.byte	-1
+ 1250              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1251              		.align	2
+ 1252              	.LC10:
+ 1253 0000 32303236 		.ascii	"2026\000"
+ 1253      00
+ 1254 0005 000000   		.space	3
+ 1255              	.LC13:
+ 1256 0008 4F504520 		.ascii	"OPE     \000"
+ 1256      20202020 
+ 1256      00
+ 1257              		.bss
+ 1258              		.align	2
+ 1259              		.set	.LANCHOR0,. + 0
+ 1260              		.type	digit_idx.5441, %object
+ 1261              		.size	digit_idx.5441, 1
+ 1262              	digit_idx.5441:
+ 1263 0000 00       		.space	1
+ 1264 0001 000000   		.space	3
+ 1265              		.type	system_tick_ms, %object
+ 1266              		.size	system_tick_ms, 4
+ 1267              	system_tick_ms:
+ 1268 0004 00000000 		.space	4
+ 1269              		.type	last_keys, %object
+ 1270              		.size	last_keys, 12
+ 1271              	last_keys:
+ 1272 0008 00000000 		.space	12
+ 1272      00000000 
+ 1272      00000000 
+ 1273              		.text
+ 1274              	.Letext0:
+ 1275              		.file 2 "e:\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\include\\mac
+ 1276              		.file 3 "e:\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\include\\sys
+ 1277              		.file 4 "Generated_Source\\PSoC4/Pin_DO.h"
+ 1278              		.file 5 "Generated_Source\\PSoC4/Pin_CLK.h"
+ 1279              		.file 6 "Generated_Source\\PSoC4/Pin_Latch.h"
+ 1280              		.file 7 "Generated_Source\\PSoC4/LED_R.h"
+ 1281              		.file 8 "Generated_Source\\PSoC4/LED_G.h"
+ 1282              		.file 9 "Generated_Source\\PSoC4/LED_B.h"
+ 1283              		.file 10 "Generated_Source\\PSoC4/COLUMN_0.h"
+ 1284              		.file 11 "Generated_Source\\PSoC4/COLUMN_1.h"
+ 1285              		.file 12 "Generated_Source\\PSoC4/COLUMN_2.h"
+ 1286              		.file 13 "Generated_Source\\PSoC4/CyLib.h"
+ 1287              		.file 14 "Generated_Source\\PSoC4/ROW_0.h"
+ 1288              		.file 15 "Generated_Source\\PSoC4/ROW_1.h"
+ 1289              		.file 16 "Generated_Source\\PSoC4/ROW_2.h"
+ 1290              		.file 17 "Generated_Source\\PSoC4/ROW_3.h"
+ 1291              		.file 18 "e:\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\include\\st
+ 1292              		.file 19 "Generated_Source\\PSoC4/Timer.h"
+ 1293              		.file 20 "Generated_Source\\PSoC4/Timer_Int.h"
+ 1294              		.section	.debug_info,"",%progbits
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 29
+
+
+ 1295              	.Ldebug_info0:
+ 1296 0000 4E090000 		.4byte	0x94e
+ 1297 0004 0400     		.2byte	0x4
+ 1298 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1299 000a 04       		.byte	0x4
+ 1300 000b 01       		.uleb128 0x1
+ 1301 000c 5D030000 		.4byte	.LASF69
+ 1302 0010 0C       		.byte	0xc
+ 1303 0011 90020000 		.4byte	.LASF70
+ 1304 0015 EC020000 		.4byte	.LASF71
+ 1305 0019 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 1306 001d 00000000 		.4byte	0
+ 1307 0021 00000000 		.4byte	.Ldebug_line0
+ 1308 0025 02       		.uleb128 0x2
+ 1309 0026 01       		.byte	0x1
+ 1310 0027 06       		.byte	0x6
+ 1311 0028 DA010000 		.4byte	.LASF0
+ 1312 002c 03       		.uleb128 0x3
+ 1313 002d 32040000 		.4byte	.LASF5
+ 1314 0031 02       		.byte	0x2
+ 1315 0032 1D       		.byte	0x1d
+ 1316 0033 37000000 		.4byte	0x37
+ 1317 0037 02       		.uleb128 0x2
+ 1318 0038 01       		.byte	0x1
+ 1319 0039 08       		.byte	0x8
+ 1320 003a C0010000 		.4byte	.LASF1
+ 1321 003e 02       		.uleb128 0x2
+ 1322 003f 02       		.byte	0x2
+ 1323 0040 05       		.byte	0x5
+ 1324 0041 41000000 		.4byte	.LASF2
+ 1325 0045 02       		.uleb128 0x2
+ 1326 0046 02       		.byte	0x2
+ 1327 0047 07       		.byte	0x7
+ 1328 0048 46020000 		.4byte	.LASF3
+ 1329 004c 02       		.uleb128 0x2
+ 1330 004d 04       		.byte	0x4
+ 1331 004e 05       		.byte	0x5
+ 1332 004f 31010000 		.4byte	.LASF4
+ 1333 0053 03       		.uleb128 0x3
+ 1334 0054 8B000000 		.4byte	.LASF6
+ 1335 0058 02       		.byte	0x2
+ 1336 0059 41       		.byte	0x41
+ 1337 005a 5E000000 		.4byte	0x5e
+ 1338 005e 02       		.uleb128 0x2
+ 1339 005f 04       		.byte	0x4
+ 1340 0060 07       		.byte	0x7
+ 1341 0061 48010000 		.4byte	.LASF7
+ 1342 0065 02       		.uleb128 0x2
+ 1343 0066 08       		.byte	0x8
+ 1344 0067 05       		.byte	0x5
+ 1345 0068 7D000000 		.4byte	.LASF8
+ 1346 006c 02       		.uleb128 0x2
+ 1347 006d 08       		.byte	0x8
+ 1348 006e 07       		.byte	0x7
+ 1349 006f E6010000 		.4byte	.LASF9
+ 1350 0073 04       		.uleb128 0x4
+ 1351 0074 04       		.byte	0x4
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 30
+
+
+ 1352 0075 05       		.byte	0x5
+ 1353 0076 696E7400 		.ascii	"int\000"
+ 1354 007a 02       		.uleb128 0x2
+ 1355 007b 04       		.byte	0x4
+ 1356 007c 07       		.byte	0x7
+ 1357 007d 13020000 		.4byte	.LASF10
+ 1358 0081 03       		.uleb128 0x3
+ 1359 0082 B9000000 		.4byte	.LASF11
+ 1360 0086 03       		.byte	0x3
+ 1361 0087 18       		.byte	0x18
+ 1362 0088 2C000000 		.4byte	0x2c
+ 1363 008c 03       		.uleb128 0x3
+ 1364 008d FD010000 		.4byte	.LASF12
+ 1365 0091 03       		.byte	0x3
+ 1366 0092 30       		.byte	0x30
+ 1367 0093 53000000 		.4byte	0x53
+ 1368 0097 02       		.uleb128 0x2
+ 1369 0098 04       		.byte	0x4
+ 1370 0099 04       		.byte	0x4
+ 1371 009a EA000000 		.4byte	.LASF13
+ 1372 009e 02       		.uleb128 0x2
+ 1373 009f 08       		.byte	0x8
+ 1374 00a0 04       		.byte	0x4
+ 1375 00a1 F0000000 		.4byte	.LASF14
+ 1376 00a5 02       		.uleb128 0x2
+ 1377 00a6 01       		.byte	0x1
+ 1378 00a7 08       		.byte	0x8
+ 1379 00a8 59020000 		.4byte	.LASF15
+ 1380 00ac 02       		.uleb128 0x2
+ 1381 00ad 08       		.byte	0x8
+ 1382 00ae 04       		.byte	0x4
+ 1383 00af AA010000 		.4byte	.LASF16
+ 1384 00b3 02       		.uleb128 0x2
+ 1385 00b4 04       		.byte	0x4
+ 1386 00b5 07       		.byte	0x7
+ 1387 00b6 50000000 		.4byte	.LASF17
+ 1388 00ba 05       		.uleb128 0x5
+ 1389 00bb 04       		.byte	0x4
+ 1390 00bc C0000000 		.4byte	0xc0
+ 1391 00c0 06       		.uleb128 0x6
+ 1392 00c1 A5000000 		.4byte	0xa5
+ 1393 00c5 07       		.uleb128 0x7
+ 1394 00c6 8C000000 		.4byte	0x8c
+ 1395 00ca 08       		.uleb128 0x8
+ 1396 00cb 01       		.byte	0x1
+ 1397 00cc 37000000 		.4byte	0x37
+ 1398 00d0 01       		.byte	0x1
+ 1399 00d1 12       		.byte	0x12
+ 1400 00d2 F5000000 		.4byte	0xf5
+ 1401 00d6 09       		.uleb128 0x9
+ 1402 00d7 26000000 		.4byte	.LASF18
+ 1403 00db 00       		.byte	0
+ 1404 00dc 09       		.uleb128 0x9
+ 1405 00dd 3A010000 		.4byte	.LASF19
+ 1406 00e1 01       		.byte	0x1
+ 1407 00e2 09       		.uleb128 0x9
+ 1408 00e3 36020000 		.4byte	.LASF20
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 31
+
+
+ 1409 00e7 02       		.byte	0x2
+ 1410 00e8 09       		.uleb128 0x9
+ 1411 00e9 67010000 		.4byte	.LASF21
+ 1412 00ed 03       		.byte	0x3
+ 1413 00ee 09       		.uleb128 0x9
+ 1414 00ef EB030000 		.4byte	.LASF22
+ 1415 00f3 04       		.byte	0x4
+ 1416 00f4 00       		.byte	0
+ 1417 00f5 03       		.uleb128 0x3
+ 1418 00f6 5A010000 		.4byte	.LASF23
+ 1419 00fa 01       		.byte	0x1
+ 1420 00fb 18       		.byte	0x18
+ 1421 00fc CA000000 		.4byte	0xca
+ 1422 0100 0A       		.uleb128 0xa
+ 1423 0101 69000000 		.4byte	.LASF24
+ 1424 0105 01       		.byte	0x1
+ 1425 0106 22       		.byte	0x22
+ 1426 0107 00000000 		.4byte	.LFB32
+ 1427 010b 2E000000 		.4byte	.LFE32-.LFB32
+ 1428 010f 01       		.uleb128 0x1
+ 1429 0110 9C       		.byte	0x9c
+ 1430 0111 7A010000 		.4byte	0x17a
+ 1431 0115 0B       		.uleb128 0xb
+ 1432 0116 79020000 		.4byte	.LASF28
+ 1433 011a 01       		.byte	0x1
+ 1434 011b 22       		.byte	0x22
+ 1435 011c 81000000 		.4byte	0x81
+ 1436 0120 00000000 		.4byte	.LLST0
+ 1437 0124 0C       		.uleb128 0xc
+ 1438 0125 04000000 		.4byte	.LBB2
+ 1439 0129 28000000 		.4byte	.LBE2-.LBB2
+ 1440 012d 0D       		.uleb128 0xd
+ 1441 012e 6900     		.ascii	"i\000"
+ 1442 0130 01       		.byte	0x1
+ 1443 0131 23       		.byte	0x23
+ 1444 0132 81000000 		.4byte	0x81
+ 1445 0136 21000000 		.4byte	.LLST1
+ 1446 013a 0E       		.uleb128 0xe
+ 1447 013b 18000000 		.4byte	.LVL3
+ 1448 013f 61080000 		.4byte	0x861
+ 1449 0143 56010000 		.4byte	0x156
+ 1450 0147 0F       		.uleb128 0xf
+ 1451 0148 01       		.uleb128 0x1
+ 1452 0149 50       		.byte	0x50
+ 1453 014a 0A       		.uleb128 0xa
+ 1454 014b 08       		.byte	0x8
+ 1455 014c 80       		.byte	0x80
+ 1456 014d 74       		.byte	0x74
+ 1457 014e 00       		.sleb128 0
+ 1458 014f 26       		.byte	0x26
+ 1459 0150 75       		.byte	0x75
+ 1460 0151 00       		.sleb128 0
+ 1461 0152 1A       		.byte	0x1a
+ 1462 0153 30       		.byte	0x30
+ 1463 0154 2E       		.byte	0x2e
+ 1464 0155 00       		.byte	0
+ 1465 0156 0E       		.uleb128 0xe
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 32
+
+
+ 1466 0157 1E000000 		.4byte	.LVL4
+ 1467 015b 6C080000 		.4byte	0x86c
+ 1468 015f 69010000 		.4byte	0x169
+ 1469 0163 0F       		.uleb128 0xf
+ 1470 0164 01       		.uleb128 0x1
+ 1471 0165 50       		.byte	0x50
+ 1472 0166 01       		.uleb128 0x1
+ 1473 0167 31       		.byte	0x31
+ 1474 0168 00       		.byte	0
+ 1475 0169 10       		.uleb128 0x10
+ 1476 016a 24000000 		.4byte	.LVL5
+ 1477 016e 6C080000 		.4byte	0x86c
+ 1478 0172 0F       		.uleb128 0xf
+ 1479 0173 01       		.uleb128 0x1
+ 1480 0174 50       		.byte	0x50
+ 1481 0175 01       		.uleb128 0x1
+ 1482 0176 30       		.byte	0x30
+ 1483 0177 00       		.byte	0
+ 1484 0178 00       		.byte	0
+ 1485 0179 00       		.byte	0
+ 1486 017a 0A       		.uleb128 0xa
+ 1487 017b CF020000 		.4byte	.LASF25
+ 1488 017f 01       		.byte	0x1
+ 1489 0180 2A       		.byte	0x2a
+ 1490 0181 00000000 		.4byte	.LFB33
+ 1491 0185 50000000 		.4byte	.LFE33-.LFB33
+ 1492 0189 01       		.uleb128 0x1
+ 1493 018a 9C       		.byte	0x9c
+ 1494 018b D5010000 		.4byte	0x1d5
+ 1495 018f 11       		.uleb128 0x11
+ 1496 0190 C5020000 		.4byte	.LASF26
+ 1497 0194 01       		.byte	0x1
+ 1498 0195 2B       		.byte	0x2b
+ 1499 0196 81000000 		.4byte	0x81
+ 1500 019a 05       		.uleb128 0x5
+ 1501 019b 03       		.byte	0x3
+ 1502 019c 00000000 		.4byte	digit_idx.5441
+ 1503 01a0 12       		.uleb128 0x12
+ 1504 01a1 12000000 		.4byte	.LVL9
+ 1505 01a5 00010000 		.4byte	0x100
+ 1506 01a9 12       		.uleb128 0x12
+ 1507 01aa 1E000000 		.4byte	.LVL10
+ 1508 01ae 00010000 		.4byte	0x100
+ 1509 01b2 0E       		.uleb128 0xe
+ 1510 01b3 24000000 		.4byte	.LVL11
+ 1511 01b7 77080000 		.4byte	0x877
+ 1512 01bb C5010000 		.4byte	0x1c5
+ 1513 01bf 0F       		.uleb128 0xf
+ 1514 01c0 01       		.uleb128 0x1
+ 1515 01c1 50       		.byte	0x50
+ 1516 01c2 01       		.uleb128 0x1
+ 1517 01c3 31       		.byte	0x31
+ 1518 01c4 00       		.byte	0
+ 1519 01c5 10       		.uleb128 0x10
+ 1520 01c6 2A000000 		.4byte	.LVL12
+ 1521 01ca 77080000 		.4byte	0x877
+ 1522 01ce 0F       		.uleb128 0xf
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 33
+
+
+ 1523 01cf 01       		.uleb128 0x1
+ 1524 01d0 50       		.byte	0x50
+ 1525 01d1 01       		.uleb128 0x1
+ 1526 01d2 30       		.byte	0x30
+ 1527 01d3 00       		.byte	0
+ 1528 01d4 00       		.byte	0
+ 1529 01d5 0A       		.uleb128 0xa
+ 1530 01d6 C1000000 		.4byte	.LASF27
+ 1531 01da 01       		.byte	0x1
+ 1532 01db 36       		.byte	0x36
+ 1533 01dc 00000000 		.4byte	.LFB34
+ 1534 01e0 18000000 		.4byte	.LFE34-.LFB34
+ 1535 01e4 01       		.uleb128 0x1
+ 1536 01e5 9C       		.byte	0x9c
+ 1537 01e6 3F020000 		.4byte	0x23f
+ 1538 01ea 13       		.uleb128 0x13
+ 1539 01eb 7200     		.ascii	"r\000"
+ 1540 01ed 01       		.byte	0x1
+ 1541 01ee 36       		.byte	0x36
+ 1542 01ef 81000000 		.4byte	0x81
+ 1543 01f3 4B000000 		.4byte	.LLST2
+ 1544 01f7 13       		.uleb128 0x13
+ 1545 01f8 6700     		.ascii	"g\000"
+ 1546 01fa 01       		.byte	0x1
+ 1547 01fb 36       		.byte	0x36
+ 1548 01fc 81000000 		.4byte	0x81
+ 1549 0200 6C000000 		.4byte	.LLST3
+ 1550 0204 13       		.uleb128 0x13
+ 1551 0205 6200     		.ascii	"b\000"
+ 1552 0207 01       		.byte	0x1
+ 1553 0208 36       		.byte	0x36
+ 1554 0209 81000000 		.4byte	0x81
+ 1555 020d 8D000000 		.4byte	.LLST4
+ 1556 0211 12       		.uleb128 0x12
+ 1557 0212 0A000000 		.4byte	.LVL14
+ 1558 0216 82080000 		.4byte	0x882
+ 1559 021a 0E       		.uleb128 0xe
+ 1560 021b 10000000 		.4byte	.LVL15
+ 1561 021f 8D080000 		.4byte	0x88d
+ 1562 0223 2E020000 		.4byte	0x22e
+ 1563 0227 0F       		.uleb128 0xf
+ 1564 0228 01       		.uleb128 0x1
+ 1565 0229 50       		.byte	0x50
+ 1566 022a 02       		.uleb128 0x2
+ 1567 022b 75       		.byte	0x75
+ 1568 022c 00       		.sleb128 0
+ 1569 022d 00       		.byte	0
+ 1570 022e 10       		.uleb128 0x10
+ 1571 022f 16000000 		.4byte	.LVL16
+ 1572 0233 98080000 		.4byte	0x898
+ 1573 0237 0F       		.uleb128 0xf
+ 1574 0238 01       		.uleb128 0x1
+ 1575 0239 50       		.byte	0x50
+ 1576 023a 02       		.uleb128 0x2
+ 1577 023b 74       		.byte	0x74
+ 1578 023c 00       		.sleb128 0
+ 1579 023d 00       		.byte	0
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 34
+
+
+ 1580 023e 00       		.byte	0
+ 1581 023f 0A       		.uleb128 0xa
+ 1582 0240 9C010000 		.4byte	.LASF29
+ 1583 0244 01       		.byte	0x1
+ 1584 0245 3A       		.byte	0x3a
+ 1585 0246 00000000 		.4byte	.LFB35
+ 1586 024a 18000000 		.4byte	.LFE35-.LFB35
+ 1587 024e 01       		.uleb128 0x1
+ 1588 024f 9C       		.byte	0x9c
+ 1589 0250 6C020000 		.4byte	0x26c
+ 1590 0254 0C       		.uleb128 0xc
+ 1591 0255 00000000 		.4byte	.LBB3
+ 1592 0259 12000000 		.4byte	.LBE3-.LBB3
+ 1593 025d 0D       		.uleb128 0xd
+ 1594 025e 6900     		.ascii	"i\000"
+ 1595 0260 01       		.byte	0x1
+ 1596 0261 3B       		.byte	0x3b
+ 1597 0262 81000000 		.4byte	0x81
+ 1598 0266 AE000000 		.4byte	.LLST5
+ 1599 026a 00       		.byte	0
+ 1600 026b 00       		.byte	0
+ 1601 026c 0A       		.uleb128 0xa
+ 1602 026d 51030000 		.4byte	.LASF30
+ 1603 0271 01       		.byte	0x1
+ 1604 0272 3E       		.byte	0x3e
+ 1605 0273 00000000 		.4byte	.LFB36
+ 1606 0277 40000000 		.4byte	.LFE36-.LFB36
+ 1607 027b 01       		.uleb128 0x1
+ 1608 027c 9C       		.byte	0x9c
+ 1609 027d E5020000 		.4byte	0x2e5
+ 1610 0281 14       		.uleb128 0x14
+ 1611 0282 14000000 		.4byte	.LBB4
+ 1612 0286 26000000 		.4byte	.LBE4-.LBB4
+ 1613 028a AF020000 		.4byte	0x2af
+ 1614 028e 0D       		.uleb128 0xd
+ 1615 028f 7200     		.ascii	"r\000"
+ 1616 0291 01       		.byte	0x1
+ 1617 0292 42       		.byte	0x42
+ 1618 0293 81000000 		.4byte	0x81
+ 1619 0297 D8000000 		.4byte	.LLST6
+ 1620 029b 15       		.uleb128 0x15
+ 1621 029c 00000000 		.4byte	.Ldebug_ranges0+0
+ 1622 02a0 0D       		.uleb128 0xd
+ 1623 02a1 6300     		.ascii	"c\000"
+ 1624 02a3 01       		.byte	0x1
+ 1625 02a4 43       		.byte	0x43
+ 1626 02a5 81000000 		.4byte	0x81
+ 1627 02a9 02010000 		.4byte	.LLST7
+ 1628 02ad 00       		.byte	0
+ 1629 02ae 00       		.byte	0
+ 1630 02af 0E       		.uleb128 0xe
+ 1631 02b0 08000000 		.4byte	.LVL21
+ 1632 02b4 A3080000 		.4byte	0x8a3
+ 1633 02b8 C2020000 		.4byte	0x2c2
+ 1634 02bc 0F       		.uleb128 0xf
+ 1635 02bd 01       		.uleb128 0x1
+ 1636 02be 50       		.byte	0x50
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 35
+
+
+ 1637 02bf 01       		.uleb128 0x1
+ 1638 02c0 31       		.byte	0x31
+ 1639 02c1 00       		.byte	0
+ 1640 02c2 0E       		.uleb128 0xe
+ 1641 02c3 0E000000 		.4byte	.LVL22
+ 1642 02c7 AE080000 		.4byte	0x8ae
+ 1643 02cb D5020000 		.4byte	0x2d5
+ 1644 02cf 0F       		.uleb128 0xf
+ 1645 02d0 01       		.uleb128 0x1
+ 1646 02d1 50       		.byte	0x50
+ 1647 02d2 01       		.uleb128 0x1
+ 1648 02d3 31       		.byte	0x31
+ 1649 02d4 00       		.byte	0
+ 1650 02d5 10       		.uleb128 0x10
+ 1651 02d6 14000000 		.4byte	.LVL23
+ 1652 02da B9080000 		.4byte	0x8b9
+ 1653 02de 0F       		.uleb128 0xf
+ 1654 02df 01       		.uleb128 0x1
+ 1655 02e0 50       		.byte	0x50
+ 1656 02e1 01       		.uleb128 0x1
+ 1657 02e2 31       		.byte	0x31
+ 1658 02e3 00       		.byte	0
+ 1659 02e4 00       		.byte	0
+ 1660 02e5 16       		.uleb128 0x16
+ 1661 02e6 1E000000 		.4byte	.LASF72
+ 1662 02ea 01       		.byte	0x1
+ 1663 02eb 47       		.byte	0x47
+ 1664 02ec A5000000 		.4byte	0xa5
+ 1665 02f0 00000000 		.4byte	.LFB37
+ 1666 02f4 E4000000 		.4byte	.LFE37-.LFB37
+ 1667 02f8 01       		.uleb128 0x1
+ 1668 02f9 9C       		.byte	0x9c
+ 1669 02fa 6B040000 		.4byte	0x46b
+ 1670 02fe 17       		.uleb128 0x17
+ 1671 02ff BD020000 		.4byte	.LASF31
+ 1672 0303 01       		.byte	0x1
+ 1673 0304 48       		.byte	0x48
+ 1674 0305 A5000000 		.4byte	0xa5
+ 1675 0309 2B010000 		.4byte	.LLST8
+ 1676 030d 15       		.uleb128 0x15
+ 1677 030e 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1678 0312 0D       		.uleb128 0xd
+ 1679 0313 6300     		.ascii	"c\000"
+ 1680 0315 01       		.byte	0x1
+ 1681 0316 49       		.byte	0x49
+ 1682 0317 81000000 		.4byte	0x81
+ 1683 031b 55010000 		.4byte	.LLST9
+ 1684 031f 0C       		.uleb128 0xc
+ 1685 0320 0A000000 		.4byte	.LBB8
+ 1686 0324 C4000000 		.4byte	.LBE8-.LBB8
+ 1687 0328 11       		.uleb128 0x11
+ 1688 0329 4B000000 		.4byte	.LASF32
+ 1689 032d 01       		.byte	0x1
+ 1690 032e 4F       		.byte	0x4f
+ 1691 032f 6B040000 		.4byte	0x46b
+ 1692 0333 02       		.uleb128 0x2
+ 1693 0334 91       		.byte	0x91
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 36
+
+
+ 1694 0335 6C       		.sleb128 -20
+ 1695 0336 14       		.uleb128 0x14
+ 1696 0337 5E000000 		.4byte	.LBB9
+ 1697 033b 3C000000 		.4byte	.LBE9-.LBB9
+ 1698 033f 51030000 		.4byte	0x351
+ 1699 0343 0D       		.uleb128 0xd
+ 1700 0344 7200     		.ascii	"r\000"
+ 1701 0346 01       		.byte	0x1
+ 1702 0347 51       		.byte	0x51
+ 1703 0348 81000000 		.4byte	0x81
+ 1704 034c 7F010000 		.4byte	.LLST10
+ 1705 0350 00       		.byte	0
+ 1706 0351 0E       		.uleb128 0xe
+ 1707 0352 14000000 		.4byte	.LVL33
+ 1708 0356 A3080000 		.4byte	0x8a3
+ 1709 035a 64030000 		.4byte	0x364
+ 1710 035e 0F       		.uleb128 0xf
+ 1711 035f 01       		.uleb128 0x1
+ 1712 0360 50       		.byte	0x50
+ 1713 0361 01       		.uleb128 0x1
+ 1714 0362 36       		.byte	0x36
+ 1715 0363 00       		.byte	0
+ 1716 0364 0E       		.uleb128 0xe
+ 1717 0365 1A000000 		.4byte	.LVL34
+ 1718 0369 C4080000 		.4byte	0x8c4
+ 1719 036d 77030000 		.4byte	0x377
+ 1720 0371 0F       		.uleb128 0xf
+ 1721 0372 01       		.uleb128 0x1
+ 1722 0373 50       		.byte	0x50
+ 1723 0374 01       		.uleb128 0x1
+ 1724 0375 30       		.byte	0x30
+ 1725 0376 00       		.byte	0
+ 1726 0377 0E       		.uleb128 0xe
+ 1727 0378 26000000 		.4byte	.LVL35
+ 1728 037c AE080000 		.4byte	0x8ae
+ 1729 0380 8A030000 		.4byte	0x38a
+ 1730 0384 0F       		.uleb128 0xf
+ 1731 0385 01       		.uleb128 0x1
+ 1732 0386 50       		.byte	0x50
+ 1733 0387 01       		.uleb128 0x1
+ 1734 0388 36       		.byte	0x36
+ 1735 0389 00       		.byte	0
+ 1736 038a 0E       		.uleb128 0xe
+ 1737 038b 2C000000 		.4byte	.LVL36
+ 1738 038f CF080000 		.4byte	0x8cf
+ 1739 0393 9D030000 		.4byte	0x39d
+ 1740 0397 0F       		.uleb128 0xf
+ 1741 0398 01       		.uleb128 0x1
+ 1742 0399 50       		.byte	0x50
+ 1743 039a 01       		.uleb128 0x1
+ 1744 039b 30       		.byte	0x30
+ 1745 039c 00       		.byte	0
+ 1746 039d 0E       		.uleb128 0xe
+ 1747 039e 38000000 		.4byte	.LVL37
+ 1748 03a2 B9080000 		.4byte	0x8b9
+ 1749 03a6 B0030000 		.4byte	0x3b0
+ 1750 03aa 0F       		.uleb128 0xf
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 37
+
+
+ 1751 03ab 01       		.uleb128 0x1
+ 1752 03ac 50       		.byte	0x50
+ 1753 03ad 01       		.uleb128 0x1
+ 1754 03ae 36       		.byte	0x36
+ 1755 03af 00       		.byte	0
+ 1756 03b0 0E       		.uleb128 0xe
+ 1757 03b1 3E000000 		.4byte	.LVL38
+ 1758 03b5 DA080000 		.4byte	0x8da
+ 1759 03b9 C3030000 		.4byte	0x3c3
+ 1760 03bd 0F       		.uleb128 0xf
+ 1761 03be 01       		.uleb128 0x1
+ 1762 03bf 50       		.byte	0x50
+ 1763 03c0 01       		.uleb128 0x1
+ 1764 03c1 30       		.byte	0x30
+ 1765 03c2 00       		.byte	0
+ 1766 03c3 0E       		.uleb128 0xe
+ 1767 03c4 44000000 		.4byte	.LVL39
+ 1768 03c8 E5080000 		.4byte	0x8e5
+ 1769 03cc D6030000 		.4byte	0x3d6
+ 1770 03d0 0F       		.uleb128 0xf
+ 1771 03d1 01       		.uleb128 0x1
+ 1772 03d2 50       		.byte	0x50
+ 1773 03d3 01       		.uleb128 0x1
+ 1774 03d4 44       		.byte	0x44
+ 1775 03d5 00       		.byte	0
+ 1776 03d6 12       		.uleb128 0x12
+ 1777 03d7 48000000 		.4byte	.LVL40
+ 1778 03db F0080000 		.4byte	0x8f0
+ 1779 03df 12       		.uleb128 0x12
+ 1780 03e0 50000000 		.4byte	.LVL41
+ 1781 03e4 FB080000 		.4byte	0x8fb
+ 1782 03e8 12       		.uleb128 0x12
+ 1783 03e9 56000000 		.4byte	.LVL42
+ 1784 03ed 06090000 		.4byte	0x906
+ 1785 03f1 12       		.uleb128 0x12
+ 1786 03f2 5C000000 		.4byte	.LVL43
+ 1787 03f6 11090000 		.4byte	0x911
+ 1788 03fa 0E       		.uleb128 0xe
+ 1789 03fb A4000000 		.4byte	.LVL50
+ 1790 03ff C4080000 		.4byte	0x8c4
+ 1791 0403 0D040000 		.4byte	0x40d
+ 1792 0407 0F       		.uleb128 0xf
+ 1793 0408 01       		.uleb128 0x1
+ 1794 0409 50       		.byte	0x50
+ 1795 040a 01       		.uleb128 0x1
+ 1796 040b 31       		.byte	0x31
+ 1797 040c 00       		.byte	0
+ 1798 040d 0E       		.uleb128 0xe
+ 1799 040e AA000000 		.4byte	.LVL51
+ 1800 0412 A3080000 		.4byte	0x8a3
+ 1801 0416 20040000 		.4byte	0x420
+ 1802 041a 0F       		.uleb128 0xf
+ 1803 041b 01       		.uleb128 0x1
+ 1804 041c 50       		.byte	0x50
+ 1805 041d 01       		.uleb128 0x1
+ 1806 041e 31       		.byte	0x31
+ 1807 041f 00       		.byte	0
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 38
+
+
+ 1808 0420 0E       		.uleb128 0xe
+ 1809 0421 B6000000 		.4byte	.LVL53
+ 1810 0425 CF080000 		.4byte	0x8cf
+ 1811 0429 33040000 		.4byte	0x433
+ 1812 042d 0F       		.uleb128 0xf
+ 1813 042e 01       		.uleb128 0x1
+ 1814 042f 50       		.byte	0x50
+ 1815 0430 01       		.uleb128 0x1
+ 1816 0431 31       		.byte	0x31
+ 1817 0432 00       		.byte	0
+ 1818 0433 0E       		.uleb128 0xe
+ 1819 0434 BC000000 		.4byte	.LVL54
+ 1820 0438 AE080000 		.4byte	0x8ae
+ 1821 043c 46040000 		.4byte	0x446
+ 1822 0440 0F       		.uleb128 0xf
+ 1823 0441 01       		.uleb128 0x1
+ 1824 0442 50       		.byte	0x50
+ 1825 0443 01       		.uleb128 0x1
+ 1826 0444 31       		.byte	0x31
+ 1827 0445 00       		.byte	0
+ 1828 0446 0E       		.uleb128 0xe
+ 1829 0447 C8000000 		.4byte	.LVL56
+ 1830 044b DA080000 		.4byte	0x8da
+ 1831 044f 59040000 		.4byte	0x459
+ 1832 0453 0F       		.uleb128 0xf
+ 1833 0454 01       		.uleb128 0x1
+ 1834 0455 50       		.byte	0x50
+ 1835 0456 01       		.uleb128 0x1
+ 1836 0457 31       		.byte	0x31
+ 1837 0458 00       		.byte	0
+ 1838 0459 10       		.uleb128 0x10
+ 1839 045a CE000000 		.4byte	.LVL57
+ 1840 045e B9080000 		.4byte	0x8b9
+ 1841 0462 0F       		.uleb128 0xf
+ 1842 0463 01       		.uleb128 0x1
+ 1843 0464 50       		.byte	0x50
+ 1844 0465 01       		.uleb128 0x1
+ 1845 0466 31       		.byte	0x31
+ 1846 0467 00       		.byte	0
+ 1847 0468 00       		.byte	0
+ 1848 0469 00       		.byte	0
+ 1849 046a 00       		.byte	0
+ 1850 046b 18       		.uleb128 0x18
+ 1851 046c 81000000 		.4byte	0x81
+ 1852 0470 7B040000 		.4byte	0x47b
+ 1853 0474 19       		.uleb128 0x19
+ 1854 0475 B3000000 		.4byte	0xb3
+ 1855 0479 03       		.byte	0x3
+ 1856 047a 00       		.byte	0
+ 1857 047b 1A       		.uleb128 0x1a
+ 1858 047c 78000000 		.4byte	.LASF73
+ 1859 0480 01       		.byte	0x1
+ 1860 0481 5D       		.byte	0x5d
+ 1861 0482 73000000 		.4byte	0x73
+ 1862 0486 00000000 		.4byte	.LFB38
+ 1863 048a 58030000 		.4byte	.LFE38-.LFB38
+ 1864 048e 01       		.uleb128 0x1
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 39
+
+
+ 1865 048f 9C       		.byte	0x9c
+ 1866 0490 90070000 		.4byte	0x790
+ 1867 0494 17       		.uleb128 0x17
+ 1868 0495 33000000 		.4byte	.LASF33
+ 1869 0499 01       		.byte	0x1
+ 1870 049a 63       		.byte	0x63
+ 1871 049b F5000000 		.4byte	0xf5
+ 1872 049f BF010000 		.4byte	.LLST11
+ 1873 04a3 17       		.uleb128 0x17
+ 1874 04a4 0F010000 		.4byte	.LASF34
+ 1875 04a8 01       		.byte	0x1
+ 1876 04a9 65       		.byte	0x65
+ 1877 04aa 8C000000 		.4byte	0x8c
+ 1878 04ae 46020000 		.4byte	.LLST12
+ 1879 04b2 17       		.uleb128 0x17
+ 1880 04b3 59000000 		.4byte	.LASF35
+ 1881 04b7 01       		.byte	0x1
+ 1882 04b8 66       		.byte	0x66
+ 1883 04b9 8C000000 		.4byte	0x8c
+ 1884 04bd 70020000 		.4byte	.LLST13
+ 1885 04c1 11       		.uleb128 0x11
+ 1886 04c2 16000000 		.4byte	.LASF36
+ 1887 04c6 01       		.byte	0x1
+ 1888 04c7 68       		.byte	0x68
+ 1889 04c8 90070000 		.4byte	0x790
+ 1890 04cc 02       		.uleb128 0x2
+ 1891 04cd 91       		.byte	0x91
+ 1892 04ce 50       		.sleb128 -48
+ 1893 04cf 17       		.uleb128 0x17
+ 1894 04d0 28040000 		.4byte	.LASF37
+ 1895 04d4 01       		.byte	0x1
+ 1896 04d5 69       		.byte	0x69
+ 1897 04d6 81000000 		.4byte	0x81
+ 1898 04da 07030000 		.4byte	.LLST14
+ 1899 04de 17       		.uleb128 0x17
+ 1900 04df CE010000 		.4byte	.LASF38
+ 1901 04e3 01       		.byte	0x1
+ 1902 04e4 6A       		.byte	0x6a
+ 1903 04e5 81000000 		.4byte	0x81
+ 1904 04e9 96030000 		.4byte	.LLST15
+ 1905 04ed 17       		.uleb128 0x17
+ 1906 04ee 66020000 		.4byte	.LASF39
+ 1907 04f2 01       		.byte	0x1
+ 1908 04f3 6B       		.byte	0x6b
+ 1909 04f4 A0070000 		.4byte	0x7a0
+ 1910 04f8 E2030000 		.4byte	.LLST16
+ 1911 04fc 14       		.uleb128 0x14
+ 1912 04fd 40000000 		.4byte	.LBB11
+ 1913 0501 EA020000 		.4byte	.LBE11-.LBB11
+ 1914 0505 2F070000 		.4byte	0x72f
+ 1915 0509 0D       		.uleb128 0xd
+ 1916 050a 6B657900 		.ascii	"key\000"
+ 1917 050e 01       		.byte	0x1
+ 1918 050f 70       		.byte	0x70
+ 1919 0510 A5000000 		.4byte	0xa5
+ 1920 0514 18040000 		.4byte	.LLST17
+ 1921 0518 14       		.uleb128 0x14
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 40
+
+
+ 1922 0519 78000000 		.4byte	.LBB12
+ 1923 051d AC020000 		.4byte	.LBE12-.LBB12
+ 1924 0521 D2060000 		.4byte	0x6d2
+ 1925 0525 0D       		.uleb128 0xd
+ 1926 0526 73656300 		.ascii	"sec\000"
+ 1927 052a 01       		.byte	0x1
+ 1928 052b A3       		.byte	0xa3
+ 1929 052c 81000000 		.4byte	0x81
+ 1930 0530 44040000 		.4byte	.LLST18
+ 1931 0534 0D       		.uleb128 0xd
+ 1932 0535 74787400 		.ascii	"txt\000"
+ 1933 0539 01       		.byte	0x1
+ 1934 053a AE       		.byte	0xae
+ 1935 053b BA000000 		.4byte	0xba
+ 1936 053f 63040000 		.4byte	.LLST19
+ 1937 0543 17       		.uleb128 0x17
+ 1938 0544 F6030000 		.4byte	.LASF40
+ 1939 0548 01       		.byte	0x1
+ 1940 0549 D1       		.byte	0xd1
+ 1941 054a 8C000000 		.4byte	0x8c
+ 1942 054e 7B040000 		.4byte	.LLST20
+ 1943 0552 14       		.uleb128 0x14
+ 1944 0553 86000000 		.4byte	.LBB13
+ 1945 0557 26000000 		.4byte	.LBE13-.LBB13
+ 1946 055b 6D050000 		.4byte	0x56d
+ 1947 055f 0D       		.uleb128 0xd
+ 1948 0560 6900     		.ascii	"i\000"
+ 1949 0562 01       		.byte	0x1
+ 1950 0563 81       		.byte	0x81
+ 1951 0564 81000000 		.4byte	0x81
+ 1952 0568 9A040000 		.4byte	.LLST21
+ 1953 056c 00       		.byte	0
+ 1954 056d 14       		.uleb128 0x14
+ 1955 056e AA010000 		.4byte	.LBB14
+ 1956 0572 26000000 		.4byte	.LBE14-.LBB14
+ 1957 0576 A1050000 		.4byte	0x5a1
+ 1958 057a 0D       		.uleb128 0xd
+ 1959 057b 6900     		.ascii	"i\000"
+ 1960 057d 01       		.byte	0x1
+ 1961 057e B9       		.byte	0xb9
+ 1962 057f 81000000 		.4byte	0x81
+ 1963 0583 C4040000 		.4byte	.LLST22
+ 1964 0587 0C       		.uleb128 0xc
+ 1965 0588 AE010000 		.4byte	.LBB15
+ 1966 058c 18000000 		.4byte	.LBE15-.LBB15
+ 1967 0590 17       		.uleb128 0x17
+ 1968 0591 0B040000 		.4byte	.LASF41
+ 1969 0595 01       		.byte	0x1
+ 1970 0596 BA       		.byte	0xba
+ 1971 0597 81000000 		.4byte	0x81
+ 1972 059b EE040000 		.4byte	.LLST23
+ 1973 059f 00       		.byte	0
+ 1974 05a0 00       		.byte	0
+ 1975 05a1 14       		.uleb128 0x14
+ 1976 05a2 CC020000 		.4byte	.LBB16
+ 1977 05a6 1C000000 		.4byte	.LBE16-.LBB16
+ 1978 05aa BC050000 		.4byte	0x5bc
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 41
+
+
+ 1979 05ae 0D       		.uleb128 0xd
+ 1980 05af 6900     		.ascii	"i\000"
+ 1981 05b1 01       		.byte	0x1
+ 1982 05b2 E6       		.byte	0xe6
+ 1983 05b3 81000000 		.4byte	0x81
+ 1984 05b7 01050000 		.4byte	.LLST24
+ 1985 05bb 00       		.byte	0
+ 1986 05bc 14       		.uleb128 0x14
+ 1987 05bd 04030000 		.4byte	.LBB17
+ 1988 05c1 20000000 		.4byte	.LBE17-.LBB17
+ 1989 05c5 D7050000 		.4byte	0x5d7
+ 1990 05c9 0D       		.uleb128 0xd
+ 1991 05ca 6900     		.ascii	"i\000"
+ 1992 05cc 01       		.byte	0x1
+ 1993 05cd EF       		.byte	0xef
+ 1994 05ce 81000000 		.4byte	0x81
+ 1995 05d2 1F050000 		.4byte	.LLST25
+ 1996 05d6 00       		.byte	0
+ 1997 05d7 0E       		.uleb128 0xe
+ 1998 05d8 82000000 		.4byte	.LVL75
+ 1999 05dc D5010000 		.4byte	0x1d5
+ 2000 05e0 F4050000 		.4byte	0x5f4
+ 2001 05e4 0F       		.uleb128 0xf
+ 2002 05e5 01       		.uleb128 0x1
+ 2003 05e6 50       		.byte	0x50
+ 2004 05e7 01       		.uleb128 0x1
+ 2005 05e8 30       		.byte	0x30
+ 2006 05e9 0F       		.uleb128 0xf
+ 2007 05ea 01       		.uleb128 0x1
+ 2008 05eb 51       		.byte	0x51
+ 2009 05ec 01       		.uleb128 0x1
+ 2010 05ed 31       		.byte	0x31
+ 2011 05ee 0F       		.uleb128 0xf
+ 2012 05ef 01       		.uleb128 0x1
+ 2013 05f0 52       		.byte	0x52
+ 2014 05f1 01       		.uleb128 0x1
+ 2015 05f2 31       		.byte	0x31
+ 2016 05f3 00       		.byte	0
+ 2017 05f4 12       		.uleb128 0x12
+ 2018 05f5 86000000 		.4byte	.LVL76
+ 2019 05f9 3F020000 		.4byte	0x23f
+ 2020 05fd 0E       		.uleb128 0xe
+ 2021 05fe E2000000 		.4byte	.LVL83
+ 2022 0602 1C090000 		.4byte	0x91c
+ 2023 0606 1F060000 		.4byte	0x61f
+ 2024 060a 0F       		.uleb128 0xf
+ 2025 060b 01       		.uleb128 0x1
+ 2026 060c 50       		.byte	0x50
+ 2027 060d 02       		.uleb128 0x2
+ 2028 060e 91       		.byte	0x91
+ 2029 060f 50       		.sleb128 -48
+ 2030 0610 0F       		.uleb128 0xf
+ 2031 0611 01       		.uleb128 0x1
+ 2032 0612 51       		.byte	0x51
+ 2033 0613 05       		.uleb128 0x5
+ 2034 0614 03       		.byte	0x3
+ 2035 0615 00000000 		.4byte	.LC10
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 42
+
+
+ 2036 0619 0F       		.uleb128 0xf
+ 2037 061a 01       		.uleb128 0x1
+ 2038 061b 52       		.byte	0x52
+ 2039 061c 01       		.uleb128 0x1
+ 2040 061d 34       		.byte	0x34
+ 2041 061e 00       		.byte	0
+ 2042 061f 12       		.uleb128 0x12
+ 2043 0620 08010000 		.4byte	.LVL91
+ 2044 0624 3F020000 		.4byte	0x23f
+ 2045 0628 0E       		.uleb128 0xe
+ 2046 0629 12010000 		.4byte	.LVL92
+ 2047 062d D5010000 		.4byte	0x1d5
+ 2048 0631 45060000 		.4byte	0x645
+ 2049 0635 0F       		.uleb128 0xf
+ 2050 0636 01       		.uleb128 0x1
+ 2051 0637 50       		.byte	0x50
+ 2052 0638 01       		.uleb128 0x1
+ 2053 0639 30       		.byte	0x30
+ 2054 063a 0F       		.uleb128 0xf
+ 2055 063b 01       		.uleb128 0x1
+ 2056 063c 51       		.byte	0x51
+ 2057 063d 01       		.uleb128 0x1
+ 2058 063e 31       		.byte	0x31
+ 2059 063f 0F       		.uleb128 0xf
+ 2060 0640 01       		.uleb128 0x1
+ 2061 0641 52       		.byte	0x52
+ 2062 0642 01       		.uleb128 0x1
+ 2063 0643 31       		.byte	0x31
+ 2064 0644 00       		.byte	0
+ 2065 0645 12       		.uleb128 0x12
+ 2066 0646 7C010000 		.4byte	.LVL103
+ 2067 064a 3F020000 		.4byte	0x23f
+ 2068 064e 0E       		.uleb128 0xe
+ 2069 064f 86010000 		.4byte	.LVL104
+ 2070 0653 D5010000 		.4byte	0x1d5
+ 2071 0657 6B060000 		.4byte	0x66b
+ 2072 065b 0F       		.uleb128 0xf
+ 2073 065c 01       		.uleb128 0x1
+ 2074 065d 50       		.byte	0x50
+ 2075 065e 01       		.uleb128 0x1
+ 2076 065f 31       		.byte	0x31
+ 2077 0660 0F       		.uleb128 0xf
+ 2078 0661 01       		.uleb128 0x1
+ 2079 0662 51       		.byte	0x51
+ 2080 0663 01       		.uleb128 0x1
+ 2081 0664 30       		.byte	0x30
+ 2082 0665 0F       		.uleb128 0xf
+ 2083 0666 01       		.uleb128 0x1
+ 2084 0667 52       		.byte	0x52
+ 2085 0668 01       		.uleb128 0x1
+ 2086 0669 31       		.byte	0x31
+ 2087 066a 00       		.byte	0
+ 2088 066b 12       		.uleb128 0x12
+ 2089 066c D4010000 		.4byte	.LVL116
+ 2090 0670 3F020000 		.4byte	0x23f
+ 2091 0674 0E       		.uleb128 0xe
+ 2092 0675 DE010000 		.4byte	.LVL117
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 43
+
+
+ 2093 0679 D5010000 		.4byte	0x1d5
+ 2094 067d 91060000 		.4byte	0x691
+ 2095 0681 0F       		.uleb128 0xf
+ 2096 0682 01       		.uleb128 0x1
+ 2097 0683 50       		.byte	0x50
+ 2098 0684 01       		.uleb128 0x1
+ 2099 0685 31       		.byte	0x31
+ 2100 0686 0F       		.uleb128 0xf
+ 2101 0687 01       		.uleb128 0x1
+ 2102 0688 51       		.byte	0x51
+ 2103 0689 01       		.uleb128 0x1
+ 2104 068a 30       		.byte	0x30
+ 2105 068b 0F       		.uleb128 0xf
+ 2106 068c 01       		.uleb128 0x1
+ 2107 068d 52       		.byte	0x52
+ 2108 068e 01       		.uleb128 0x1
+ 2109 068f 31       		.byte	0x31
+ 2110 0690 00       		.byte	0
+ 2111 0691 0E       		.uleb128 0xe
+ 2112 0692 EC010000 		.4byte	.LVL119
+ 2113 0696 27090000 		.4byte	0x927
+ 2114 069a AF060000 		.4byte	0x6af
+ 2115 069e 0F       		.uleb128 0xf
+ 2116 069f 01       		.uleb128 0x1
+ 2117 06a0 50       		.byte	0x50
+ 2118 06a1 02       		.uleb128 0x2
+ 2119 06a2 91       		.byte	0x91
+ 2120 06a3 50       		.sleb128 -48
+ 2121 06a4 0F       		.uleb128 0xf
+ 2122 06a5 01       		.uleb128 0x1
+ 2123 06a6 51       		.byte	0x51
+ 2124 06a7 01       		.uleb128 0x1
+ 2125 06a8 30       		.byte	0x30
+ 2126 06a9 0F       		.uleb128 0xf
+ 2127 06aa 01       		.uleb128 0x1
+ 2128 06ab 52       		.byte	0x52
+ 2129 06ac 01       		.uleb128 0x1
+ 2130 06ad 35       		.byte	0x35
+ 2131 06ae 00       		.byte	0
+ 2132 06af 12       		.uleb128 0x12
+ 2133 06b0 8A020000 		.4byte	.LVL138
+ 2134 06b4 3F020000 		.4byte	0x23f
+ 2135 06b8 10       		.uleb128 0x10
+ 2136 06b9 94020000 		.4byte	.LVL139
+ 2137 06bd D5010000 		.4byte	0x1d5
+ 2138 06c1 0F       		.uleb128 0xf
+ 2139 06c2 01       		.uleb128 0x1
+ 2140 06c3 50       		.byte	0x50
+ 2141 06c4 01       		.uleb128 0x1
+ 2142 06c5 31       		.byte	0x31
+ 2143 06c6 0F       		.uleb128 0xf
+ 2144 06c7 01       		.uleb128 0x1
+ 2145 06c8 51       		.byte	0x51
+ 2146 06c9 01       		.uleb128 0x1
+ 2147 06ca 31       		.byte	0x31
+ 2148 06cb 0F       		.uleb128 0xf
+ 2149 06cc 01       		.uleb128 0x1
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 44
+
+
+ 2150 06cd 52       		.byte	0x52
+ 2151 06ce 01       		.uleb128 0x1
+ 2152 06cf 30       		.byte	0x30
+ 2153 06d0 00       		.byte	0
+ 2154 06d1 00       		.byte	0
+ 2155 06d2 12       		.uleb128 0x12
+ 2156 06d3 44000000 		.4byte	.LVL68
+ 2157 06d7 E5020000 		.4byte	0x2e5
+ 2158 06db 0E       		.uleb128 0xe
+ 2159 06dc 56000000 		.4byte	.LVL71
+ 2160 06e0 27090000 		.4byte	0x927
+ 2161 06e4 F9060000 		.4byte	0x6f9
+ 2162 06e8 0F       		.uleb128 0xf
+ 2163 06e9 01       		.uleb128 0x1
+ 2164 06ea 50       		.byte	0x50
+ 2165 06eb 02       		.uleb128 0x2
+ 2166 06ec 91       		.byte	0x91
+ 2167 06ed 50       		.sleb128 -48
+ 2168 06ee 0F       		.uleb128 0xf
+ 2169 06ef 01       		.uleb128 0x1
+ 2170 06f0 51       		.byte	0x51
+ 2171 06f1 01       		.uleb128 0x1
+ 2172 06f2 30       		.byte	0x30
+ 2173 06f3 0F       		.uleb128 0xf
+ 2174 06f4 01       		.uleb128 0x1
+ 2175 06f5 52       		.byte	0x52
+ 2176 06f6 01       		.uleb128 0x1
+ 2177 06f7 35       		.byte	0x35
+ 2178 06f8 00       		.byte	0
+ 2179 06f9 12       		.uleb128 0x12
+ 2180 06fa 5A000000 		.4byte	.LVL72
+ 2181 06fe 3F020000 		.4byte	0x23f
+ 2182 0702 0E       		.uleb128 0xe
+ 2183 0703 64000000 		.4byte	.LVL73
+ 2184 0707 D5010000 		.4byte	0x1d5
+ 2185 070b 1F070000 		.4byte	0x71f
+ 2186 070f 0F       		.uleb128 0xf
+ 2187 0710 01       		.uleb128 0x1
+ 2188 0711 50       		.byte	0x50
+ 2189 0712 01       		.uleb128 0x1
+ 2190 0713 30       		.byte	0x30
+ 2191 0714 0F       		.uleb128 0xf
+ 2192 0715 01       		.uleb128 0x1
+ 2193 0716 51       		.byte	0x51
+ 2194 0717 01       		.uleb128 0x1
+ 2195 0718 31       		.byte	0x31
+ 2196 0719 0F       		.uleb128 0xf
+ 2197 071a 01       		.uleb128 0x1
+ 2198 071b 52       		.byte	0x52
+ 2199 071c 01       		.uleb128 0x1
+ 2200 071d 31       		.byte	0x31
+ 2201 071e 00       		.byte	0
+ 2202 071f 10       		.uleb128 0x10
+ 2203 0720 2A030000 		.4byte	.LVL156
+ 2204 0724 30090000 		.4byte	0x930
+ 2205 0728 0F       		.uleb128 0xf
+ 2206 0729 01       		.uleb128 0x1
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 45
+
+
+ 2207 072a 50       		.byte	0x50
+ 2208 072b 01       		.uleb128 0x1
+ 2209 072c 3A       		.byte	0x3a
+ 2210 072d 00       		.byte	0
+ 2211 072e 00       		.byte	0
+ 2212 072f 12       		.uleb128 0x12
+ 2213 0730 14000000 		.4byte	.LVL62
+ 2214 0734 3B090000 		.4byte	0x93b
+ 2215 0738 0E       		.uleb128 0xe
+ 2216 0739 1A000000 		.4byte	.LVL63
+ 2217 073d 46090000 		.4byte	0x946
+ 2218 0741 4F070000 		.4byte	0x74f
+ 2219 0745 0F       		.uleb128 0xf
+ 2220 0746 01       		.uleb128 0x1
+ 2221 0747 50       		.byte	0x50
+ 2222 0748 05       		.uleb128 0x5
+ 2223 0749 03       		.byte	0x3
+ 2224 074a 00000000 		.4byte	Timer_Int_Handler
+ 2225 074e 00       		.byte	0
+ 2226 074f 12       		.uleb128 0x12
+ 2227 0750 1E000000 		.4byte	.LVL64
+ 2228 0754 6C020000 		.4byte	0x26c
+ 2229 0758 0E       		.uleb128 0xe
+ 2230 0759 28000000 		.4byte	.LVL65
+ 2231 075d 27090000 		.4byte	0x927
+ 2232 0761 76070000 		.4byte	0x776
+ 2233 0765 0F       		.uleb128 0xf
+ 2234 0766 01       		.uleb128 0x1
+ 2235 0767 50       		.byte	0x50
+ 2236 0768 02       		.uleb128 0x2
+ 2237 0769 91       		.byte	0x91
+ 2238 076a 50       		.sleb128 -48
+ 2239 076b 0F       		.uleb128 0xf
+ 2240 076c 01       		.uleb128 0x1
+ 2241 076d 51       		.byte	0x51
+ 2242 076e 01       		.uleb128 0x1
+ 2243 076f 30       		.byte	0x30
+ 2244 0770 0F       		.uleb128 0xf
+ 2245 0771 01       		.uleb128 0x1
+ 2246 0772 52       		.byte	0x52
+ 2247 0773 01       		.uleb128 0x1
+ 2248 0774 35       		.byte	0x35
+ 2249 0775 00       		.byte	0
+ 2250 0776 10       		.uleb128 0x10
+ 2251 0777 32000000 		.4byte	.LVL66
+ 2252 077b D5010000 		.4byte	0x1d5
+ 2253 077f 0F       		.uleb128 0xf
+ 2254 0780 01       		.uleb128 0x1
+ 2255 0781 50       		.byte	0x50
+ 2256 0782 01       		.uleb128 0x1
+ 2257 0783 31       		.byte	0x31
+ 2258 0784 0F       		.uleb128 0xf
+ 2259 0785 01       		.uleb128 0x1
+ 2260 0786 51       		.byte	0x51
+ 2261 0787 01       		.uleb128 0x1
+ 2262 0788 31       		.byte	0x31
+ 2263 0789 0F       		.uleb128 0xf
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 46
+
+
+ 2264 078a 01       		.uleb128 0x1
+ 2265 078b 52       		.byte	0x52
+ 2266 078c 01       		.uleb128 0x1
+ 2267 078d 31       		.byte	0x31
+ 2268 078e 00       		.byte	0
+ 2269 078f 00       		.byte	0
+ 2270 0790 18       		.uleb128 0x18
+ 2271 0791 A5000000 		.4byte	0xa5
+ 2272 0795 A0070000 		.4byte	0x7a0
+ 2273 0799 19       		.uleb128 0x19
+ 2274 079a B3000000 		.4byte	0xb3
+ 2275 079e 04       		.byte	0x4
+ 2276 079f 00       		.byte	0
+ 2277 07a0 02       		.uleb128 0x2
+ 2278 07a1 01       		.byte	0x1
+ 2279 07a2 02       		.byte	0x2
+ 2280 07a3 73020000 		.4byte	.LASF42
+ 2281 07a7 18       		.uleb128 0x18
+ 2282 07a8 C0000000 		.4byte	0xc0
+ 2283 07ac BD070000 		.4byte	0x7bd
+ 2284 07b0 19       		.uleb128 0x19
+ 2285 07b1 B3000000 		.4byte	0xb3
+ 2286 07b5 03       		.byte	0x3
+ 2287 07b6 19       		.uleb128 0x19
+ 2288 07b7 B3000000 		.4byte	0xb3
+ 2289 07bb 02       		.byte	0x2
+ 2290 07bc 00       		.byte	0
+ 2291 07bd 11       		.uleb128 0x11
+ 2292 07be 5E020000 		.4byte	.LASF43
+ 2293 07c2 01       		.byte	0x1
+ 2294 07c3 1D       		.byte	0x1d
+ 2295 07c4 CE070000 		.4byte	0x7ce
+ 2296 07c8 05       		.uleb128 0x5
+ 2297 07c9 03       		.byte	0x3
+ 2298 07ca 14000000 		.4byte	key_map
+ 2299 07ce 06       		.uleb128 0x6
+ 2300 07cf A7070000 		.4byte	0x7a7
+ 2301 07d3 18       		.uleb128 0x18
+ 2302 07d4 81000000 		.4byte	0x81
+ 2303 07d8 E9070000 		.4byte	0x7e9
+ 2304 07dc 19       		.uleb128 0x19
+ 2305 07dd B3000000 		.4byte	0xb3
+ 2306 07e1 03       		.byte	0x3
+ 2307 07e2 19       		.uleb128 0x19
+ 2308 07e3 B3000000 		.4byte	0xb3
+ 2309 07e7 02       		.byte	0x2
+ 2310 07e8 00       		.byte	0
+ 2311 07e9 11       		.uleb128 0x11
+ 2312 07ea 0C000000 		.4byte	.LASF44
+ 2313 07ee 01       		.byte	0x1
+ 2314 07ef 20       		.byte	0x20
+ 2315 07f0 D3070000 		.4byte	0x7d3
+ 2316 07f4 05       		.uleb128 0x5
+ 2317 07f5 03       		.byte	0x3
+ 2318 07f6 08000000 		.4byte	last_keys
+ 2319 07fa 18       		.uleb128 0x18
+ 2320 07fb 0A080000 		.4byte	0x80a
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 47
+
+
+ 2321 07ff 0A080000 		.4byte	0x80a
+ 2322 0803 19       		.uleb128 0x19
+ 2323 0804 B3000000 		.4byte	0xb3
+ 2324 0808 7F       		.byte	0x7f
+ 2325 0809 00       		.byte	0
+ 2326 080a 06       		.uleb128 0x6
+ 2327 080b 81000000 		.4byte	0x81
+ 2328 080f 1B       		.uleb128 0x1b
+ 2329 0810 36030000 		.4byte	.LASF45
+ 2330 0814 01       		.byte	0x1
+ 2331 0815 0B       		.byte	0xb
+ 2332 0816 20080000 		.4byte	0x820
+ 2333 081a 05       		.uleb128 0x5
+ 2334 081b 03       		.byte	0x3
+ 2335 081c 00000000 		.4byte	ascii_font
+ 2336 0820 06       		.uleb128 0x6
+ 2337 0821 FA070000 		.4byte	0x7fa
+ 2338 0825 18       		.uleb128 0x18
+ 2339 0826 35080000 		.4byte	0x835
+ 2340 082a 35080000 		.4byte	0x835
+ 2341 082e 19       		.uleb128 0x19
+ 2342 082f B3000000 		.4byte	0xb3
+ 2343 0833 07       		.byte	0x7
+ 2344 0834 00       		.byte	0
+ 2345 0835 07       		.uleb128 0x7
+ 2346 0836 81000000 		.4byte	0x81
+ 2347 083a 1B       		.uleb128 0x1b
+ 2348 083b 06020000 		.4byte	.LASF46
+ 2349 083f 01       		.byte	0x1
+ 2350 0840 1A       		.byte	0x1a
+ 2351 0841 4B080000 		.4byte	0x84b
+ 2352 0845 05       		.uleb128 0x5
+ 2353 0846 03       		.byte	0x3
+ 2354 0847 00000000 		.4byte	display_data
+ 2355 084b 07       		.uleb128 0x7
+ 2356 084c 25080000 		.4byte	0x825
+ 2357 0850 1B       		.uleb128 0x1b
+ 2358 0851 9E000000 		.4byte	.LASF47
+ 2359 0855 01       		.byte	0x1
+ 2360 0856 1B       		.byte	0x1b
+ 2361 0857 C5000000 		.4byte	0xc5
+ 2362 085b 05       		.uleb128 0x5
+ 2363 085c 03       		.byte	0x3
+ 2364 085d 00000000 		.4byte	system_tick_ms
+ 2365 0861 1C       		.uleb128 0x1c
+ 2366 0862 F7000000 		.4byte	.LASF48
+ 2367 0866 F7000000 		.4byte	.LASF48
+ 2368 086a 04       		.byte	0x4
+ 2369 086b 33       		.byte	0x33
+ 2370 086c 1C       		.uleb128 0x1c
+ 2371 086d 1A040000 		.4byte	.LASF49
+ 2372 0871 1A040000 		.4byte	.LASF49
+ 2373 0875 05       		.byte	0x5
+ 2374 0876 33       		.byte	0x33
+ 2375 0877 1C       		.uleb128 0x1c
+ 2376 0878 41030000 		.4byte	.LASF50
+ 2377 087c 41030000 		.4byte	.LASF50
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 48
+
+
+ 2378 0880 06       		.byte	0x6
+ 2379 0881 33       		.byte	0x33
+ 2380 0882 1C       		.uleb128 0x1c
+ 2381 0883 AD000000 		.4byte	.LASF51
+ 2382 0887 AD000000 		.4byte	.LASF51
+ 2383 088b 07       		.byte	0x7
+ 2384 088c 33       		.byte	0x33
+ 2385 088d 1C       		.uleb128 0x1c
+ 2386 088e 97020000 		.4byte	.LASF52
+ 2387 0892 97020000 		.4byte	.LASF52
+ 2388 0896 08       		.byte	0x8
+ 2389 0897 33       		.byte	0x33
+ 2390 0898 1C       		.uleb128 0x1c
+ 2391 0899 00000000 		.4byte	.LASF53
+ 2392 089d 00000000 		.4byte	.LASF53
+ 2393 08a1 09       		.byte	0x9
+ 2394 08a2 33       		.byte	0x33
+ 2395 08a3 1C       		.uleb128 0x1c
+ 2396 08a4 20020000 		.4byte	.LASF54
+ 2397 08a8 20020000 		.4byte	.LASF54
+ 2398 08ac 0A       		.byte	0xa
+ 2399 08ad 36       		.byte	0x36
+ 2400 08ae 1C       		.uleb128 0x1c
+ 2401 08af 77010000 		.4byte	.LASF55
+ 2402 08b3 77010000 		.4byte	.LASF55
+ 2403 08b7 0B       		.byte	0xb
+ 2404 08b8 36       		.byte	0x36
+ 2405 08b9 1C       		.uleb128 0x1c
+ 2406 08ba D4000000 		.4byte	.LASF56
+ 2407 08be D4000000 		.4byte	.LASF56
+ 2408 08c2 0C       		.byte	0xc
+ 2409 08c3 36       		.byte	0x36
+ 2410 08c4 1C       		.uleb128 0x1c
+ 2411 08c5 A3020000 		.4byte	.LASF57
+ 2412 08c9 A3020000 		.4byte	.LASF57
+ 2413 08cd 0A       		.byte	0xa
+ 2414 08ce 33       		.byte	0x33
+ 2415 08cf 1C       		.uleb128 0x1c
+ 2416 08d0 FC030000 		.4byte	.LASF58
+ 2417 08d4 FC030000 		.4byte	.LASF58
+ 2418 08d8 0B       		.byte	0xb
+ 2419 08d9 33       		.byte	0x33
+ 2420 08da 1C       		.uleb128 0x1c
+ 2421 08db 8D010000 		.4byte	.LASF59
+ 2422 08df 8D010000 		.4byte	.LASF59
+ 2423 08e3 0C       		.byte	0xc
+ 2424 08e4 33       		.byte	0x33
+ 2425 08e5 1C       		.uleb128 0x1c
+ 2426 08e6 B6010000 		.4byte	.LASF60
+ 2427 08ea B6010000 		.4byte	.LASF60
+ 2428 08ee 0D       		.byte	0xd
+ 2429 08ef ED       		.byte	0xed
+ 2430 08f0 1C       		.uleb128 0x1c
+ 2431 08f1 04010000 		.4byte	.LASF61
+ 2432 08f5 04010000 		.4byte	.LASF61
+ 2433 08f9 0E       		.byte	0xe
+ 2434 08fa 32       		.byte	0x32
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 49
+
+
+ 2435 08fb 1C       		.uleb128 0x1c
+ 2436 08fc E1020000 		.4byte	.LASF62
+ 2437 0900 E1020000 		.4byte	.LASF62
+ 2438 0904 0F       		.byte	0xf
+ 2439 0905 32       		.byte	0x32
+ 2440 0906 1C       		.uleb128 0x1c
+ 2441 0907 C9000000 		.4byte	.LASF63
+ 2442 090b C9000000 		.4byte	.LASF63
+ 2443 090f 10       		.byte	0x10
+ 2444 0910 32       		.byte	0x32
+ 2445 0911 1C       		.uleb128 0x1c
+ 2446 0912 B2020000 		.4byte	.LASF64
+ 2447 0916 B2020000 		.4byte	.LASF64
+ 2448 091a 11       		.byte	0x11
+ 2449 091b 32       		.byte	0x32
+ 2450 091c 1C       		.uleb128 0x1c
+ 2451 091d 96000000 		.4byte	.LASF65
+ 2452 0921 96000000 		.4byte	.LASF65
+ 2453 0925 12       		.byte	0x12
+ 2454 0926 23       		.byte	0x23
+ 2455 0927 1D       		.uleb128 0x1d
+ 2456 0928 1E010000 		.4byte	.LASF74
+ 2457 092c 1E010000 		.4byte	.LASF74
+ 2458 0930 1C       		.uleb128 0x1c
+ 2459 0931 12040000 		.4byte	.LASF66
+ 2460 0935 12040000 		.4byte	.LASF66
+ 2461 0939 0D       		.byte	0xd
+ 2462 093a EC       		.byte	0xec
+ 2463 093b 1C       		.uleb128 0x1c
+ 2464 093c 25010000 		.4byte	.LASF67
+ 2465 0940 25010000 		.4byte	.LASF67
+ 2466 0944 13       		.byte	0x13
+ 2467 0945 5A       		.byte	0x5a
+ 2468 0946 1C       		.uleb128 0x1c
+ 2469 0947 7E020000 		.4byte	.LASF68
+ 2470 094b 7E020000 		.4byte	.LASF68
+ 2471 094f 14       		.byte	0x14
+ 2472 0950 18       		.byte	0x18
+ 2473 0951 00       		.byte	0
+ 2474              		.section	.debug_abbrev,"",%progbits
+ 2475              	.Ldebug_abbrev0:
+ 2476 0000 01       		.uleb128 0x1
+ 2477 0001 11       		.uleb128 0x11
+ 2478 0002 01       		.byte	0x1
+ 2479 0003 25       		.uleb128 0x25
+ 2480 0004 0E       		.uleb128 0xe
+ 2481 0005 13       		.uleb128 0x13
+ 2482 0006 0B       		.uleb128 0xb
+ 2483 0007 03       		.uleb128 0x3
+ 2484 0008 0E       		.uleb128 0xe
+ 2485 0009 1B       		.uleb128 0x1b
+ 2486 000a 0E       		.uleb128 0xe
+ 2487 000b 55       		.uleb128 0x55
+ 2488 000c 17       		.uleb128 0x17
+ 2489 000d 11       		.uleb128 0x11
+ 2490 000e 01       		.uleb128 0x1
+ 2491 000f 10       		.uleb128 0x10
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 50
+
+
+ 2492 0010 17       		.uleb128 0x17
+ 2493 0011 00       		.byte	0
+ 2494 0012 00       		.byte	0
+ 2495 0013 02       		.uleb128 0x2
+ 2496 0014 24       		.uleb128 0x24
+ 2497 0015 00       		.byte	0
+ 2498 0016 0B       		.uleb128 0xb
+ 2499 0017 0B       		.uleb128 0xb
+ 2500 0018 3E       		.uleb128 0x3e
+ 2501 0019 0B       		.uleb128 0xb
+ 2502 001a 03       		.uleb128 0x3
+ 2503 001b 0E       		.uleb128 0xe
+ 2504 001c 00       		.byte	0
+ 2505 001d 00       		.byte	0
+ 2506 001e 03       		.uleb128 0x3
+ 2507 001f 16       		.uleb128 0x16
+ 2508 0020 00       		.byte	0
+ 2509 0021 03       		.uleb128 0x3
+ 2510 0022 0E       		.uleb128 0xe
+ 2511 0023 3A       		.uleb128 0x3a
+ 2512 0024 0B       		.uleb128 0xb
+ 2513 0025 3B       		.uleb128 0x3b
+ 2514 0026 0B       		.uleb128 0xb
+ 2515 0027 49       		.uleb128 0x49
+ 2516 0028 13       		.uleb128 0x13
+ 2517 0029 00       		.byte	0
+ 2518 002a 00       		.byte	0
+ 2519 002b 04       		.uleb128 0x4
+ 2520 002c 24       		.uleb128 0x24
+ 2521 002d 00       		.byte	0
+ 2522 002e 0B       		.uleb128 0xb
+ 2523 002f 0B       		.uleb128 0xb
+ 2524 0030 3E       		.uleb128 0x3e
+ 2525 0031 0B       		.uleb128 0xb
+ 2526 0032 03       		.uleb128 0x3
+ 2527 0033 08       		.uleb128 0x8
+ 2528 0034 00       		.byte	0
+ 2529 0035 00       		.byte	0
+ 2530 0036 05       		.uleb128 0x5
+ 2531 0037 0F       		.uleb128 0xf
+ 2532 0038 00       		.byte	0
+ 2533 0039 0B       		.uleb128 0xb
+ 2534 003a 0B       		.uleb128 0xb
+ 2535 003b 49       		.uleb128 0x49
+ 2536 003c 13       		.uleb128 0x13
+ 2537 003d 00       		.byte	0
+ 2538 003e 00       		.byte	0
+ 2539 003f 06       		.uleb128 0x6
+ 2540 0040 26       		.uleb128 0x26
+ 2541 0041 00       		.byte	0
+ 2542 0042 49       		.uleb128 0x49
+ 2543 0043 13       		.uleb128 0x13
+ 2544 0044 00       		.byte	0
+ 2545 0045 00       		.byte	0
+ 2546 0046 07       		.uleb128 0x7
+ 2547 0047 35       		.uleb128 0x35
+ 2548 0048 00       		.byte	0
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 51
+
+
+ 2549 0049 49       		.uleb128 0x49
+ 2550 004a 13       		.uleb128 0x13
+ 2551 004b 00       		.byte	0
+ 2552 004c 00       		.byte	0
+ 2553 004d 08       		.uleb128 0x8
+ 2554 004e 04       		.uleb128 0x4
+ 2555 004f 01       		.byte	0x1
+ 2556 0050 0B       		.uleb128 0xb
+ 2557 0051 0B       		.uleb128 0xb
+ 2558 0052 49       		.uleb128 0x49
+ 2559 0053 13       		.uleb128 0x13
+ 2560 0054 3A       		.uleb128 0x3a
+ 2561 0055 0B       		.uleb128 0xb
+ 2562 0056 3B       		.uleb128 0x3b
+ 2563 0057 0B       		.uleb128 0xb
+ 2564 0058 01       		.uleb128 0x1
+ 2565 0059 13       		.uleb128 0x13
+ 2566 005a 00       		.byte	0
+ 2567 005b 00       		.byte	0
+ 2568 005c 09       		.uleb128 0x9
+ 2569 005d 28       		.uleb128 0x28
+ 2570 005e 00       		.byte	0
+ 2571 005f 03       		.uleb128 0x3
+ 2572 0060 0E       		.uleb128 0xe
+ 2573 0061 1C       		.uleb128 0x1c
+ 2574 0062 0B       		.uleb128 0xb
+ 2575 0063 00       		.byte	0
+ 2576 0064 00       		.byte	0
+ 2577 0065 0A       		.uleb128 0xa
+ 2578 0066 2E       		.uleb128 0x2e
+ 2579 0067 01       		.byte	0x1
+ 2580 0068 3F       		.uleb128 0x3f
+ 2581 0069 19       		.uleb128 0x19
+ 2582 006a 03       		.uleb128 0x3
+ 2583 006b 0E       		.uleb128 0xe
+ 2584 006c 3A       		.uleb128 0x3a
+ 2585 006d 0B       		.uleb128 0xb
+ 2586 006e 3B       		.uleb128 0x3b
+ 2587 006f 0B       		.uleb128 0xb
+ 2588 0070 27       		.uleb128 0x27
+ 2589 0071 19       		.uleb128 0x19
+ 2590 0072 11       		.uleb128 0x11
+ 2591 0073 01       		.uleb128 0x1
+ 2592 0074 12       		.uleb128 0x12
+ 2593 0075 06       		.uleb128 0x6
+ 2594 0076 40       		.uleb128 0x40
+ 2595 0077 18       		.uleb128 0x18
+ 2596 0078 9742     		.uleb128 0x2117
+ 2597 007a 19       		.uleb128 0x19
+ 2598 007b 01       		.uleb128 0x1
+ 2599 007c 13       		.uleb128 0x13
+ 2600 007d 00       		.byte	0
+ 2601 007e 00       		.byte	0
+ 2602 007f 0B       		.uleb128 0xb
+ 2603 0080 05       		.uleb128 0x5
+ 2604 0081 00       		.byte	0
+ 2605 0082 03       		.uleb128 0x3
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 52
+
+
+ 2606 0083 0E       		.uleb128 0xe
+ 2607 0084 3A       		.uleb128 0x3a
+ 2608 0085 0B       		.uleb128 0xb
+ 2609 0086 3B       		.uleb128 0x3b
+ 2610 0087 0B       		.uleb128 0xb
+ 2611 0088 49       		.uleb128 0x49
+ 2612 0089 13       		.uleb128 0x13
+ 2613 008a 02       		.uleb128 0x2
+ 2614 008b 17       		.uleb128 0x17
+ 2615 008c 00       		.byte	0
+ 2616 008d 00       		.byte	0
+ 2617 008e 0C       		.uleb128 0xc
+ 2618 008f 0B       		.uleb128 0xb
+ 2619 0090 01       		.byte	0x1
+ 2620 0091 11       		.uleb128 0x11
+ 2621 0092 01       		.uleb128 0x1
+ 2622 0093 12       		.uleb128 0x12
+ 2623 0094 06       		.uleb128 0x6
+ 2624 0095 00       		.byte	0
+ 2625 0096 00       		.byte	0
+ 2626 0097 0D       		.uleb128 0xd
+ 2627 0098 34       		.uleb128 0x34
+ 2628 0099 00       		.byte	0
+ 2629 009a 03       		.uleb128 0x3
+ 2630 009b 08       		.uleb128 0x8
+ 2631 009c 3A       		.uleb128 0x3a
+ 2632 009d 0B       		.uleb128 0xb
+ 2633 009e 3B       		.uleb128 0x3b
+ 2634 009f 0B       		.uleb128 0xb
+ 2635 00a0 49       		.uleb128 0x49
+ 2636 00a1 13       		.uleb128 0x13
+ 2637 00a2 02       		.uleb128 0x2
+ 2638 00a3 17       		.uleb128 0x17
+ 2639 00a4 00       		.byte	0
+ 2640 00a5 00       		.byte	0
+ 2641 00a6 0E       		.uleb128 0xe
+ 2642 00a7 898201   		.uleb128 0x4109
+ 2643 00aa 01       		.byte	0x1
+ 2644 00ab 11       		.uleb128 0x11
+ 2645 00ac 01       		.uleb128 0x1
+ 2646 00ad 31       		.uleb128 0x31
+ 2647 00ae 13       		.uleb128 0x13
+ 2648 00af 01       		.uleb128 0x1
+ 2649 00b0 13       		.uleb128 0x13
+ 2650 00b1 00       		.byte	0
+ 2651 00b2 00       		.byte	0
+ 2652 00b3 0F       		.uleb128 0xf
+ 2653 00b4 8A8201   		.uleb128 0x410a
+ 2654 00b7 00       		.byte	0
+ 2655 00b8 02       		.uleb128 0x2
+ 2656 00b9 18       		.uleb128 0x18
+ 2657 00ba 9142     		.uleb128 0x2111
+ 2658 00bc 18       		.uleb128 0x18
+ 2659 00bd 00       		.byte	0
+ 2660 00be 00       		.byte	0
+ 2661 00bf 10       		.uleb128 0x10
+ 2662 00c0 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 53
+
+
+ 2663 00c3 01       		.byte	0x1
+ 2664 00c4 11       		.uleb128 0x11
+ 2665 00c5 01       		.uleb128 0x1
+ 2666 00c6 31       		.uleb128 0x31
+ 2667 00c7 13       		.uleb128 0x13
+ 2668 00c8 00       		.byte	0
+ 2669 00c9 00       		.byte	0
+ 2670 00ca 11       		.uleb128 0x11
+ 2671 00cb 34       		.uleb128 0x34
+ 2672 00cc 00       		.byte	0
+ 2673 00cd 03       		.uleb128 0x3
+ 2674 00ce 0E       		.uleb128 0xe
+ 2675 00cf 3A       		.uleb128 0x3a
+ 2676 00d0 0B       		.uleb128 0xb
+ 2677 00d1 3B       		.uleb128 0x3b
+ 2678 00d2 0B       		.uleb128 0xb
+ 2679 00d3 49       		.uleb128 0x49
+ 2680 00d4 13       		.uleb128 0x13
+ 2681 00d5 02       		.uleb128 0x2
+ 2682 00d6 18       		.uleb128 0x18
+ 2683 00d7 00       		.byte	0
+ 2684 00d8 00       		.byte	0
+ 2685 00d9 12       		.uleb128 0x12
+ 2686 00da 898201   		.uleb128 0x4109
+ 2687 00dd 00       		.byte	0
+ 2688 00de 11       		.uleb128 0x11
+ 2689 00df 01       		.uleb128 0x1
+ 2690 00e0 31       		.uleb128 0x31
+ 2691 00e1 13       		.uleb128 0x13
+ 2692 00e2 00       		.byte	0
+ 2693 00e3 00       		.byte	0
+ 2694 00e4 13       		.uleb128 0x13
+ 2695 00e5 05       		.uleb128 0x5
+ 2696 00e6 00       		.byte	0
+ 2697 00e7 03       		.uleb128 0x3
+ 2698 00e8 08       		.uleb128 0x8
+ 2699 00e9 3A       		.uleb128 0x3a
+ 2700 00ea 0B       		.uleb128 0xb
+ 2701 00eb 3B       		.uleb128 0x3b
+ 2702 00ec 0B       		.uleb128 0xb
+ 2703 00ed 49       		.uleb128 0x49
+ 2704 00ee 13       		.uleb128 0x13
+ 2705 00ef 02       		.uleb128 0x2
+ 2706 00f0 17       		.uleb128 0x17
+ 2707 00f1 00       		.byte	0
+ 2708 00f2 00       		.byte	0
+ 2709 00f3 14       		.uleb128 0x14
+ 2710 00f4 0B       		.uleb128 0xb
+ 2711 00f5 01       		.byte	0x1
+ 2712 00f6 11       		.uleb128 0x11
+ 2713 00f7 01       		.uleb128 0x1
+ 2714 00f8 12       		.uleb128 0x12
+ 2715 00f9 06       		.uleb128 0x6
+ 2716 00fa 01       		.uleb128 0x1
+ 2717 00fb 13       		.uleb128 0x13
+ 2718 00fc 00       		.byte	0
+ 2719 00fd 00       		.byte	0
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 54
+
+
+ 2720 00fe 15       		.uleb128 0x15
+ 2721 00ff 0B       		.uleb128 0xb
+ 2722 0100 01       		.byte	0x1
+ 2723 0101 55       		.uleb128 0x55
+ 2724 0102 17       		.uleb128 0x17
+ 2725 0103 00       		.byte	0
+ 2726 0104 00       		.byte	0
+ 2727 0105 16       		.uleb128 0x16
+ 2728 0106 2E       		.uleb128 0x2e
+ 2729 0107 01       		.byte	0x1
+ 2730 0108 3F       		.uleb128 0x3f
+ 2731 0109 19       		.uleb128 0x19
+ 2732 010a 03       		.uleb128 0x3
+ 2733 010b 0E       		.uleb128 0xe
+ 2734 010c 3A       		.uleb128 0x3a
+ 2735 010d 0B       		.uleb128 0xb
+ 2736 010e 3B       		.uleb128 0x3b
+ 2737 010f 0B       		.uleb128 0xb
+ 2738 0110 27       		.uleb128 0x27
+ 2739 0111 19       		.uleb128 0x19
+ 2740 0112 49       		.uleb128 0x49
+ 2741 0113 13       		.uleb128 0x13
+ 2742 0114 11       		.uleb128 0x11
+ 2743 0115 01       		.uleb128 0x1
+ 2744 0116 12       		.uleb128 0x12
+ 2745 0117 06       		.uleb128 0x6
+ 2746 0118 40       		.uleb128 0x40
+ 2747 0119 18       		.uleb128 0x18
+ 2748 011a 9742     		.uleb128 0x2117
+ 2749 011c 19       		.uleb128 0x19
+ 2750 011d 01       		.uleb128 0x1
+ 2751 011e 13       		.uleb128 0x13
+ 2752 011f 00       		.byte	0
+ 2753 0120 00       		.byte	0
+ 2754 0121 17       		.uleb128 0x17
+ 2755 0122 34       		.uleb128 0x34
+ 2756 0123 00       		.byte	0
+ 2757 0124 03       		.uleb128 0x3
+ 2758 0125 0E       		.uleb128 0xe
+ 2759 0126 3A       		.uleb128 0x3a
+ 2760 0127 0B       		.uleb128 0xb
+ 2761 0128 3B       		.uleb128 0x3b
+ 2762 0129 0B       		.uleb128 0xb
+ 2763 012a 49       		.uleb128 0x49
+ 2764 012b 13       		.uleb128 0x13
+ 2765 012c 02       		.uleb128 0x2
+ 2766 012d 17       		.uleb128 0x17
+ 2767 012e 00       		.byte	0
+ 2768 012f 00       		.byte	0
+ 2769 0130 18       		.uleb128 0x18
+ 2770 0131 01       		.uleb128 0x1
+ 2771 0132 01       		.byte	0x1
+ 2772 0133 49       		.uleb128 0x49
+ 2773 0134 13       		.uleb128 0x13
+ 2774 0135 01       		.uleb128 0x1
+ 2775 0136 13       		.uleb128 0x13
+ 2776 0137 00       		.byte	0
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 55
+
+
+ 2777 0138 00       		.byte	0
+ 2778 0139 19       		.uleb128 0x19
+ 2779 013a 21       		.uleb128 0x21
+ 2780 013b 00       		.byte	0
+ 2781 013c 49       		.uleb128 0x49
+ 2782 013d 13       		.uleb128 0x13
+ 2783 013e 2F       		.uleb128 0x2f
+ 2784 013f 0B       		.uleb128 0xb
+ 2785 0140 00       		.byte	0
+ 2786 0141 00       		.byte	0
+ 2787 0142 1A       		.uleb128 0x1a
+ 2788 0143 2E       		.uleb128 0x2e
+ 2789 0144 01       		.byte	0x1
+ 2790 0145 3F       		.uleb128 0x3f
+ 2791 0146 19       		.uleb128 0x19
+ 2792 0147 03       		.uleb128 0x3
+ 2793 0148 0E       		.uleb128 0xe
+ 2794 0149 3A       		.uleb128 0x3a
+ 2795 014a 0B       		.uleb128 0xb
+ 2796 014b 3B       		.uleb128 0x3b
+ 2797 014c 0B       		.uleb128 0xb
+ 2798 014d 27       		.uleb128 0x27
+ 2799 014e 19       		.uleb128 0x19
+ 2800 014f 49       		.uleb128 0x49
+ 2801 0150 13       		.uleb128 0x13
+ 2802 0151 8701     		.uleb128 0x87
+ 2803 0153 19       		.uleb128 0x19
+ 2804 0154 11       		.uleb128 0x11
+ 2805 0155 01       		.uleb128 0x1
+ 2806 0156 12       		.uleb128 0x12
+ 2807 0157 06       		.uleb128 0x6
+ 2808 0158 40       		.uleb128 0x40
+ 2809 0159 18       		.uleb128 0x18
+ 2810 015a 9642     		.uleb128 0x2116
+ 2811 015c 19       		.uleb128 0x19
+ 2812 015d 01       		.uleb128 0x1
+ 2813 015e 13       		.uleb128 0x13
+ 2814 015f 00       		.byte	0
+ 2815 0160 00       		.byte	0
+ 2816 0161 1B       		.uleb128 0x1b
+ 2817 0162 34       		.uleb128 0x34
+ 2818 0163 00       		.byte	0
+ 2819 0164 03       		.uleb128 0x3
+ 2820 0165 0E       		.uleb128 0xe
+ 2821 0166 3A       		.uleb128 0x3a
+ 2822 0167 0B       		.uleb128 0xb
+ 2823 0168 3B       		.uleb128 0x3b
+ 2824 0169 0B       		.uleb128 0xb
+ 2825 016a 49       		.uleb128 0x49
+ 2826 016b 13       		.uleb128 0x13
+ 2827 016c 3F       		.uleb128 0x3f
+ 2828 016d 19       		.uleb128 0x19
+ 2829 016e 02       		.uleb128 0x2
+ 2830 016f 18       		.uleb128 0x18
+ 2831 0170 00       		.byte	0
+ 2832 0171 00       		.byte	0
+ 2833 0172 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 56
+
+
+ 2834 0173 2E       		.uleb128 0x2e
+ 2835 0174 00       		.byte	0
+ 2836 0175 3F       		.uleb128 0x3f
+ 2837 0176 19       		.uleb128 0x19
+ 2838 0177 3C       		.uleb128 0x3c
+ 2839 0178 19       		.uleb128 0x19
+ 2840 0179 6E       		.uleb128 0x6e
+ 2841 017a 0E       		.uleb128 0xe
+ 2842 017b 03       		.uleb128 0x3
+ 2843 017c 0E       		.uleb128 0xe
+ 2844 017d 3A       		.uleb128 0x3a
+ 2845 017e 0B       		.uleb128 0xb
+ 2846 017f 3B       		.uleb128 0x3b
+ 2847 0180 0B       		.uleb128 0xb
+ 2848 0181 00       		.byte	0
+ 2849 0182 00       		.byte	0
+ 2850 0183 1D       		.uleb128 0x1d
+ 2851 0184 2E       		.uleb128 0x2e
+ 2852 0185 00       		.byte	0
+ 2853 0186 3F       		.uleb128 0x3f
+ 2854 0187 19       		.uleb128 0x19
+ 2855 0188 3C       		.uleb128 0x3c
+ 2856 0189 19       		.uleb128 0x19
+ 2857 018a 6E       		.uleb128 0x6e
+ 2858 018b 0E       		.uleb128 0xe
+ 2859 018c 03       		.uleb128 0x3
+ 2860 018d 0E       		.uleb128 0xe
+ 2861 018e 00       		.byte	0
+ 2862 018f 00       		.byte	0
+ 2863 0190 00       		.byte	0
+ 2864              		.section	.debug_loc,"",%progbits
+ 2865              	.Ldebug_loc0:
+ 2866              	.LLST0:
+ 2867 0000 00000000 		.4byte	.LVL0
+ 2868 0004 08000000 		.4byte	.LVL2
+ 2869 0008 0100     		.2byte	0x1
+ 2870 000a 50       		.byte	0x50
+ 2871 000b 08000000 		.4byte	.LVL2
+ 2872 000f 2E000000 		.4byte	.LFE32
+ 2873 0013 0400     		.2byte	0x4
+ 2874 0015 F3       		.byte	0xf3
+ 2875 0016 01       		.uleb128 0x1
+ 2876 0017 50       		.byte	0x50
+ 2877 0018 9F       		.byte	0x9f
+ 2878 0019 00000000 		.4byte	0
+ 2879 001d 00000000 		.4byte	0
+ 2880              	.LLST1:
+ 2881 0021 04000000 		.4byte	.LVL1
+ 2882 0025 08000000 		.4byte	.LVL2
+ 2883 0029 0200     		.2byte	0x2
+ 2884 002b 30       		.byte	0x30
+ 2885 002c 9F       		.byte	0x9f
+ 2886 002d 08000000 		.4byte	.LVL2
+ 2887 0031 26000000 		.4byte	.LVL6
+ 2888 0035 0100     		.2byte	0x1
+ 2889 0037 54       		.byte	0x54
+ 2890 0038 28000000 		.4byte	.LVL7
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 57
+
+
+ 2891 003c 2C000000 		.4byte	.LVL8
+ 2892 0040 0100     		.2byte	0x1
+ 2893 0042 54       		.byte	0x54
+ 2894 0043 00000000 		.4byte	0
+ 2895 0047 00000000 		.4byte	0
+ 2896              	.LLST2:
+ 2897 004b 00000000 		.4byte	.LVL13
+ 2898 004f 09000000 		.4byte	.LVL14-1
+ 2899 0053 0100     		.2byte	0x1
+ 2900 0055 50       		.byte	0x50
+ 2901 0056 09000000 		.4byte	.LVL14-1
+ 2902 005a 18000000 		.4byte	.LFE34
+ 2903 005e 0400     		.2byte	0x4
+ 2904 0060 F3       		.byte	0xf3
+ 2905 0061 01       		.uleb128 0x1
+ 2906 0062 50       		.byte	0x50
+ 2907 0063 9F       		.byte	0x9f
+ 2908 0064 00000000 		.4byte	0
+ 2909 0068 00000000 		.4byte	0
+ 2910              	.LLST3:
+ 2911 006c 00000000 		.4byte	.LVL13
+ 2912 0070 09000000 		.4byte	.LVL14-1
+ 2913 0074 0100     		.2byte	0x1
+ 2914 0076 51       		.byte	0x51
+ 2915 0077 09000000 		.4byte	.LVL14-1
+ 2916 007b 18000000 		.4byte	.LFE34
+ 2917 007f 0400     		.2byte	0x4
+ 2918 0081 F3       		.byte	0xf3
+ 2919 0082 01       		.uleb128 0x1
+ 2920 0083 51       		.byte	0x51
+ 2921 0084 9F       		.byte	0x9f
+ 2922 0085 00000000 		.4byte	0
+ 2923 0089 00000000 		.4byte	0
+ 2924              	.LLST4:
+ 2925 008d 00000000 		.4byte	.LVL13
+ 2926 0091 09000000 		.4byte	.LVL14-1
+ 2927 0095 0100     		.2byte	0x1
+ 2928 0097 52       		.byte	0x52
+ 2929 0098 09000000 		.4byte	.LVL14-1
+ 2930 009c 18000000 		.4byte	.LFE34
+ 2931 00a0 0400     		.2byte	0x4
+ 2932 00a2 F3       		.byte	0xf3
+ 2933 00a3 01       		.uleb128 0x1
+ 2934 00a4 52       		.byte	0x52
+ 2935 00a5 9F       		.byte	0x9f
+ 2936 00a6 00000000 		.4byte	0
+ 2937 00aa 00000000 		.4byte	0
+ 2938              	.LLST5:
+ 2939 00ae 00000000 		.4byte	.LVL17
+ 2940 00b2 04000000 		.4byte	.LVL18
+ 2941 00b6 0200     		.2byte	0x2
+ 2942 00b8 30       		.byte	0x30
+ 2943 00b9 9F       		.byte	0x9f
+ 2944 00ba 04000000 		.4byte	.LVL18
+ 2945 00be 0C000000 		.4byte	.LVL19
+ 2946 00c2 0100     		.2byte	0x1
+ 2947 00c4 53       		.byte	0x53
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 58
+
+
+ 2948 00c5 0E000000 		.4byte	.LVL20
+ 2949 00c9 18000000 		.4byte	.LFE35
+ 2950 00cd 0100     		.2byte	0x1
+ 2951 00cf 53       		.byte	0x53
+ 2952 00d0 00000000 		.4byte	0
+ 2953 00d4 00000000 		.4byte	0
+ 2954              	.LLST6:
+ 2955 00d8 14000000 		.4byte	.LVL23
+ 2956 00dc 18000000 		.4byte	.LVL24
+ 2957 00e0 0200     		.2byte	0x2
+ 2958 00e2 30       		.byte	0x30
+ 2959 00e3 9F       		.byte	0x9f
+ 2960 00e4 18000000 		.4byte	.LVL24
+ 2961 00e8 34000000 		.4byte	.LVL29
+ 2962 00ec 0100     		.2byte	0x1
+ 2963 00ee 51       		.byte	0x51
+ 2964 00ef 36000000 		.4byte	.LVL30
+ 2965 00f3 40000000 		.4byte	.LFE36
+ 2966 00f7 0100     		.2byte	0x1
+ 2967 00f9 51       		.byte	0x51
+ 2968 00fa 00000000 		.4byte	0
+ 2969 00fe 00000000 		.4byte	0
+ 2970              	.LLST7:
+ 2971 0102 18000000 		.4byte	.LVL24
+ 2972 0106 28000000 		.4byte	.LVL25
+ 2973 010a 0100     		.2byte	0x1
+ 2974 010c 52       		.byte	0x52
+ 2975 010d 2A000000 		.4byte	.LVL26
+ 2976 0111 2C000000 		.4byte	.LVL27
+ 2977 0115 0100     		.2byte	0x1
+ 2978 0117 52       		.byte	0x52
+ 2979 0118 2E000000 		.4byte	.LVL28
+ 2980 011c 36000000 		.4byte	.LVL30
+ 2981 0120 0100     		.2byte	0x1
+ 2982 0122 52       		.byte	0x52
+ 2983 0123 00000000 		.4byte	0
+ 2984 0127 00000000 		.4byte	0
+ 2985              	.LLST8:
+ 2986 012b 04000000 		.4byte	.LVL31
+ 2987 012f 0A000000 		.4byte	.LVL32
+ 2988 0133 0200     		.2byte	0x2
+ 2989 0135 30       		.byte	0x30
+ 2990 0136 9F       		.byte	0x9f
+ 2991 0137 0A000000 		.4byte	.LVL32
+ 2992 013b 82000000 		.4byte	.LVL46
+ 2993 013f 0100     		.2byte	0x1
+ 2994 0141 55       		.byte	0x55
+ 2995 0142 86000000 		.4byte	.LVL47
+ 2996 0146 DA000000 		.4byte	.LVL61
+ 2997 014a 0100     		.2byte	0x1
+ 2998 014c 55       		.byte	0x55
+ 2999 014d 00000000 		.4byte	0
+ 3000 0151 00000000 		.4byte	0
+ 3001              	.LLST9:
+ 3002 0155 04000000 		.4byte	.LVL31
+ 3003 0159 0A000000 		.4byte	.LVL32
+ 3004 015d 0200     		.2byte	0x2
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 59
+
+
+ 3005 015f 30       		.byte	0x30
+ 3006 0160 9F       		.byte	0x9f
+ 3007 0161 0A000000 		.4byte	.LVL32
+ 3008 0165 D0000000 		.4byte	.LVL58
+ 3009 0169 0100     		.2byte	0x1
+ 3010 016b 54       		.byte	0x54
+ 3011 016c D2000000 		.4byte	.LVL59
+ 3012 0170 DA000000 		.4byte	.LVL60
+ 3013 0174 0100     		.2byte	0x1
+ 3014 0176 54       		.byte	0x54
+ 3015 0177 00000000 		.4byte	0
+ 3016 017b 00000000 		.4byte	0
+ 3017              	.LLST10:
+ 3018 017f 5E000000 		.4byte	.LVL44
+ 3019 0183 62000000 		.4byte	.LVL45
+ 3020 0187 0200     		.2byte	0x2
+ 3021 0189 30       		.byte	0x30
+ 3022 018a 9F       		.byte	0x9f
+ 3023 018b 62000000 		.4byte	.LVL45
+ 3024 018f 94000000 		.4byte	.LVL48
+ 3025 0193 0100     		.2byte	0x1
+ 3026 0195 52       		.byte	0x52
+ 3027 0196 96000000 		.4byte	.LVL49
+ 3028 019a A3000000 		.4byte	.LVL50-1
+ 3029 019e 0100     		.2byte	0x1
+ 3030 01a0 52       		.byte	0x52
+ 3031 01a1 AC000000 		.4byte	.LVL52
+ 3032 01a5 B5000000 		.4byte	.LVL53-1
+ 3033 01a9 0100     		.2byte	0x1
+ 3034 01ab 52       		.byte	0x52
+ 3035 01ac BE000000 		.4byte	.LVL55
+ 3036 01b0 C7000000 		.4byte	.LVL56-1
+ 3037 01b4 0100     		.2byte	0x1
+ 3038 01b6 52       		.byte	0x52
+ 3039 01b7 00000000 		.4byte	0
+ 3040 01bb 00000000 		.4byte	0
+ 3041              	.LLST11:
+ 3042 01bf 1E000000 		.4byte	.LVL64
+ 3043 01c3 40000000 		.4byte	.LVL67
+ 3044 01c7 0200     		.2byte	0x2
+ 3045 01c9 30       		.byte	0x30
+ 3046 01ca 9F       		.byte	0x9f
+ 3047 01cb 40000000 		.4byte	.LVL67
+ 3048 01cf 4C000000 		.4byte	.LVL70
+ 3049 01d3 0100     		.2byte	0x1
+ 3050 01d5 55       		.byte	0x55
+ 3051 01d6 4C000000 		.4byte	.LVL70
+ 3052 01da 6A000000 		.4byte	.LVL74
+ 3053 01de 0200     		.2byte	0x2
+ 3054 01e0 30       		.byte	0x30
+ 3055 01e1 9F       		.byte	0x9f
+ 3056 01e2 6A000000 		.4byte	.LVL74
+ 3057 01e6 E6000000 		.4byte	.LVL84
+ 3058 01ea 0100     		.2byte	0x1
+ 3059 01ec 55       		.byte	0x55
+ 3060 01ed E6000000 		.4byte	.LVL84
+ 3061 01f1 F4000000 		.4byte	.LVL87
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 60
+
+
+ 3062 01f5 0200     		.2byte	0x2
+ 3063 01f7 32       		.byte	0x32
+ 3064 01f8 9F       		.byte	0x9f
+ 3065 01f9 F4000000 		.4byte	.LVL87
+ 3066 01fd 04010000 		.4byte	.LVL90
+ 3067 0201 0200     		.2byte	0x2
+ 3068 0203 31       		.byte	0x31
+ 3069 0204 9F       		.byte	0x9f
+ 3070 0205 04010000 		.4byte	.LVL90
+ 3071 0209 9C010000 		.4byte	.LVL107
+ 3072 020d 0100     		.2byte	0x1
+ 3073 020f 55       		.byte	0x55
+ 3074 0210 9C010000 		.4byte	.LVL107
+ 3075 0214 A6010000 		.4byte	.LVL109
+ 3076 0218 0200     		.2byte	0x2
+ 3077 021a 33       		.byte	0x33
+ 3078 021b 9F       		.byte	0x9f
+ 3079 021c A6010000 		.4byte	.LVL109
+ 3080 0220 E2010000 		.4byte	.LVL118
+ 3081 0224 0100     		.2byte	0x1
+ 3082 0226 55       		.byte	0x55
+ 3083 0227 E2010000 		.4byte	.LVL118
+ 3084 022b F4010000 		.4byte	.LVL120
+ 3085 022f 0200     		.2byte	0x2
+ 3086 0231 34       		.byte	0x34
+ 3087 0232 9F       		.byte	0x9f
+ 3088 0233 F4010000 		.4byte	.LVL120
+ 3089 0237 58030000 		.4byte	.LFE38
+ 3090 023b 0100     		.2byte	0x1
+ 3091 023d 55       		.byte	0x55
+ 3092 023e 00000000 		.4byte	0
+ 3093 0242 00000000 		.4byte	0
+ 3094              	.LLST12:
+ 3095 0246 1E000000 		.4byte	.LVL64
+ 3096 024a 40000000 		.4byte	.LVL67
+ 3097 024e 0200     		.2byte	0x2
+ 3098 0250 30       		.byte	0x30
+ 3099 0251 9F       		.byte	0x9f
+ 3100 0252 40000000 		.4byte	.LVL67
+ 3101 0256 A0010000 		.4byte	.LVL108
+ 3102 025a 0100     		.2byte	0x1
+ 3103 025c 57       		.byte	0x57
+ 3104 025d AA010000 		.4byte	.LVL110
+ 3105 0261 58030000 		.4byte	.LFE38
+ 3106 0265 0100     		.2byte	0x1
+ 3107 0267 57       		.byte	0x57
+ 3108 0268 00000000 		.4byte	0
+ 3109 026c 00000000 		.4byte	0
+ 3110              	.LLST13:
+ 3111 0270 1E000000 		.4byte	.LVL64
+ 3112 0274 40000000 		.4byte	.LVL67
+ 3113 0278 0200     		.2byte	0x2
+ 3114 027a 30       		.byte	0x30
+ 3115 027b 9F       		.byte	0x9f
+ 3116 027c 40000000 		.4byte	.LVL67
+ 3117 0280 F4000000 		.4byte	.LVL87
+ 3118 0284 0200     		.2byte	0x2
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 61
+
+
+ 3119 0286 91       		.byte	0x91
+ 3120 0287 4C       		.sleb128 -52
+ 3121 0288 F4000000 		.4byte	.LVL87
+ 3122 028c 04010000 		.4byte	.LVL90
+ 3123 0290 0400     		.2byte	0x4
+ 3124 0292 0A       		.byte	0xa
+ 3125 0293 983A     		.2byte	0x3a98
+ 3126 0295 9F       		.byte	0x9f
+ 3127 0296 04010000 		.4byte	.LVL90
+ 3128 029a 30010000 		.4byte	.LVL93
+ 3129 029e 0200     		.2byte	0x2
+ 3130 02a0 91       		.byte	0x91
+ 3131 02a1 4C       		.sleb128 -52
+ 3132 02a2 30010000 		.4byte	.LVL93
+ 3133 02a6 32010000 		.4byte	.LVL94
+ 3134 02aa 0100     		.2byte	0x1
+ 3135 02ac 52       		.byte	0x52
+ 3136 02ad 32010000 		.4byte	.LVL94
+ 3137 02b1 9C010000 		.4byte	.LVL107
+ 3138 02b5 0200     		.2byte	0x2
+ 3139 02b7 91       		.byte	0x91
+ 3140 02b8 4C       		.sleb128 -52
+ 3141 02b9 9C010000 		.4byte	.LVL107
+ 3142 02bd A6010000 		.4byte	.LVL109
+ 3143 02c1 0200     		.2byte	0x2
+ 3144 02c3 30       		.byte	0x30
+ 3145 02c4 9F       		.byte	0x9f
+ 3146 02c5 A6010000 		.4byte	.LVL109
+ 3147 02c9 04020000 		.4byte	.LVL121
+ 3148 02cd 0200     		.2byte	0x2
+ 3149 02cf 91       		.byte	0x91
+ 3150 02d0 4C       		.sleb128 -52
+ 3151 02d1 04020000 		.4byte	.LVL121
+ 3152 02d5 06020000 		.4byte	.LVL122
+ 3153 02d9 0100     		.2byte	0x1
+ 3154 02db 53       		.byte	0x53
+ 3155 02dc 06020000 		.4byte	.LVL122
+ 3156 02e0 1A020000 		.4byte	.LVL126
+ 3157 02e4 0200     		.2byte	0x2
+ 3158 02e6 91       		.byte	0x91
+ 3159 02e7 4C       		.sleb128 -52
+ 3160 02e8 1A020000 		.4byte	.LVL126
+ 3161 02ec 38020000 		.4byte	.LVL130
+ 3162 02f0 0100     		.2byte	0x1
+ 3163 02f2 54       		.byte	0x54
+ 3164 02f3 38020000 		.4byte	.LVL130
+ 3165 02f7 58030000 		.4byte	.LFE38
+ 3166 02fb 0200     		.2byte	0x2
+ 3167 02fd 91       		.byte	0x91
+ 3168 02fe 4C       		.sleb128 -52
+ 3169 02ff 00000000 		.4byte	0
+ 3170 0303 00000000 		.4byte	0
+ 3171              	.LLST14:
+ 3172 0307 28000000 		.4byte	.LVL65
+ 3173 030b 40000000 		.4byte	.LVL67
+ 3174 030f 0200     		.2byte	0x2
+ 3175 0311 30       		.byte	0x30
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 62
+
+
+ 3176 0312 9F       		.byte	0x9f
+ 3177 0313 40000000 		.4byte	.LVL67
+ 3178 0317 4C000000 		.4byte	.LVL70
+ 3179 031b 0100     		.2byte	0x1
+ 3180 031d 58       		.byte	0x58
+ 3181 031e 4C000000 		.4byte	.LVL70
+ 3182 0322 6A000000 		.4byte	.LVL74
+ 3183 0326 0200     		.2byte	0x2
+ 3184 0328 30       		.byte	0x30
+ 3185 0329 9F       		.byte	0x9f
+ 3186 032a 6A000000 		.4byte	.LVL74
+ 3187 032e C0000000 		.4byte	.LVL81
+ 3188 0332 0100     		.2byte	0x1
+ 3189 0334 58       		.byte	0x58
+ 3190 0335 C0000000 		.4byte	.LVL81
+ 3191 0339 CA000000 		.4byte	.LVL82
+ 3192 033d 0100     		.2byte	0x1
+ 3193 033f 53       		.byte	0x53
+ 3194 0340 CA000000 		.4byte	.LVL82
+ 3195 0344 F0000000 		.4byte	.LVL86
+ 3196 0348 0100     		.2byte	0x1
+ 3197 034a 58       		.byte	0x58
+ 3198 034b F4000000 		.4byte	.LVL87
+ 3199 034f FC000000 		.4byte	.LVL89
+ 3200 0353 0100     		.2byte	0x1
+ 3201 0355 58       		.byte	0x58
+ 3202 0356 04010000 		.4byte	.LVL90
+ 3203 035a E2010000 		.4byte	.LVL118
+ 3204 035e 0100     		.2byte	0x1
+ 3205 0360 58       		.byte	0x58
+ 3206 0361 E2010000 		.4byte	.LVL118
+ 3207 0365 F4010000 		.4byte	.LVL120
+ 3208 0369 0200     		.2byte	0x2
+ 3209 036b 30       		.byte	0x30
+ 3210 036c 9F       		.byte	0x9f
+ 3211 036d F4010000 		.4byte	.LVL120
+ 3212 0371 A8020000 		.4byte	.LVL140
+ 3213 0375 0100     		.2byte	0x1
+ 3214 0377 58       		.byte	0x58
+ 3215 0378 A8020000 		.4byte	.LVL140
+ 3216 037c B2020000 		.4byte	.LVL141
+ 3217 0380 0100     		.2byte	0x1
+ 3218 0382 53       		.byte	0x53
+ 3219 0383 B2020000 		.4byte	.LVL141
+ 3220 0387 58030000 		.4byte	.LFE38
+ 3221 038b 0100     		.2byte	0x1
+ 3222 038d 58       		.byte	0x58
+ 3223 038e 00000000 		.4byte	0
+ 3224 0392 00000000 		.4byte	0
+ 3225              	.LLST15:
+ 3226 0396 28000000 		.4byte	.LVL65
+ 3227 039a 40000000 		.4byte	.LVL67
+ 3228 039e 0200     		.2byte	0x2
+ 3229 03a0 30       		.byte	0x30
+ 3230 03a1 9F       		.byte	0x9f
+ 3231 03a2 40000000 		.4byte	.LVL67
+ 3232 03a6 E6000000 		.4byte	.LVL84
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 63
+
+
+ 3233 03aa 0100     		.2byte	0x1
+ 3234 03ac 56       		.byte	0x56
+ 3235 03ad E6000000 		.4byte	.LVL84
+ 3236 03b1 F4000000 		.4byte	.LVL87
+ 3237 03b5 0200     		.2byte	0x2
+ 3238 03b7 30       		.byte	0x30
+ 3239 03b8 9F       		.byte	0x9f
+ 3240 03b9 F4000000 		.4byte	.LVL87
+ 3241 03bd 96010000 		.4byte	.LVL105
+ 3242 03c1 0100     		.2byte	0x1
+ 3243 03c3 56       		.byte	0x56
+ 3244 03c4 98010000 		.4byte	.LVL106
+ 3245 03c8 F8020000 		.4byte	.LVL148
+ 3246 03cc 0100     		.2byte	0x1
+ 3247 03ce 56       		.byte	0x56
+ 3248 03cf FA020000 		.4byte	.LVL149
+ 3249 03d3 58030000 		.4byte	.LFE38
+ 3250 03d7 0100     		.2byte	0x1
+ 3251 03d9 56       		.byte	0x56
+ 3252 03da 00000000 		.4byte	0
+ 3253 03de 00000000 		.4byte	0
+ 3254              	.LLST16:
+ 3255 03e2 28000000 		.4byte	.LVL65
+ 3256 03e6 40000000 		.4byte	.LVL67
+ 3257 03ea 0200     		.2byte	0x2
+ 3258 03ec 30       		.byte	0x30
+ 3259 03ed 9F       		.byte	0x9f
+ 3260 03ee 40000000 		.4byte	.LVL67
+ 3261 03f2 E2010000 		.4byte	.LVL118
+ 3262 03f6 0100     		.2byte	0x1
+ 3263 03f8 59       		.byte	0x59
+ 3264 03f9 E2010000 		.4byte	.LVL118
+ 3265 03fd F4010000 		.4byte	.LVL120
+ 3266 0401 0200     		.2byte	0x2
+ 3267 0403 30       		.byte	0x30
+ 3268 0404 9F       		.byte	0x9f
+ 3269 0405 F4010000 		.4byte	.LVL120
+ 3270 0409 58030000 		.4byte	.LFE38
+ 3271 040d 0100     		.2byte	0x1
+ 3272 040f 59       		.byte	0x59
+ 3273 0410 00000000 		.4byte	0
+ 3274 0414 00000000 		.4byte	0
+ 3275              	.LLST17:
+ 3276 0418 48000000 		.4byte	.LVL69
+ 3277 041c 50010000 		.4byte	.LVL99
+ 3278 0420 0200     		.2byte	0x2
+ 3279 0422 7D       		.byte	0x7d
+ 3280 0423 00       		.sleb128 0
+ 3281 0424 78010000 		.4byte	.LVL102
+ 3282 0428 16020000 		.4byte	.LVL125
+ 3283 042c 0200     		.2byte	0x2
+ 3284 042e 7D       		.byte	0x7d
+ 3285 042f 00       		.sleb128 0
+ 3286 0430 86020000 		.4byte	.LVL137
+ 3287 0434 24030000 		.4byte	.LVL155
+ 3288 0438 0200     		.2byte	0x2
+ 3289 043a 7D       		.byte	0x7d
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 64
+
+
+ 3290 043b 00       		.sleb128 0
+ 3291 043c 00000000 		.4byte	0
+ 3292 0440 00000000 		.4byte	0
+ 3293              	.LLST18:
+ 3294 0444 46010000 		.4byte	.LVL98
+ 3295 0448 55010000 		.4byte	.LVL100-1
+ 3296 044c 0100     		.2byte	0x1
+ 3297 044e 52       		.byte	0x52
+ 3298 044f 55010000 		.4byte	.LVL100-1
+ 3299 0453 78010000 		.4byte	.LVL102
+ 3300 0457 0200     		.2byte	0x2
+ 3301 0459 7D       		.byte	0x7d
+ 3302 045a 00       		.sleb128 0
+ 3303 045b 00000000 		.4byte	0
+ 3304 045f 00000000 		.4byte	0
+ 3305              	.LLST19:
+ 3306 0463 86010000 		.4byte	.LVL104
+ 3307 0467 D0010000 		.4byte	.LVL115
+ 3308 046b 0600     		.2byte	0x6
+ 3309 046d 03       		.byte	0x3
+ 3310 046e 08000000 		.4byte	.LC13
+ 3311 0472 9F       		.byte	0x9f
+ 3312 0473 00000000 		.4byte	0
+ 3313 0477 00000000 		.4byte	0
+ 3314              	.LLST20:
+ 3315 047b 16020000 		.4byte	.LVL125
+ 3316 047f 1C020000 		.4byte	.LVL127
+ 3317 0483 0100     		.2byte	0x1
+ 3318 0485 50       		.byte	0x50
+ 3319 0486 1C020000 		.4byte	.LVL127
+ 3320 048a 48020000 		.4byte	.LVL132
+ 3321 048e 0200     		.2byte	0x2
+ 3322 0490 7D       		.byte	0x7d
+ 3323 0491 00       		.sleb128 0
+ 3324 0492 00000000 		.4byte	0
+ 3325 0496 00000000 		.4byte	0
+ 3326              	.LLST21:
+ 3327 049a 86000000 		.4byte	.LVL76
+ 3328 049e 8A000000 		.4byte	.LVL77
+ 3329 04a2 0200     		.2byte	0x2
+ 3330 04a4 30       		.byte	0x30
+ 3331 04a5 9F       		.byte	0x9f
+ 3332 04a6 8A000000 		.4byte	.LVL77
+ 3333 04aa A6000000 		.4byte	.LVL78
+ 3334 04ae 0100     		.2byte	0x1
+ 3335 04b0 53       		.byte	0x53
+ 3336 04b1 A8000000 		.4byte	.LVL79
+ 3337 04b5 B0000000 		.4byte	.LVL80
+ 3338 04b9 0100     		.2byte	0x1
+ 3339 04bb 53       		.byte	0x53
+ 3340 04bc 00000000 		.4byte	0
+ 3341 04c0 00000000 		.4byte	0
+ 3342              	.LLST22:
+ 3343 04c4 AA010000 		.4byte	.LVL110
+ 3344 04c8 AE010000 		.4byte	.LVL111
+ 3345 04cc 0200     		.2byte	0x2
+ 3346 04ce 30       		.byte	0x30
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 65
+
+
+ 3347 04cf 9F       		.byte	0x9f
+ 3348 04d0 AE010000 		.4byte	.LVL111
+ 3349 04d4 C8010000 		.4byte	.LVL113
+ 3350 04d8 0100     		.2byte	0x1
+ 3351 04da 53       		.byte	0x53
+ 3352 04db CA010000 		.4byte	.LVL114
+ 3353 04df D0010000 		.4byte	.LVL115
+ 3354 04e3 0100     		.2byte	0x1
+ 3355 04e5 53       		.byte	0x53
+ 3356 04e6 00000000 		.4byte	0
+ 3357 04ea 00000000 		.4byte	0
+ 3358              	.LLST23:
+ 3359 04ee BE010000 		.4byte	.LVL112
+ 3360 04f2 CA010000 		.4byte	.LVL114
+ 3361 04f6 0100     		.2byte	0x1
+ 3362 04f8 50       		.byte	0x50
+ 3363 04f9 00000000 		.4byte	0
+ 3364 04fd 00000000 		.4byte	0
+ 3365              	.LLST24:
+ 3366 0501 CC020000 		.4byte	.LVL144
+ 3367 0505 E0020000 		.4byte	.LVL145
+ 3368 0509 0100     		.2byte	0x1
+ 3369 050b 53       		.byte	0x53
+ 3370 050c E2020000 		.4byte	.LVL146
+ 3371 0510 E8020000 		.4byte	.LVL147
+ 3372 0514 0100     		.2byte	0x1
+ 3373 0516 53       		.byte	0x53
+ 3374 0517 00000000 		.4byte	0
+ 3375 051b 00000000 		.4byte	0
+ 3376              	.LLST25:
+ 3377 051f 04030000 		.4byte	.LVL151
+ 3378 0523 08030000 		.4byte	.LVL152
+ 3379 0527 0200     		.2byte	0x2
+ 3380 0529 30       		.byte	0x30
+ 3381 052a 9F       		.byte	0x9f
+ 3382 052b 08030000 		.4byte	.LVL152
+ 3383 052f 1E030000 		.4byte	.LVL153
+ 3384 0533 0100     		.2byte	0x1
+ 3385 0535 53       		.byte	0x53
+ 3386 0536 20030000 		.4byte	.LVL154
+ 3387 053a 24030000 		.4byte	.LVL155
+ 3388 053e 0100     		.2byte	0x1
+ 3389 0540 53       		.byte	0x53
+ 3390 0541 00000000 		.4byte	0
+ 3391 0545 00000000 		.4byte	0
+ 3392              		.section	.debug_aranges,"",%progbits
+ 3393 0000 4C000000 		.4byte	0x4c
+ 3394 0004 0200     		.2byte	0x2
+ 3395 0006 00000000 		.4byte	.Ldebug_info0
+ 3396 000a 04       		.byte	0x4
+ 3397 000b 00       		.byte	0
+ 3398 000c 0000     		.2byte	0
+ 3399 000e 0000     		.2byte	0
+ 3400 0010 00000000 		.4byte	.LFB32
+ 3401 0014 2E000000 		.4byte	.LFE32-.LFB32
+ 3402 0018 00000000 		.4byte	.LFB33
+ 3403 001c 50000000 		.4byte	.LFE33-.LFB33
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 66
+
+
+ 3404 0020 00000000 		.4byte	.LFB34
+ 3405 0024 18000000 		.4byte	.LFE34-.LFB34
+ 3406 0028 00000000 		.4byte	.LFB35
+ 3407 002c 18000000 		.4byte	.LFE35-.LFB35
+ 3408 0030 00000000 		.4byte	.LFB36
+ 3409 0034 40000000 		.4byte	.LFE36-.LFB36
+ 3410 0038 00000000 		.4byte	.LFB37
+ 3411 003c E4000000 		.4byte	.LFE37-.LFB37
+ 3412 0040 00000000 		.4byte	.LFB38
+ 3413 0044 58030000 		.4byte	.LFE38-.LFB38
+ 3414 0048 00000000 		.4byte	0
+ 3415 004c 00000000 		.4byte	0
+ 3416              		.section	.debug_ranges,"",%progbits
+ 3417              	.Ldebug_ranges0:
+ 3418 0000 18000000 		.4byte	.LBB5
+ 3419 0004 2C000000 		.4byte	.LBE5
+ 3420 0008 2E000000 		.4byte	.LBB6
+ 3421 000c 32000000 		.4byte	.LBE6
+ 3422 0010 00000000 		.4byte	0
+ 3423 0014 00000000 		.4byte	0
+ 3424 0018 04000000 		.4byte	.LBB7
+ 3425 001c 06000000 		.4byte	.LBE7
+ 3426 0020 08000000 		.4byte	.LBB10
+ 3427 0024 D6000000 		.4byte	.LBE10
+ 3428 0028 00000000 		.4byte	0
+ 3429 002c 00000000 		.4byte	0
+ 3430 0030 00000000 		.4byte	.LFB32
+ 3431 0034 2E000000 		.4byte	.LFE32
+ 3432 0038 00000000 		.4byte	.LFB33
+ 3433 003c 50000000 		.4byte	.LFE33
+ 3434 0040 00000000 		.4byte	.LFB34
+ 3435 0044 18000000 		.4byte	.LFE34
+ 3436 0048 00000000 		.4byte	.LFB35
+ 3437 004c 18000000 		.4byte	.LFE35
+ 3438 0050 00000000 		.4byte	.LFB36
+ 3439 0054 40000000 		.4byte	.LFE36
+ 3440 0058 00000000 		.4byte	.LFB37
+ 3441 005c E4000000 		.4byte	.LFE37
+ 3442 0060 00000000 		.4byte	.LFB38
+ 3443 0064 58030000 		.4byte	.LFE38
+ 3444 0068 00000000 		.4byte	0
+ 3445 006c 00000000 		.4byte	0
+ 3446              		.section	.debug_line,"",%progbits
+ 3447              	.Ldebug_line0:
+ 3448 0000 15040000 		.section	.debug_str,"MS",%progbits,1
+ 3448      02001502 
+ 3448      00000201 
+ 3448      FB0E0D00 
+ 3448      01010101 
+ 3449              	.LASF53:
+ 3450 0000 4C45445F 		.ascii	"LED_B_Write\000"
+ 3450      425F5772 
+ 3450      69746500 
+ 3451              	.LASF44:
+ 3452 000c 6C617374 		.ascii	"last_keys\000"
+ 3452      5F6B6579 
+ 3452      7300
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 67
+
+
+ 3453              	.LASF36:
+ 3454 0016 70696E5F 		.ascii	"pin_buf\000"
+ 3454      62756600 
+ 3455              	.LASF72:
+ 3456 001e 6765745F 		.ascii	"get_key\000"
+ 3456      6B657900 
+ 3457              	.LASF18:
+ 3458 0026 53544154 		.ascii	"STATE_LOCKED\000"
+ 3458      455F4C4F 
+ 3458      434B4544 
+ 3458      00
+ 3459              	.LASF33:
+ 3460 0033 63757272 		.ascii	"current_state\000"
+ 3460      656E745F 
+ 3460      73746174 
+ 3460      6500
+ 3461              	.LASF2:
+ 3462 0041 73686F72 		.ascii	"short int\000"
+ 3462      7420696E 
+ 3462      7400
+ 3463              	.LASF32:
+ 3464 004b 726F7773 		.ascii	"rows\000"
+ 3464      00
+ 3465              	.LASF17:
+ 3466 0050 73697A65 		.ascii	"sizetype\000"
+ 3466      74797065 
+ 3466      00
+ 3467              	.LASF35:
+ 3468 0059 61637469 		.ascii	"action_timer_ms\000"
+ 3468      6F6E5F74 
+ 3468      696D6572 
+ 3468      5F6D7300 
+ 3469              	.LASF24:
+ 3470 0069 48433539 		.ascii	"HC595_sendByte\000"
+ 3470      355F7365 
+ 3470      6E644279 
+ 3470      746500
+ 3471              	.LASF73:
+ 3472 0078 6D61696E 		.ascii	"main\000"
+ 3472      00
+ 3473              	.LASF8:
+ 3474 007d 6C6F6E67 		.ascii	"long long int\000"
+ 3474      206C6F6E 
+ 3474      6720696E 
+ 3474      7400
+ 3475              	.LASF6:
+ 3476 008b 5F5F7569 		.ascii	"__uint32_t\000"
+ 3476      6E743332 
+ 3476      5F7400
+ 3477              	.LASF65:
+ 3478 0096 7374726E 		.ascii	"strncmp\000"
+ 3478      636D7000 
+ 3479              	.LASF47:
+ 3480 009e 73797374 		.ascii	"system_tick_ms\000"
+ 3480      656D5F74 
+ 3480      69636B5F 
+ 3480      6D7300
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 68
+
+
+ 3481              	.LASF51:
+ 3482 00ad 4C45445F 		.ascii	"LED_R_Write\000"
+ 3482      525F5772 
+ 3482      69746500 
+ 3483              	.LASF11:
+ 3484 00b9 75696E74 		.ascii	"uint8_t\000"
+ 3484      385F7400 
+ 3485              	.LASF27:
+ 3486 00c1 7267625F 		.ascii	"rgb_set\000"
+ 3486      73657400 
+ 3487              	.LASF63:
+ 3488 00c9 524F575F 		.ascii	"ROW_2_Read\000"
+ 3488      325F5265 
+ 3488      616400
+ 3489              	.LASF56:
+ 3490 00d4 434F4C55 		.ascii	"COLUMN_2_SetDriveMode\000"
+ 3490      4D4E5F32 
+ 3490      5F536574 
+ 3490      44726976 
+ 3490      654D6F64 
+ 3491              	.LASF13:
+ 3492 00ea 666C6F61 		.ascii	"float\000"
+ 3492      7400
+ 3493              	.LASF14:
+ 3494 00f0 646F7562 		.ascii	"double\000"
+ 3494      6C6500
+ 3495              	.LASF48:
+ 3496 00f7 50696E5F 		.ascii	"Pin_DO_Write\000"
+ 3496      444F5F57 
+ 3496      72697465 
+ 3496      00
+ 3497              	.LASF61:
+ 3498 0104 524F575F 		.ascii	"ROW_0_Read\000"
+ 3498      305F5265 
+ 3498      616400
+ 3499              	.LASF34:
+ 3500 010f 6C617374 		.ascii	"last_action_ms\000"
+ 3500      5F616374 
+ 3500      696F6E5F 
+ 3500      6D7300
+ 3501              	.LASF74:
+ 3502 011e 6D656D73 		.ascii	"memset\000"
+ 3502      657400
+ 3503              	.LASF67:
+ 3504 0125 54696D65 		.ascii	"Timer_Start\000"
+ 3504      725F5374 
+ 3504      61727400 
+ 3505              	.LASF4:
+ 3506 0131 6C6F6E67 		.ascii	"long int\000"
+ 3506      20696E74 
+ 3506      00
+ 3507              	.LASF19:
+ 3508 013a 53544154 		.ascii	"STATE_PENALTY\000"
+ 3508      455F5045 
+ 3508      4E414C54 
+ 3508      5900
+ 3509              	.LASF7:
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 69
+
+
+ 3510 0148 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3510      20756E73 
+ 3510      69676E65 
+ 3510      6420696E 
+ 3510      7400
+ 3511              	.LASF23:
+ 3512 015a 73616665 		.ascii	"safe_state_t\000"
+ 3512      5F737461 
+ 3512      74655F74 
+ 3512      00
+ 3513              	.LASF21:
+ 3514 0167 53544154 		.ascii	"STATE_STOPWATCH\000"
+ 3514      455F5354 
+ 3514      4F505741 
+ 3514      54434800 
+ 3515              	.LASF55:
+ 3516 0177 434F4C55 		.ascii	"COLUMN_1_SetDriveMode\000"
+ 3516      4D4E5F31 
+ 3516      5F536574 
+ 3516      44726976 
+ 3516      654D6F64 
+ 3517              	.LASF59:
+ 3518 018d 434F4C55 		.ascii	"COLUMN_2_Write\000"
+ 3518      4D4E5F32 
+ 3518      5F577269 
+ 3518      746500
+ 3519              	.LASF29:
+ 3520 019c 636C6561 		.ascii	"clear_display\000"
+ 3520      725F6469 
+ 3520      73706C61 
+ 3520      7900
+ 3521              	.LASF16:
+ 3522 01aa 6C6F6E67 		.ascii	"long double\000"
+ 3522      20646F75 
+ 3522      626C6500 
+ 3523              	.LASF60:
+ 3524 01b6 43794465 		.ascii	"CyDelayUs\000"
+ 3524      6C617955 
+ 3524      7300
+ 3525              	.LASF1:
+ 3526 01c0 756E7369 		.ascii	"unsigned char\000"
+ 3526      676E6564 
+ 3526      20636861 
+ 3526      7200
+ 3527              	.LASF38:
+ 3528 01ce 7363726F 		.ascii	"scroll_step\000"
+ 3528      6C6C5F73 
+ 3528      74657000 
+ 3529              	.LASF0:
+ 3530 01da 7369676E 		.ascii	"signed char\000"
+ 3530      65642063 
+ 3530      68617200 
+ 3531              	.LASF9:
+ 3532 01e6 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3532      206C6F6E 
+ 3532      6720756E 
+ 3532      7369676E 
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 70
+
+
+ 3532      65642069 
+ 3533              	.LASF12:
+ 3534 01fd 75696E74 		.ascii	"uint32_t\000"
+ 3534      33325F74 
+ 3534      00
+ 3535              	.LASF46:
+ 3536 0206 64697370 		.ascii	"display_data\000"
+ 3536      6C61795F 
+ 3536      64617461 
+ 3536      00
+ 3537              	.LASF10:
+ 3538 0213 756E7369 		.ascii	"unsigned int\000"
+ 3538      676E6564 
+ 3538      20696E74 
+ 3538      00
+ 3539              	.LASF54:
+ 3540 0220 434F4C55 		.ascii	"COLUMN_0_SetDriveMode\000"
+ 3540      4D4E5F30 
+ 3540      5F536574 
+ 3540      44726976 
+ 3540      654D6F64 
+ 3541              	.LASF20:
+ 3542 0236 53544154 		.ascii	"STATE_OPEN_ANIM\000"
+ 3542      455F4F50 
+ 3542      454E5F41 
+ 3542      4E494D00 
+ 3543              	.LASF3:
+ 3544 0246 73686F72 		.ascii	"short unsigned int\000"
+ 3544      7420756E 
+ 3544      7369676E 
+ 3544      65642069 
+ 3544      6E7400
+ 3545              	.LASF15:
+ 3546 0259 63686172 		.ascii	"char\000"
+ 3546      00
+ 3547              	.LASF43:
+ 3548 025e 6B65795F 		.ascii	"key_map\000"
+ 3548      6D617000 
+ 3549              	.LASF39:
+ 3550 0266 69735F73 		.ascii	"is_scrolling\000"
+ 3550      63726F6C 
+ 3550      6C696E67 
+ 3550      00
+ 3551              	.LASF42:
+ 3552 0273 5F426F6F 		.ascii	"_Bool\000"
+ 3552      6C00
+ 3553              	.LASF28:
+ 3554 0279 64617461 		.ascii	"data\000"
+ 3554      00
+ 3555              	.LASF68:
+ 3556 027e 54696D65 		.ascii	"Timer_Int_StartEx\000"
+ 3556      725F496E 
+ 3556      745F5374 
+ 3556      61727445 
+ 3556      7800
+ 3557              	.LASF70:
+ 3558 0290 6D61696E 		.ascii	"main.c\000"
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 71
+
+
+ 3558      2E6300
+ 3559              	.LASF52:
+ 3560 0297 4C45445F 		.ascii	"LED_G_Write\000"
+ 3560      475F5772 
+ 3560      69746500 
+ 3561              	.LASF57:
+ 3562 02a3 434F4C55 		.ascii	"COLUMN_0_Write\000"
+ 3562      4D4E5F30 
+ 3562      5F577269 
+ 3562      746500
+ 3563              	.LASF64:
+ 3564 02b2 524F575F 		.ascii	"ROW_3_Read\000"
+ 3564      335F5265 
+ 3564      616400
+ 3565              	.LASF31:
+ 3566 02bd 70726573 		.ascii	"pressed\000"
+ 3566      73656400 
+ 3567              	.LASF26:
+ 3568 02c5 64696769 		.ascii	"digit_idx\000"
+ 3568      745F6964 
+ 3568      7800
+ 3569              	.LASF25:
+ 3570 02cf 54696D65 		.ascii	"Timer_Int_Handler\000"
+ 3570      725F496E 
+ 3570      745F4861 
+ 3570      6E646C65 
+ 3570      7200
+ 3571              	.LASF62:
+ 3572 02e1 524F575F 		.ascii	"ROW_1_Read\000"
+ 3572      315F5265 
+ 3572      616400
+ 3573              	.LASF71:
+ 3574 02ec 453A5C6C 		.ascii	"E:\\lab-mkr-1-main\\lab-mkr-1-main\\lab3_Skorobohat"
+ 3574      61622D6D 
+ 3574      6B722D31 
+ 3574      2D6D6169 
+ 3574      6E5C6C61 
+ 3575 031c 79695C53 		.ascii	"yi\\SkorobohatyiLab6.cydsn\000"
+ 3575      6B6F726F 
+ 3575      626F6861 
+ 3575      7479694C 
+ 3575      6162362E 
+ 3576              	.LASF45:
+ 3577 0336 61736369 		.ascii	"ascii_font\000"
+ 3577      695F666F 
+ 3577      6E7400
+ 3578              	.LASF50:
+ 3579 0341 50696E5F 		.ascii	"Pin_Latch_Write\000"
+ 3579      4C617463 
+ 3579      685F5772 
+ 3579      69746500 
+ 3580              	.LASF30:
+ 3581 0351 6D617472 		.ascii	"matrix_init\000"
+ 3581      69785F69 
+ 3581      6E697400 
+ 3582              	.LASF69:
+ 3583 035d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ARM GAS  C:\Users\statm\AppData\Local\Temp\ccceTS3e.s 			page 72
+
+
+ 3583      43313120 
+ 3583      352E342E 
+ 3583      31203230 
+ 3583      31363036 
+ 3584 0390 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 3584      20726576 
+ 3584      6973696F 
+ 3584      6E203233 
+ 3584      37373135 
+ 3585 03c3 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 3585      66756E63 
+ 3585      74696F6E 
+ 3585      2D736563 
+ 3585      74696F6E 
+ 3586              	.LASF22:
+ 3587 03eb 53544154 		.ascii	"STATE_MEMO\000"
+ 3587      455F4D45 
+ 3587      4D4F00
+ 3588              	.LASF40:
+ 3589 03f6 745F7365 		.ascii	"t_sec\000"
+ 3589      6300
+ 3590              	.LASF58:
+ 3591 03fc 434F4C55 		.ascii	"COLUMN_1_Write\000"
+ 3591      4D4E5F31 
+ 3591      5F577269 
+ 3591      746500
+ 3592              	.LASF41:
+ 3593 040b 73796D62 		.ascii	"symbol\000"
+ 3593      6F6C00
+ 3594              	.LASF66:
+ 3595 0412 43794465 		.ascii	"CyDelay\000"
+ 3595      6C617900 
+ 3596              	.LASF49:
+ 3597 041a 50696E5F 		.ascii	"Pin_CLK_Write\000"
+ 3597      434C4B5F 
+ 3597      57726974 
+ 3597      6500
+ 3598              	.LASF37:
+ 3599 0428 696E7075 		.ascii	"input_idx\000"
+ 3599      745F6964 
+ 3599      7800
+ 3600              	.LASF5:
+ 3601 0432 5F5F7569 		.ascii	"__uint8_t\000"
+ 3601      6E74385F 
+ 3601      7400
+ 3602              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
