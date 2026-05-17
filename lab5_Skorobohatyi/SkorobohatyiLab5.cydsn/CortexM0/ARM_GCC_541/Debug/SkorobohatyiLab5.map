@@ -1,0 +1,1183 @@
+Archive member included to satisfy reference by file (symbol)
+
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                              .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o (CyIntEnable)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+                              .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o (CySysWdtIsr)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (COLUMN_0_Read)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (COLUMN_1_Read)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (COLUMN_2_Read)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (ROW_0_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (ROW_1_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (ROW_2_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (ROW_3_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (Pin_Latch_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (Pin_CLK_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (Pin_DO_Write)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (Timer_Int_StartEx)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (Timer_Start)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+                              .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o) (CyDelayCycles)
+.\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+                              .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o) (CySetReg24)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+                              .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o) (__aeabi_uidiv)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+                              e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+                              .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o (__errno)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+                              e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o (exit)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                              e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o) (_global_impure_ptr)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                              e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o (__libc_init_array)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (memcpy)
+e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                              e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o (memset)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .data          0x00000000        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .text          0x00000000       0x78 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.extab     0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.exidx     0x00000000        0x8 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .text.ScanMatrixKeypad
+                0x00000000       0x98 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .data          0x00000000        0x4 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .text._exit    0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .text._sbrk    0x00000000       0x30 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .bss           0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysClkImoStart
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysClkImoStop
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysClkWriteHfclkDirect
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysEnablePumpClock
+                0x00000000       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysClkGetSysclkSource
+                0x00000000       0x1c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysClkWriteSysclkDiv
+                0x00000000       0x30 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysLvdDisable
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysLvdGetInterruptSource
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysLvdClearInterrupt
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysGetResetReason
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyDisableInts
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyEnableInts
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntGetState
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntDisable
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntSetPending
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntClearPending
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntSetSysVector
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntGetSysVector
+                0x00000000       0x1c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntGetVector
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntSetPriority
+                0x00000000       0x4c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyIntGetPriority
+                0x00000000       0x2c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySoftwareReset
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyDelay  0x00000000       0x30 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysLvdEnable
+                0x00000000       0x44 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyDelayFreq
+                0x00000000       0x4c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickStop
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickEnableInterrupt
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickEnable
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickDisableInterrupt
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickSetReload
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickGetReload
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickGetValue
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickGetCountFlag
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickServiceCallbacks
+                0x00000000       0x28 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickClear
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickInit
+                0x00000000       0x40 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickStart
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickSetCallback
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CySysTickGetCallback
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text.CyGetUniqueId
+                0x00000000       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkIloEnabled
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkIloStart
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkIloStartMeasurement
+                0x00000000       0x34 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkIloStopMeasurement
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkIloCompensate
+                0x00000000      0x104 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetEnabledStatus
+                0x00000000       0x24 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtSetMode
+                0x00000000       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkLfclkPosedgeRestore
+                0x00000000       0x2c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtSetClearOnMatch
+                0x00000000       0x34 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetClearOnMatch
+                0x00000000       0x24 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtEnable
+                0x00000000       0x40 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtDisable
+                0x00000000       0x44 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtSetCascade
+                0x00000000       0x34 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetCascade
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtSetMatch
+                0x00000000       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtSetToggleBit
+                0x00000000       0x30 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetToggleBit
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetMatch
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetCount
+                0x00000000       0x3c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkLfclkPosedgeCatch
+                0x00000000       0x74 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysClkIloStop
+                0x00000000       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetInterruptSource
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtResetCounters
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtSetInterruptCallback
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtGetInterruptCallback
+                0x00000000       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtEnableCounterIsr
+                0x00000000       0x34 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtDisableCounterIsr
+                0x00000000       0x28 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWatchdogFeed
+                0x00000000       0x60 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysTimerDelayUntilMatch
+                0x00000000       0x6c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysTimerDelay
+                0x00000000       0x3c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .rodata        0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text.COLUMN_0_SetDriveMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text.COLUMN_0_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text.COLUMN_0_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text.COLUMN_0_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text.COLUMN_0_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text.COLUMN_0_ClearInterrupt
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text.COLUMN_1_SetDriveMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text.COLUMN_1_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text.COLUMN_1_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text.COLUMN_1_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text.COLUMN_1_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text.COLUMN_1_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text.COLUMN_2_SetDriveMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text.COLUMN_2_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text.COLUMN_2_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text.COLUMN_2_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text.COLUMN_2_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text.COLUMN_2_ClearInterrupt
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text.ROW_0_SetDriveMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text.ROW_0_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text.ROW_0_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text.ROW_0_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text.ROW_0_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text.ROW_0_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text.ROW_1_SetDriveMode
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text.ROW_1_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text.ROW_1_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text.ROW_1_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text.ROW_1_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text.ROW_1_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text.ROW_2_SetDriveMode
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text.ROW_2_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text.ROW_2_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text.ROW_2_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text.ROW_2_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text.ROW_2_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text.ROW_3_SetDriveMode
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text.ROW_3_Write
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text.ROW_3_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text.ROW_3_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text.ROW_3_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text.ROW_3_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .text.Pin_Latch_SetDriveMode
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .text.Pin_Latch_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .text.Pin_Latch_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .text.Pin_Latch_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .text.Pin_Latch_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .text.Pin_CLK_SetDriveMode
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .text.Pin_CLK_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .text.Pin_CLK_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .text.Pin_CLK_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .text.Pin_CLK_ClearInterrupt
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .text.Pin_DO_SetDriveMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .text.Pin_DO_Read
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .text.Pin_DO_ReadDataReg
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .text.Pin_DO_SetInterruptMode
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .text.Pin_DO_ClearInterrupt
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_Interrupt
+                0x00000000        0x4 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_GetVector
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_GetPriority
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_GetState
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_Start
+                0x00000000       0x1c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_Stop
+                0x00000000       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_SetPending
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text.Timer_Int_ClearPending
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .text.Timer_Stop
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .text.Timer_SoftwareCapture
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .text.Timer_ReadControlRegister
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .text.Timer_WriteControlRegister
+                0x00000000        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .text.Timer_ReadPeriod
+                0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .text.Timer_ReadCounter
+                0x00000000       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+ .text          0x00000000      0x114 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+ .text          0x00000000        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .text.exit     0x00000000       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .rodata._global_impure_ptr
+                0x00000000        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .text          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .data          0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .bss           0x00000000        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x00000000         0x00008000         xr
+ram              0x20000000         0x00001000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+START GROUP
+LOAD .\CortexM0\ARM_GCC_541\Debug\main.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a
+END GROUP
+START GROUP
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc_nano.a
+END GROUP
+START GROUP
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc_nano.a
+END GROUP
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+START GROUP
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc.a
+LOAD e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a
+END GROUP
+                0x00000000                CY_APPL_ORIGIN = 0x0
+                0x00000080                CY_FLASH_ROW_SIZE = 0x80
+                0x00000001                CY_APPL_NUM = 0x1
+                0x00000001                CY_APPL_MAX = 0x1
+                0x00000040                CY_METADATA_SIZE = 0x40
+                0x00000000                CY_APPL_LOADABLE = 0x0
+                0x00000000                CY_CHECKSUM_EXCLUDE_SIZE = ALIGN (0x0, CY_FLASH_ROW_SIZE)
+                0x00000000                CY_APP_FOR_STACK_AND_COPIER = 0x0
+                [!provide]                PROVIDE (__cy_heap_start, _end)
+                0x00000001                PROVIDE (__cy_region_num, ((__cy_regions_end - __cy_regions) / 0x10))
+                0x20001000                PROVIDE (__cy_stack, (ORIGIN (ram) + LENGTH (ram)))
+                [!provide]                PROVIDE (__cy_heap_end, (__cy_stack - 0x400))
+
+.cybootloader   0x00000000        0x0
+ *(.cybootloader)
+                0x00000000                appl1_start = CY_APPL_ORIGIN?CY_APPL_ORIGIN:ALIGN (CY_FLASH_ROW_SIZE)
+                0x00003f80                appl2_start = (appl1_start + ALIGN ((((LENGTH (rom) - appl1_start) - (0x2 * CY_FLASH_ROW_SIZE)) / 0x2), CY_FLASH_ROW_SIZE))
+                0x00000000                appl_start = (CY_APPL_NUM == 0x1)?appl1_start:appl2_start
+                0x00000001                cy_project_type_bootloader = (appl_start == 0x0)?0x1:0x0
+                0x00000000                cy_project_type_app_for_stack_and_copier = (CY_APP_FOR_STACK_AND_COPIER == 0x1)?0x1:0x0
+
+.text           0x00000000      0x8be
+ CREATE_OBJECT_SYMBOLS
+                0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
+ *(.romvectors)
+ .romvectors    0x00000000       0x10 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x00000000                RomVectors
+                0x00000001                ASSERT ((. != __cy_interrupt_vector), No interrupt vector)
+                0x00000001                ASSERT (CY_APPL_ORIGIN?(SIZEOF (.cybootloader) <= CY_APPL_ORIGIN):0x1, Wrong image location)
+                0x00000010                PROVIDE (__cy_reset, Reset)
+ *(.text.Reset)
+ .text.Reset    0x00000010        0x8 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x00000010                Reset
+                0x00000001                ASSERT ((. != __cy_reset), No reset code)
+ *(.psocinit)
+ .psocinit      0x00000018      0x15c .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00000074                cyfitter_cfg
+                0x00000174                . = MAX (., 0x100)
+ *(.text .text.* .gnu.linkonce.t.*)
+ .text          0x00000174       0x60 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .text.FourDigit74HC595_sendData
+                0x000001d4       0x34 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .text.FourDigit74HC595_sendOneDigit
+                0x00000208       0x50 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .text.Timer_Int_Handler2
+                0x00000258       0x3c .\CortexM0\ARM_GCC_541\Debug\main.o
+                0x00000258                Timer_Int_Handler2
+ .text.main     0x00000294       0x14 .\CortexM0\ARM_GCC_541\Debug\main.o
+                0x00000294                main
+ .text.cfg_write_bytes32
+                0x000002a8       0x34 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .text.CYMEMZERO
+                0x000002dc        0xc .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .text.IntDefaultHandler
+                0x000002e8       0x10 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x000002e8                IntDefaultHandler
+ .text.Start_c  0x000002f8       0x48 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x000002f8                Start_c
+ .text.initialize_psoc
+                0x00000340       0x40 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x00000340                initialize_psoc
+ .text.CyIntEnable
+                0x00000380       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x00000380                CyIntEnable
+ .text.CyHalt   0x00000394        0x4 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x00000394                CyHalt
+ .text.CyIntSetVector
+                0x00000398       0x24 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x00000398                CyIntSetVector
+ .text.CyDelayUs
+                0x000003bc       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x000003bc                CyDelayUs
+ .text.CySysClkWriteImoFreq
+                0x000003d0      0x164 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x000003d0                CySysClkWriteImoFreq
+ .text.CySysWdtLocked
+                0x00000534       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .text.CySysWdtLock
+                0x00000548       0x1c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+                0x00000548                CySysWdtLock
+ .text.CySysWdtUnlock
+                0x00000564       0x30 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+                0x00000564                CySysWdtUnlock
+ .text.CySysWdtClearInterrupt
+                0x00000594       0x4c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+                0x00000594                CySysWdtClearInterrupt
+ .text.CySysWdtIsr
+                0x000005e0       0xa4 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+                0x000005e0                CySysWdtIsr
+ .text.Pin_Latch_Write
+                0x00000684       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+                0x00000684                Pin_Latch_Write
+ .text.Pin_CLK_Write
+                0x0000069c       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+                0x0000069c                Pin_CLK_Write
+ .text.Pin_DO_Write
+                0x000006b4       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+                0x000006b4                Pin_DO_Write
+ .text.Timer_Int_SetVector
+                0x000006cc        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                0x000006cc                Timer_Int_SetVector
+ .text.Timer_Int_SetPriority
+                0x000006d8       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                0x000006d8                Timer_Int_SetPriority
+ .text.Timer_Int_Enable
+                0x000006f8        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                0x000006f8                Timer_Int_Enable
+ .text.Timer_Int_Disable
+                0x00000704        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                0x00000704                Timer_Int_Disable
+ .text.Timer_Int_StartEx
+                0x00000710       0x1c .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                0x00000710                Timer_Int_StartEx
+ .text.Timer_Enable
+                0x0000072c       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x0000072c                Timer_Enable
+ .text.Timer_SetInterruptMode
+                0x00000740        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x00000740                Timer_SetInterruptMode
+ .text.Timer_ReadStatusRegister
+                0x0000074c        0xc .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x0000074c                Timer_ReadStatusRegister
+ .text.Timer_WritePeriod
+                0x00000758       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x00000758                Timer_WritePeriod
+ .text.Timer_ReadCapture
+                0x00000768       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x00000768                Timer_ReadCapture
+ .text.Timer_WriteCounter
+                0x00000778       0x10 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x00000778                Timer_WriteCounter
+ .text.Timer_ClearFIFO
+                0x00000788       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x00000788                Timer_ClearFIFO
+ .text.Timer_Init
+                0x0000079c       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x0000079c                Timer_Init
+ .text.Timer_Start
+                0x000007d4       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x000007d4                Timer_Start
+ *fill*         0x000007f4        0x4 
+ .text          0x000007f8       0x24 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+                0x000007f8                CyDelayCycles
+                0x0000080c                CyEnterCriticalSection
+                0x00000814                CyExitCriticalSection
+ .text.CySetReg24
+                0x0000081c       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+                0x0000081c                CySetReg24
+ .text.CyGetReg24
+                0x00000830       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+                0x00000830                CyGetReg24
+ .text.__errno  0x00000844        0xc e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+                0x00000844                __errno
+ .text.__libc_init_array
+                0x00000850       0x4c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                0x00000850                __libc_init_array
+ .text.memcpy   0x0000089c       0x12 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+                0x0000089c                memcpy
+ .text.memset   0x000008ae       0x10 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                0x000008ae                memset
+ *(.plt)
+ *(.gnu.warning)
+ *(.glue_7t)
+ .glue_7t       0x000008be        0x0 linker stubs
+ *(.glue_7)
+ .glue_7        0x000008be        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x000008be        0x0 linker stubs
+ *(.bootloader)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.gcc_except_table)
+
+.v4_bx          0x000008c0        0x0
+ .v4_bx         0x000008c0        0x0 linker stubs
+
+.iplt           0x000008c0        0x0
+ .iplt          0x000008c0        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x000008c0        0x4
+ *(.eh_frame)
+ .eh_frame      0x000008c0        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .eh_frame      0x000008c0        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+                [!provide]                PROVIDE (__exidx_start, .)
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x000008c4                __exidx_end = .
+
+.rodata         0x000008c4      0x194
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x000008c4       0x28 .\CortexM0\ARM_GCC_541\Debug\main.o
+                0x000008e0                keyMap
+ .rodata        0x000008ec      0x104 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .rodata        0x000009f0       0x2e .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x000009f0                cyImoFreqMhz2Reg
+ .rodata.str1.1
+                0x00000a1e        0x2 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                0x00000a20                . = ALIGN (0x4)
+ *(.init)
+ .init          0x00000a20        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+                0x00000a20                _init
+ .init          0x00000a24        0x8 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+                0x00000a2c                . = ALIGN (0x4)
+                0x00000a2c                __preinit_array_start = .
+ *(.preinit_array)
+                0x00000a2c                __preinit_array_end = .
+                0x00000a2c                . = ALIGN (0x4)
+                0x00000a2c                __init_array_start = .
+ *(SORT(.init_array.*))
+ *(.init_array)
+ .init_array    0x00000a2c        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .init_array    0x00000a30        0x4 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x00000a34                __init_array_end = .
+                0x00000a34                . = ALIGN (0x4)
+ *(.fini)
+ .fini          0x00000a34        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+                0x00000a34                _fini
+ .fini          0x00000a38        0x8 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+                0x00000a40                . = ALIGN (0x4)
+                0x00000a40                __fini_array_start = .
+ *(.fini_array)
+ .fini_array    0x00000a40        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ *(SORT(.fini_array.*))
+                0x00000a44                __fini_array_end = .
+                0x00000a44                . = ALIGN (0x4)
+ *crtbegin.o(.ctors)
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *crtend.o(.ctors)
+                0x00000a44                . = ALIGN (0x4)
+ *crtbegin.o(.dtors)
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *crtend.o(.dtors)
+                0x00000a44                . = ALIGN (0x4)
+                0x00000a44                __cy_regions = .
+                0x00000a44        0x4 LONG 0xa58 __cy_region_init_ram
+                0x00000a48        0x4 LONG 0x200000c0 __cy_region_start_data
+                0x00000a4c        0x4 LONG 0x80 __cy_region_init_size_ram
+                0x00000a50        0x4 LONG 0x48 __cy_region_zero_size_ram
+                0x00000a54                __cy_regions_end = .
+                0x00000a58                . = ALIGN (0x8)
+ *fill*         0x00000a54        0x4 
+                0x00000a58                _etext = .
+
+.cy_checksum_exclude
+                0x00000a58        0x0
+ *(.cy_checksum_exclude)
+
+.ramvectors     0x20000000       0xc0
+                0x20000000                __cy_region_start_ram = .
+ *(.ramvectors)
+ .ramvectors    0x20000000       0xc0 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                0x20000000                CyRamVectors
+
+.noinit
+ *(.noinit)
+
+.data           0x200000c0       0x80 load address 0x00000a58
+                0x200000c0                __cy_region_start_data = .
+ *(.jcr)
+ .jcr           0x200000c0        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .jcr           0x200000c0        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ *(.got.plt)
+ *(.got)
+ *(.shdata)
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x200000c4       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                0x200000c4                CySysClkPumpConfig
+                0x200000c8                cydelay32kMs
+                0x200000cc                cydelayFreqKhz
+                0x200000d0                cydelayFreqMhz
+                0x200000d4                cydelayFreqHz
+ .data          0x200000d8        0x4 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .data.impure_data
+                0x200000dc       0x60 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .data._impure_ptr
+                0x2000013c        0x4 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                0x2000013c                _impure_ptr
+                0x20000140                . = ALIGN (0x8)
+ *(.ram)
+                0x20000140                _edata = .
+
+.igot.plt       0x20000140        0x0 load address 0x00000ad8
+ .igot.plt      0x20000140        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+
+.bss            0x20000140       0x48 load address 0x00000ad8
+                0x20000140                PROVIDE (__bss_start__, .)
+ *(.shbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x20000140       0x1c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .bss           0x2000015c        0x1 .\CortexM0\ARM_GCC_541\Debug\main.o
+ *fill*         0x2000015d        0x3 
+ .bss           0x20000160       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .bss           0x20000180        0x1 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                0x20000180                Timer_initVar
+ *(COMMON)
+                0x20000188                . = ALIGN (0x8)
+ *fill*         0x20000181        0x7 
+ *(.ram.b)
+                0x20000188                _end = .
+                0x20000188                __end = .
+                0x20000188                PROVIDE (end, .)
+                0x20000188                PROVIDE (__bss_end__, .)
+                0x00000a58                __cy_region_init_ram = LOADADDR (.data)
+                0x00000080                __cy_region_init_size_ram = (_edata - ADDR (.data))
+                0x00000048                __cy_region_zero_size_ram = (_end - _edata)
+
+.heap           0x20000188       0x80 load address 0x00000ad8
+                0x20000188                . = _end
+                0x20000208                . = (. + 0x80)
+ *fill*         0x20000188       0x80 
+                0x20000208                __cy_heap_limit = .
+
+.stack          0x20000c00      0x400
+                0x20000c00                __cy_stack_limit = .
+                0x20001000                . = (. + 0x400)
+ *fill*         0x20000c00      0x400 
+                0x00000001                ASSERT ((__cy_stack_limit >= __cy_heap_limit), region RAM overflowed with stack)
+                0x00000000                cy_checksum_exclude_size = (CY_APPL_LOADABLE == 0x1)?SIZEOF (.cy_checksum_exclude):0x0
+                0x00000001                ASSERT ((cy_checksum_exclude_size <= CY_CHECKSUM_EXCLUDE_SIZE), CY_BOOT: Section .cy_checksum_exclude size exceedes specified limit.)
+                0x00007fc0                cyloadermeta_start = (cy_project_type_bootloader || cy_project_type_app_for_stack_and_copier)?(LENGTH (rom) - CY_METADATA_SIZE):0xf0000000
+
+.cyloadermeta
+ *(.cyloadermeta)
+                0x00007fc0                cyloadablemeta_start = cy_project_type_app_for_stack_and_copier?((LENGTH (rom) - CY_FLASH_ROW_SIZE) - CY_METADATA_SIZE):((LENGTH (rom) - (CY_FLASH_ROW_SIZE * (CY_APPL_NUM - 0x1))) - CY_METADATA_SIZE)
+
+.cyloadablemeta
+ *(.cyloadablemeta)
+
+.cyflashprotect
+                0x90400000       0x20
+ *(.cyflashprotect)
+ .cyflashprotect
+                0x90400000       0x20 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+                0x90400000                cy_meta_flashprotect
+
+.cymeta         0x90500000        0xc
+ *(.cymeta)
+ .cymeta        0x90500000        0xc .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+                0x90500000                cy_metadata
+
+.cychipprotect  0x90600000        0x1
+ *(.cychipprotect)
+ .cychipprotect
+                0x90600000        0x1 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+                0x90600000                cy_meta_chipprotect
+
+.rel.dyn        0x00000ad8        0x0 load address 0x90600004
+ .rel.iplt      0x00000ad8        0x0 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x7b8
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x40 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_aranges
+                0x00000040       0x38 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_aranges
+                0x00000078       0x18 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .debug_aranges
+                0x00000090       0x48 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_aranges
+                0x000000d8      0x180 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_aranges
+                0x00000258      0x138 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_aranges
+                0x00000390       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_aranges
+                0x000003d8       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_aranges
+                0x00000420       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_aranges
+                0x00000468       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_aranges
+                0x000004b0       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_aranges
+                0x000004f8       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_aranges
+                0x00000540       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_aranges
+                0x00000588       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_aranges
+                0x000005d0       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_aranges
+                0x00000618       0x48 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_aranges
+                0x00000660       0x80 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_aranges
+                0x000006e0       0x90 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_aranges
+                0x00000770       0x20 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .debug_aranges
+                0x00000790       0x28 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000     0x3d4a
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000      0x49b .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_info    0x0000049b      0x3a0 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_info    0x0000083b       0xf8 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .debug_info    0x00000933      0x3a2 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_info    0x00000cd5      0xaed .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_info    0x000017c2      0xcfe .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_info    0x000024c0      0x19b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_info    0x0000265b      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_info    0x000027f8      0x19b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_info    0x00002993      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_info    0x00002b30      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_info    0x00002ccd      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_info    0x00002e6a      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_info    0x00003007      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_info    0x000031a4      0x19d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_info    0x00003341      0x19b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_info    0x000034dc      0x305 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_info    0x000037e1      0x386 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_info    0x00003b67       0x98 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .debug_info    0x00003bff      0x14b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.debug_abbrev   0x00000000     0x14b5
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x160 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_abbrev  0x00000160      0x199 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_abbrev  0x000002f9       0x5d .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .debug_abbrev  0x00000356      0x1d7 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_abbrev  0x0000052d      0x1d3 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_abbrev  0x00000700      0x210 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_abbrev  0x00000910       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_abbrev  0x000009d8       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_abbrev  0x00000aa0       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_abbrev  0x00000b68       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_abbrev  0x00000c30       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_abbrev  0x00000cf8       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_abbrev  0x00000dc0       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_abbrev  0x00000e88       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_abbrev  0x00000f50       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_abbrev  0x00001018       0xc8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_abbrev  0x000010e0      0x19a .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_abbrev  0x0000127a      0x167 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_abbrev  0x000013e1       0x14 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x000013f5       0xc0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.debug_line     0x00000000     0x1aa0
+ *(.debug_line)
+ .debug_line    0x00000000      0x279 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_line    0x00000279      0x145 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_line    0x000003be      0x109 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .debug_line    0x000004c7      0x1fd .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_line    0x000006c4      0x460 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_line    0x00000b24      0x466 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_line    0x00000f8a       0xbf .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_line    0x00001049       0xc0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_line    0x00001109       0xbf .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_line    0x000011c8       0xbd .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_line    0x00001285       0xbd .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_line    0x00001342       0xbd .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_line    0x000013ff       0xbd .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_line    0x000014bc       0xc1 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_line    0x0000157d       0xbf .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_line    0x0000163c       0xbd .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_line    0x000016f9      0x151 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_line    0x0000184a      0x179 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_line    0x000019c3       0x69 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .debug_line    0x00001a2c       0x74 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.debug_frame    0x00000000     0x1150
+ *(.debug_frame)
+ .debug_frame   0x00000000       0xa4 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_frame   0x000000a4       0x8c .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_frame   0x00000130       0xbc .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_frame   0x000001ec      0x3e0 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_frame   0x000005cc      0x3a8 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_frame   0x00000974       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_frame   0x000009e4       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_frame   0x00000a54       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_frame   0x00000ac4       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_frame   0x00000b34       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_frame   0x00000ba4       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_frame   0x00000c14       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_frame   0x00000c84       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_frame   0x00000cf4       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_frame   0x00000d64       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_frame   0x00000dd4      0x110 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_frame   0x00000ee4      0x160 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_frame   0x00001044       0x30 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+ .debug_frame   0x00001074       0x20 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+ .debug_frame   0x00001094       0x20 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x000010b4       0x28 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x000010dc       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x00001108       0x28 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x00001130       0x20 e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+
+.debug_str      0x00000000     0x1740
+ *(.debug_str)
+ .debug_str     0x00000000      0x293 .\CortexM0\ARM_GCC_541\Debug\main.o
+                                0x2e0 (size before relaxing)
+ .debug_str     0x00000293      0x127 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+                                0x2cd (size before relaxing)
+ .debug_str     0x000003ba       0x59 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+                                0x1d0 (size before relaxing)
+ .debug_str     0x00000413      0x13a .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+                                0x309 (size before relaxing)
+ .debug_str     0x0000054d      0x4b1 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+                                0x6be (size before relaxing)
+ .debug_str     0x000009fe      0x530 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+                                0x745 (size before relaxing)
+ .debug_str     0x00000f2e       0xa9 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+                                0x253 (size before relaxing)
+ .debug_str     0x00000fd7       0x8e .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+                                0x253 (size before relaxing)
+ .debug_str     0x00001065       0x8e .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+                                0x253 (size before relaxing)
+ .debug_str     0x000010f3       0x7b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+                                0x23e (size before relaxing)
+ .debug_str     0x0000116e       0x7b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+                                0x23e (size before relaxing)
+ .debug_str     0x000011e9       0x7b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+                                0x23e (size before relaxing)
+ .debug_str     0x00001264       0x7b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+                                0x23e (size before relaxing)
+ .debug_str     0x000012df       0x93 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+                                0x25a (size before relaxing)
+ .debug_str     0x00001372       0x87 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+                                0x24c (size before relaxing)
+ .debug_str     0x000013f9       0x81 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+                                0x245 (size before relaxing)
+ .debug_str     0x0000147a      0x11b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+                                0x32a (size before relaxing)
+ .debug_str     0x00001595      0x17d .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+                                0x359 (size before relaxing)
+ .debug_str     0x00001712       0x2e .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+                                0x1c5 (size before relaxing)
+
+.debug_loc      0x00000000     0x1a1d
+ *(.debug_loc)
+ .debug_loc     0x00000000       0xf9 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_loc     0x000000f9      0x118 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_loc     0x00000211      0x14f .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_loc     0x00000360      0x599 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_loc     0x000008f9      0x9b5 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_loc     0x000012ae       0x81 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_loc     0x0000132f       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_loc     0x000013d1       0x81 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_loc     0x00001452       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_loc     0x000014f4       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_loc     0x00001596       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_loc     0x00001638       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_loc     0x000016da       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_loc     0x0000177c       0xa2 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_loc     0x0000181e       0x81 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_loc     0x0000189f       0x82 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_loc     0x00001921       0x6b .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_loc     0x0000198c       0x91 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_ranges   0x00000000      0x660
+ *(.debug_ranges)
+ .debug_ranges  0x00000000       0x30 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .debug_ranges  0x00000030       0x28 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_ranges  0x00000058       0x38 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .debug_ranges  0x00000090      0x170 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .debug_ranges  0x00000200      0x128 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .debug_ranges  0x00000328       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .debug_ranges  0x00000360       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .debug_ranges  0x00000398       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .debug_ranges  0x000003d0       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .debug_ranges  0x00000408       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .debug_ranges  0x00000440       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .debug_ranges  0x00000478       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .debug_ranges  0x000004b0       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .debug_ranges  0x000004e8       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .debug_ranges  0x00000520       0x38 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .debug_ranges  0x00000558       0x70 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .debug_ranges  0x000005c8       0x80 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .debug_ranges  0x00000648       0x18 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.comment        0x00000000       0x6e
+ .comment       0x00000000       0x6e .\CortexM0\ARM_GCC_541\Debug\main.o
+                                 0x6f (size before relaxing)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .comment       0x0000006e       0x6f .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.note.gnu.arm.ident
+ *(.note.gnu.arm.ident)
+
+.ARM.attributes
+                0x00000000       0x28
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x1e e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .ARM.attributes
+                0x0000001e       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .ARM.attributes
+                0x0000004a       0x1b e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.attributes
+                0x00000065       0x31 .\CortexM0\ARM_GCC_541\Debug\main.o
+ .ARM.attributes
+                0x00000096       0x31 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .ARM.attributes
+                0x000000c7       0x31 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+ .ARM.attributes
+                0x000000f8       0x31 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+ .ARM.attributes
+                0x00000129       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLib.o)
+ .ARM.attributes
+                0x0000015a       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyLFClk.o)
+ .ARM.attributes
+                0x0000018b       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_0.o)
+ .ARM.attributes
+                0x000001bc       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_1.o)
+ .ARM.attributes
+                0x000001ed       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(COLUMN_2.o)
+ .ARM.attributes
+                0x0000021e       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_0.o)
+ .ARM.attributes
+                0x0000024f       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_1.o)
+ .ARM.attributes
+                0x00000280       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_2.o)
+ .ARM.attributes
+                0x000002b1       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(ROW_3.o)
+ .ARM.attributes
+                0x000002e2       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_Latch.o)
+ .ARM.attributes
+                0x00000313       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_CLK.o)
+ .ARM.attributes
+                0x00000344       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Pin_DO.o)
+ .ARM.attributes
+                0x00000375       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer_Int.o)
+ .ARM.attributes
+                0x000003a6       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(Timer.o)
+ .ARM.attributes
+                0x000003d7       0x21 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(CyBootAsmGnu.o)
+ .ARM.attributes
+                0x000003f8       0x31 .\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.a(cyutils.o)
+ .ARM.attributes
+                0x00000429       0x1e e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x00000447       0x1e e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000465       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x00000491       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .ARM.attributes
+                0x000004bd       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x000004e9       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x00000515       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .ARM.attributes
+                0x00000541       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000056d       0x2c e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .ARM.attributes
+                0x00000599       0x1e e:/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+
+/DISCARD/
+ *(.note.GNU-stack)
+OUTPUT(E:\lab-mkr-1-main\lab-mkr-1-main\lab3_Skorobohatyi\SkorobohatyiLab5.cydsn\CortexM0\ARM_GCC_541\Debug\SkorobohatyiLab5.elf elf32-littlearm)
